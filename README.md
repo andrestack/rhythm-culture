@@ -3,7 +3,7 @@
 Rebuild of rhythmculture.com.au (WordPress + Divi + WooCommerce) as Astro 7 + Keystatic on Vercel.
 Started 2026-10-29. Source: a WordPress export (XML) and a WooCommerce product CSV, plus images scraped from the live site.
 
-**Status: working prototype, not launched.** It builds (about 450 static pages) and the main flows run locally. Nothing is deployed, no repo exists yet, and no DNS has been touched.
+**Status: working prototype, not launched.** `AUDIT.md` (29 Oct) lists what is left before launch; its four blockers are fixed. It builds (about 450 static pages) and the main flows run locally. Code is on GitHub (andrestack/rhythm-culture); nothing is deployed and no DNS has been touched.
 
 ---
 

@@ -26,19 +26,18 @@ Create `src/content/posts/<slug>.mdoc`. The filename is the web address: `/<slug
 
 ```
 ---
-title: "Term 1 classes start"
-date: "2027-01-20"
-link: "/term-1-classes-start/"
-description: "One sentence for Google (under 160 characters)."
-seoTitle: ""
-featured: "/media/cms/term-1.webp"
-categories: ["News"]
+title: Term 1 classes start
+link: /term-1-classes-start/
+description: One sentence for Google (under 160 characters).
+featured: /media/cms/term-1.webp
+date: '2027-01-20'
+categories:
+  - News
 ---
-
 Body in markdown.
 ```
 
-Values in the top block use double quotes. `link` must be `/<slug>/` and different from every other page. Use `featured: ""` if there is no photo. New posts show up on `/blog/` automatically, newest first. Ask for any facts you do not have (dates, times, prices, places): never invent them.
+The top block is YAML in the same layout Keystatic writes: keys in this order, the date in single quotes, and any field with no value left out entirely (no `featured` line if there is no photo). Put a value in quotes if it contains a colon. `link` must be `/<slug>/` and different from every other page. New posts show up on `/blog/` automatically, newest first. Ask for any facts you do not have (dates, times, prices, places): never invent them.
 
 ### Change a page
 Find it: `grep -l 'link: "/about/"' src/content/pages/*.mdoc`, then edit the body text only. Keep `link:` as it is. A page can show a form under its text: set `form:` to `contact`, `quote`, `booking`, `camp`, or `""` for none.

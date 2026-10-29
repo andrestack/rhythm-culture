@@ -13,6 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import TurndownService from 'turndown';
+import { dump } from 'js-yaml';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const XML = path.join(ROOT, 'reference/wp-export.xml');
@@ -122,13 +123,14 @@ td.addRule('drop-empty-links', { filter: (n) => n.nodeName === 'A' && !n.textCon
 const md = (html) => td.turndown(html).replace(/\n{3,}/g, '\n\n').trim();
 const FORMS = { 1: 'contact', 17: 'quote', 27: 'booking', 5: 'camp' };
 
-const q = (v) => JSON.stringify(v ?? '');
+// Files are written exactly the way Keystatic saves them (js-yaml dump, schema key order, empty strings
+// left out, JSON with 2-space indent + newline), so a client's first CMS save only shows their own change.
+const compact = (o) => Object.fromEntries(Object.entries(o).filter(([, v]) => v !== '' && v !== undefined));
 function write(dir, slug, front, body) {
   fs.mkdirSync(path.join(OUT, dir), { recursive: true });
   const file = path.join(OUT, dir, `${slug}.mdoc`);
   if (fs.existsSync(file) && !FORCE) { kept++; return false; }
-  const fm = Object.entries(front).map(([k, v]) => `${k}: ${Array.isArray(v) ? JSON.stringify(v) : q(v)}`).join('\n');
-  fs.writeFileSync(file, `---\n${fm}\n---\n\n${body}\n`);
+  fs.writeFileSync(file, `---\n${dump(compact(front))}---\n${body}\n`);
   return true;
 }
 
@@ -145,13 +147,14 @@ for (const i of items) {
   const thumb = attachments.get(meta(i, '_thumbnail_id'));
   const content = tag(i, 'content:encoded');
   const formId = content.match(/\[gravityform[^\]]*\bid="(\d+)"/)?.[1];
+  // Key order = keystatic.config.ts schema order.
   const front = {
     title: tag(i, 'title'),
-    date: tag(i, 'wp:post_date').slice(0, 10),
     link: tag(i, 'link').replace(ORIGIN, ''),
-    description: meta(i, '_yoast_wpseo_metadesc'),
     seoTitle: meta(i, '_yoast_wpseo_title'),
+    description: meta(i, '_yoast_wpseo_metadesc'),
     featured: thumb ? local(thumb) : '',
+    date: tag(i, 'wp:post_date').slice(0, 10),
     ...(type === 'post' ? { categories: cats(i) } : { form: FORMS[formId] ?? '' }),
   };
   if (write(type === 'post' ? 'posts' : 'pages', slug, front, md(clean(content.replace(/\[gravityform[^\]]*\]/g, ''))))) stats[type]++;
@@ -198,12 +201,11 @@ for (const p of recs.filter((r) => !isVar(r) && r.Published === '1')) {
   }));
   const price = p['Sale price'] || p['Regular price'] || '';
   const visible = p['In stock?'] === '1' && !/Camp Afro Foli/.test(p.Categories) && (Number(price) > 0 || options.length > 0);
-  const rec = {
+  const rec = { // key order = keystatic.config.ts schema order
     name: p.Name.replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim(),
-    wpId: p.ID,
-    category: p.Categories.split(',')[0].trim(),
     visible: prev ? prev.visible : visible,
     soldOut: p['In stock?'] !== '1',
+    category: p.Categories.split(',')[0].trim(),
     price: p['Regular price'] || '',
     salePrice: p['Sale price'] || '',
     image: p.Images.split(',').map((x) => x.trim()).filter(Boolean).map(local)[0] ?? '',
@@ -212,7 +214,7 @@ for (const p of recs.filter((r) => !isVar(r) && r.Published === '1')) {
     options: prev?.options?.length ? prev.options : options,
   };
   if (prev && !FORCE) { kept++; continue; }
-  fs.writeFileSync(file, JSON.stringify(rec, null, 2));
+  fs.writeFileSync(file, JSON.stringify(compact(rec), null, 2) + '\n');
   shopCount++;
 }
 stats.product = shopCount;

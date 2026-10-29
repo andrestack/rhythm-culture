@@ -1,13 +1,8 @@
 {
   "name": "Drum Hire",
-  "wpId": "7036",
-  "category": "Rhythm Culture Drum & Dance Classes",
   "visible": false,
   "soldOut": false,
-  "price": "",
-  "salePrice": "",
+  "category": "Rhythm Culture Drum & Dance Classes",
   "image": "/media/2015/05/drum-3.jpg",
-  "description": "",
-  "stripeUrl": "",
   "options": []
 }

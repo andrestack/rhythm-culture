@@ -1,14 +1,10 @@
 {
   "name": "Belt Shaker",
-  "wpId": "2424",
-  "category": "Percussion",
   "visible": true,
   "soldOut": false,
-  "price": "",
-  "salePrice": "",
+  "category": "Percussion",
   "image": "/media/2013/02/Belt-Shaker-1-scaled.jpg",
   "description": "# Belt Shakers\n\n\\\\nThe Belt shaker is made from seed pods and makes a beautiful watery sound when worn by a dancer or used as a shaker! They can be worn on the ankles or the wrists and attaches easily using a velcro strip sewn onto kente cloth. The seed pods have a wonderful texture and what we would call a [loud sound for a shaker.](/product/beaded-shaker/) \\\\n \\\\nMade in Ghana, West Africa. \\\\n \\\\nNB: Items may vary slightly in appearance from that pictured. Please contact us if you have any questions.",
-  "stripeUrl": "",
   "options": [
     {
       "label": "Single",

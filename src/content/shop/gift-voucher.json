@@ -1,13 +1,9 @@
 {
   "name": "Gift Voucher - $25",
-  "wpId": "10632",
-  "category": "Vouchers & Tuition",
   "visible": true,
   "soldOut": false,
+  "category": "Vouchers & Tuition",
   "price": "25",
-  "salePrice": "",
   "image": "/media/2017/12/Twitter-profile-picture-1.png",
-  "description": "",
-  "stripeUrl": "",
   "options": []
 }

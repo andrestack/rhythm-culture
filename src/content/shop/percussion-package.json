@@ -1,13 +1,10 @@
 {
   "name": "Percussion Package",
-  "wpId": "2425",
-  "category": "Percussion",
   "visible": true,
   "soldOut": false,
+  "category": "Percussion",
   "price": "195",
-  "salePrice": "",
   "image": "/media/2013/02/Percussion-Package.jpg",
   "description": "# Percussion package\n\n\\\\n\n\nOne Percussion Package Includes:\n\n\\\\n \\\\n\n\nShekere x 1\n\n\\\\n\n\nGangkogui x 2\n\n\\\\n\n\nAslatua x2\n\n\\\\n\n\nPod Skaker x 2\n\n\\\\n\n\nKiss Kass Shaker x 2\n\n\\\\n\n\nBasket Shakers x 2",
-  "stripeUrl": "",
   "options": []
 }

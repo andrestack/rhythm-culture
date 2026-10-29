@@ -1,13 +1,10 @@
 {
   "name": "Online Classes 4 Weeks",
-  "wpId": "15627",
-  "category": "African Dance/ Drum Workshop",
   "visible": true,
   "soldOut": false,
+  "category": "African Dance/ Drum Workshop",
   "price": "70.00",
-  "salePrice": "",
   "image": "/media/2012/11/IMG_9403-1.jpeg",
   "description": "Learn West African Drumming online with Nathaniel Combs. All welcome.",
-  "stripeUrl": "",
   "options": []
 }

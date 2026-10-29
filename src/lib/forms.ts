@@ -1,11 +1,22 @@
-// Replaces the four Gravity Forms. Submissions POST as JSON to PUBLIC_FORM_ENDPOINT (an n8n webhook).
+// Replaces the four Gravity Forms. Submissions go to /api/form, are validated with zod (formSchema.ts)
+// and forwarded to the n8n webhook in FORM_WEBHOOK_URL.
 export type Field = {
   name: string;
   label: string;
   type?: 'text' | 'email' | 'tel' | 'date' | 'time' | 'number' | 'textarea' | 'select' | 'checkbox';
   required?: boolean;
   options?: string[];
+  note?: string[]; // numbered text shown above the field (e.g. terms a checkbox accepts)
 };
+
+// Booking terms, copied verbatim from the old Gravity Form (booking form, 29 Oct 2026).
+const BOOKING_TERMS = [
+  'All invoices must be paid within 14 days of the invoice date, unless otherwise stated.',
+  'All late payments will incur a $20 late payment fee if unpaid after 21 days after the due date. There after all late payments will incur a 20% surcharge per calendar month, billed weekly, or part there of, until payment is received.',
+  'Any cancellation or changes to the booking after the booking form has been submitted will be charged a 20% fee of the total owing.',
+  'If cancellation occurs within 21 days of the booking date a 50% charge of the total owing will be charged.',
+  'If cancellation occurs within 14 days of the booking date a 100% charge of the total owing will be charged.',
+];
 
 const hear = ['Google', 'Facebook', 'Instagram', 'Word of mouth', 'A school or organisation', 'Other'];
 const f = (name: string, label: string, extra: Partial<Field> = {}): Field => ({ name, label, ...extra });
@@ -64,7 +75,7 @@ export const FORMS: Record<string, { subject: string; submit: string; fields: Fi
       f('accessNotes', 'Notes regarding access (stairs, elevators etc.)', { type: 'textarea' }),
       f('purpose', 'Event purpose / theme', { required: true }),
       f('comments', 'Any other comments', { type: 'textarea' }),
-      f('terms', 'I accept the booking terms and conditions above', { type: 'checkbox', required: true }),
+      f('terms', 'I have read and agree to the terms and conditions above', { type: 'checkbox', required: true, note: BOOKING_TERMS }),
     ],
   },
   camp: {

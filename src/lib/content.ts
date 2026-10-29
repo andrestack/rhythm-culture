@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { marked } from 'marked';
+import { load } from 'js-yaml';
 
 export interface Entry {
   title: string; date: string; link: string; description: string; seoTitle: string;
@@ -9,19 +10,33 @@ export interface Entry {
 
 const dir = (d: string) => path.join(process.cwd(), 'src/content', d);
 
-// Entries are Keystatic markdoc files: YAML frontmatter + markdown body.
-// The importer writes frontmatter values as JSON strings, which are valid YAML.
+// Entries are Keystatic markdoc files: YAML frontmatter + markdown body, parsed with js-yaml (the library
+// Keystatic itself uses). Keystatic omits empty fields when it saves, so every field needs a default here.
+const FRONTMATTER = /^---\n([\s\S]*?)\n?---\n?([\s\S]*)$/;
+
 function read(d: string): Entry[] {
   return fs.readdirSync(dir(d)).filter((f) => f.endsWith('.mdoc')).map((f) => {
-    const raw = fs.readFileSync(path.join(dir(d), f), 'utf8');
-    const [, fm, ...rest] = raw.split('---\n');
-    const data: Record<string, any> = {};
-    for (const line of fm.split('\n')) {
-      const i = line.indexOf(': ');
-      if (i > 0) data[line.slice(0, i)] = JSON.parse(line.slice(i + 2));
+    const raw = fs.readFileSync(path.join(dir(d), f), 'utf8').replace(/\r\n?/g, '\n');
+    const m = raw.match(FRONTMATTER);
+    if (!m) throw new Error(`src/content/${d}/${f}: missing --- frontmatter block`);
+    let data: Record<string, any>;
+    try {
+      data = (load(m[1]) as Record<string, any>) ?? {};
+    } catch (err) {
+      throw new Error(`src/content/${d}/${f}: frontmatter is not valid YAML. ${(err as Error).message}`);
     }
-    const body = rest.join('---\n').trim();
-    return { categories: [], form: '', ...data, body, html: marked.parse(body, { async: false }) as string } as Entry;
+    const slug = f.replace(/\.mdoc$/, '');
+    const date = data.date instanceof Date ? data.date.toISOString().slice(0, 10) : String(data.date ?? '');
+    const body = m[2].trim();
+    return {
+      title: '', description: '', seoTitle: '', featured: '', form: '', categories: [],
+      ...data,
+      title: String(data.title ?? slug),
+      link: data.link || `/${slug}/`, // new CMS entries without a URL path fall back to their file name
+      date,
+      body,
+      html: marked.parse(body, { async: false }) as string,
+    } as Entry;
   });
 }
 
@@ -39,7 +54,10 @@ export interface Product {
 }
 export const products = (): Product[] =>
   fs.readdirSync(dir('shop')).filter((f) => f.endsWith('.json')).map((f) => ({
-    options: [], stripeUrl: '', ...JSON.parse(fs.readFileSync(path.join(dir('shop'), f), 'utf8')), slug: f.replace(/\.json$/, ''),
+    // Keystatic drops empty fields on save, so default them all.
+    name: '', category: '', visible: false, soldOut: false, price: '', salePrice: '', image: '', description: '', stripeUrl: '', options: [],
+    ...JSON.parse(fs.readFileSync(path.join(dir('shop'), f), 'utf8')),
+    slug: f.replace(/\.json$/, ''),
   }));
 export const menu = () => {
   const m: { id: string; parent: string; title: string; url: string }[] = JSON.parse(fs.readFileSync(path.join(dir('.'), 'menu.json'), 'utf8'));

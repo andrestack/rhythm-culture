@@ -1,13 +1,11 @@
 {
   "name": "8 Class Pass - Drum & Dance Classes",
-  "wpId": "10953",
-  "category": "Rhythm Culture Drum & Dance Classes",
   "visible": true,
   "soldOut": false,
+  "category": "Rhythm Culture Drum & Dance Classes",
   "price": "200",
   "salePrice": "120",
   "image": "/media/2017/12/a022bc00-cbbe-1a54-42f7-9a02869899f7.jpg",
   "description": "This purchase entitles you to attend 8 classes within 4 weeks. \\\\n \\\\nThis pass expires after 4 weeks from your first class.",
-  "stripeUrl": "",
   "options": []
 }

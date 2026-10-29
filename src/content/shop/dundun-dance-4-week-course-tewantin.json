@@ -1,13 +1,10 @@
 {
   "name": "Dundun Dance 4 week course - Tewantin",
-  "wpId": "16386",
-  "category": "Community Drum And Dance Events",
   "visible": true,
   "soldOut": false,
+  "category": "Community Drum And Dance Events",
   "price": "80.00",
-  "salePrice": "",
   "image": "/media/2021/07/dundundancephoto.jpg",
   "description": "There is also a drum hire fee which is $4.00 per week.",
-  "stripeUrl": "",
   "options": []
 }

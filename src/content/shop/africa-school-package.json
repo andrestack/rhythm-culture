@@ -1,13 +1,10 @@
 {
   "name": "Africa School Package",
-  "wpId": "2419",
-  "category": "School Drum Packages",
   "visible": true,
   "soldOut": false,
+  "category": "School Drum Packages",
   "price": "1695.00",
-  "salePrice": "",
   "image": "/media/2022/03/20210720_135425.jpg",
   "description": "# Africa School package\n\n\\\\nIncludes: \\\\nThree 250mm Ghana Djembes. \\\\nDuo Dundun Set. \\\\nOne Medium Shekere. \\\\nOne Gankogui Double Bell.",
-  "stripeUrl": "",
   "options": []
 }
