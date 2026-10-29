@@ -47,7 +47,7 @@ Node 24 was used. Copy `.env.example` to `.env` and set `FORM_WEBHOOK_URL` to tr
 ## Project map
 
 ```
-scripts/import-wp.mjs     WP export -> src/content (safe to re-run, see "Re-running the import")
+scripts/import-wp.mjs     WP export -> src/content (one-time migration tool, guarded: see "Re-running the import")
 .claude/skills/           rhythm-culture-cms (client editing guide) and compress-images (+ compress.mjs, run via `npm run compress`)
 src/content/pages/*.mdoc  pages (markdown + YAML frontmatter)
 src/content/posts/*.mdoc  blog posts
@@ -86,11 +86,28 @@ reference/                original exports (products.csv, wp-export.xml (git-ign
 7. **Page-by-page visual review.** Only `/african-drumming-classes/` and `/shop/` have been checked by eye. Walk the 56 pages against the live site and fix layout gaps (grids, teacher bios, "Choose" buttons on the old Divi pages). Mark finished pages in a checklist.
 8. **Gaps to fill.** Instagram strip (link grid is enough), events/dates (the old plugin is gone: either text on the pages or a small collection), Mailchimp signup embed, GA4 and Facebook pixel snippets in `src/layouts/Base.astro`, favicon, 404 page, `robots.txt`, sitemap (`@astrojs/sitemap`).
 9. **Legal / SEO check.** Confirm the Assegai font licence covers the new host (it is a MyFonts webfont copied from the live theme). Compare titles and descriptions with the old site. Check all old URLs resolve (crawl the 9 old sitemaps against the build output).
-10. **Cutover.** Preview URL signed off -> lower DNS TTL -> point the domain at Vercel -> watch Search Console. Keep the WordPress site untouched until then. Afterwards delete `reference/wp-export.xml`.
+10. **Cutover.** Preview URL signed off -> lower DNS TTL -> point the domain at Vercel -> watch Search Console. Keep the WordPress site untouched until then. Afterwards see *Post-launch todo*.
 
 ### Re-running the import
 
-`npm run import` re-reads the exports and rewrites `src/content/pages` and `posts`. **It overwrites CMS edits to pages and posts**, so only run it before editing starts. Shop files are the exception: it preserves each product's `visible`, `stripeUrl` and `options`. `npm run import:images` also downloads referenced images that are missing.
+`scripts/import-wp.mjs` is a **one-time migration tool**, and it has a guardrail because the files it writes are the files the client edits afterwards:
+
+- `npm run import` only **creates** files that don't exist yet. Every existing page, post, product and the menu is left untouched and counted ("N existing files left untouched"). Running it after the client has edited content changes nothing.
+- `npm run import -- --force` overwrites existing files from the old WordPress export. It **refuses to run unless `src/content` has no uncommitted changes**, so any overwrite can be undone with git (`git restore src/content`). Use it only deliberately, on a branch.
+- `npm run import:images` also downloads referenced images that are missing (images are never overwritten).
+
+The guard is code, not a lock: someone can still pass `--force` on a clean tree. After launch, delete the tool (see *Post-launch todo*).
+
+### Post-launch todo
+
+Once the domain is live and the client has started editing:
+
+1. **Delete the importer:** remove `scripts/import-wp.mjs` and the `import` and `import:images` entries in `package.json`. Without the tool there is nothing to overwrite their edits. Remove `turndown` from dependencies if nothing else uses it.
+2. **Delete `reference/wp-export.xml`** (contains customer orders) and, if not needed, `reference/products.csv`, `image-list.txt`, `image-failures.txt`.
+3. Update `AGENTS.md` and `.claude/skills/rhythm-culture-cms/SKILL.md`: drop the lines about not running the import.
+4. Tag the final migrated state (`git tag migration-complete`) so a known-good version is one command away.
+5. Turn on branch protection for `main` if it is not already on.
+6. Retire the old WordPress site only after Search Console shows no crawl problems, and keep a backup of it.
 
 ---
 

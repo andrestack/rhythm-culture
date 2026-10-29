@@ -2,8 +2,16 @@
 //   node scripts/import-wp.mjs            -> content only
 //   node scripts/import-wp.mjs --images   -> content + download images to public/media
 // Deliberately ignores shop_order / shop_coupon (customer data) and Divi layout library items.
+//
+// ONE-TIME MIGRATION TOOL. The files it writes are the same files the site owner edits in the CMS afterwards.
+// Guardrails:
+//   - By default it only CREATES files that do not exist yet; anything already in src/content is left untouched.
+//   - --force overwrites existing files, and refuses to run unless src/content has no uncommitted changes
+//     (so every overwrite can be undone with git).
+// Post-launch todo: delete this script, its npm scripts and reference/wp-export.xml.
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 import TurndownService from 'turndown';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
@@ -12,6 +20,23 @@ const OUT = path.join(ROOT, 'src/content');
 const MEDIA = path.join(ROOT, 'public/media');
 const ORIGIN = 'https://rhythmculture.com.au';
 const DL = process.argv.includes('--images');
+const FORCE = process.argv.includes('--force');
+
+if (FORCE) {
+  let dirty;
+  try {
+    dirty = execFileSync('git', ['status', '--porcelain', '--', 'src/content'], { cwd: ROOT, encoding: 'utf8' }).trim();
+  } catch {
+    console.error('--force needs a git repository so overwritten content can be restored. Aborting.');
+    process.exit(1);
+  }
+  if (dirty) {
+    console.error('--force refused: src/content has uncommitted changes. Commit or stash them first, so nothing is lost.\n' + dirty);
+    process.exit(1);
+  }
+  console.warn('--force: overwriting existing pages, posts, products and menu from the WordPress export. Undo with git.');
+}
+let kept = 0; // existing files left untouched
 
 const xml = fs.readFileSync(XML, 'utf8');
 const items = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m) => m[1]);
@@ -100,8 +125,11 @@ const FORMS = { 1: 'contact', 17: 'quote', 27: 'booking', 5: 'camp' };
 const q = (v) => JSON.stringify(v ?? '');
 function write(dir, slug, front, body) {
   fs.mkdirSync(path.join(OUT, dir), { recursive: true });
+  const file = path.join(OUT, dir, `${slug}.mdoc`);
+  if (fs.existsSync(file) && !FORCE) { kept++; return false; }
   const fm = Object.entries(front).map(([k, v]) => `${k}: ${Array.isArray(v) ? JSON.stringify(v) : q(v)}`).join('\n');
-  fs.writeFileSync(path.join(OUT, dir, `${slug}.mdoc`), `---\n${fm}\n---\n\n${body}\n`);
+  fs.writeFileSync(file, `---\n${fm}\n---\n\n${body}\n`);
+  return true;
 }
 
 const stats = { page: 0, post: 0, product: 0, skippedDraft: 0 };
@@ -126,8 +154,7 @@ for (const i of items) {
     featured: thumb ? local(thumb) : '',
     ...(type === 'post' ? { categories: cats(i) } : { form: FORMS[formId] ?? '' }),
   };
-  write(type === 'post' ? 'posts' : 'pages', slug, front, md(clean(content.replace(/\[gravityform[^\]]*\]/g, ''))));
-  stats[type]++;
+  if (write(type === 'post' ? 'posts' : 'pages', slug, front, md(clean(content.replace(/\[gravityform[^\]]*\]/g, ''))))) stats[type]++;
 }
 
 const byId = new Map(items.map((i) => [tag(i, 'wp:post_id'), { title: tag(i, 'title'), link: tag(i, 'link').replace(ORIGIN, '') }]));
@@ -184,6 +211,7 @@ for (const p of recs.filter((r) => !isVar(r) && r.Published === '1')) {
     stripeUrl: prev?.stripeUrl ?? '',
     options: prev?.options?.length ? prev.options : options,
   };
+  if (prev && !FORCE) { kept++; continue; }
   fs.writeFileSync(file, JSON.stringify(rec, null, 2));
   shopCount++;
 }
@@ -198,10 +226,12 @@ const menu = items.filter((i) => tag(i, 'wp:post_type') === 'nav_menu_item' && t
     title: tag(i, 'title') || ref?.title || '', url: meta(i, '_menu_item_url').replace(ORIGIN, '') || ref?.link || '',
   };
 }).sort((a, b) => a.order - b.order);
-fs.writeFileSync(path.join(OUT, 'menu.json'), JSON.stringify(menu, null, 2));
+if (fs.existsSync(path.join(OUT, 'menu.json')) && !FORCE) kept++;
+else fs.writeFileSync(path.join(OUT, 'menu.json'), JSON.stringify(menu, null, 2));
 
 fs.writeFileSync(path.join(ROOT, 'reference/image-list.txt'), [...images].sort().join('\n'));
-console.log(stats, 'menu items:', menu.length, 'unique images referenced:', images.size);
+console.log('created/updated:', stats, 'unique images referenced:', images.size);
+if (kept) console.log(`${kept} existing file(s) left untouched. Use --force to overwrite them (needs a clean git tree).`);
 
 if (DL) {
   const list = [...images];

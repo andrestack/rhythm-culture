@@ -13,7 +13,7 @@ Read `README.md` first: project map, what is done, next steps.
 - Never invent facts, prices, dates or payment links. Ask for them.
 - Ask before deleting any page or product. Never commit `.env` or secrets.
 - Keep the look: green `#7cda24`, red `#e02b20`, Assegai headings, Open Sans body.
-- Do not run `npm run import` (it overwrites edited pages and posts) and never edit `reference/`.
+- Do not run `npm run import` (a guard stops it overwriting, but never pass `--force`) and never edit `reference/`.
 
 ## Needs Andre
 
