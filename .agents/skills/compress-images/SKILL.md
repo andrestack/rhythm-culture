@@ -5,22 +5,22 @@ description: Compress website images and optionally convert them to WebP, updati
 
 # Compress and convert images
 
-Script: `.claude/skills/compress-images/compress.mjs` (needs `sharp`, already a dev dependency). Run from the project root. Images live in `public/media/`; new uploads from the CMS go in `public/media/cms/`.
+Script: `.agents/skills/compress-images/compress.mjs` (needs `sharp`, already a dev dependency). Run from the project root. Images live in `public/media/`; new uploads from the CMS go in `public/media/cms/`.
 
 ## Usually: do this
 
 1. Start with a dry run so you can say what will happen:
    ```bash
-   node .claude/skills/compress-images/compress.mjs --dry-run
+   node .agents/skills/compress-images/compress.mjs --dry-run
    ```
 2. Ask the user which they want (default to the first if they just say "compress"):
    - **Compress only** keeps the file names and types, so nothing else changes. Safe.
    - **Convert to WebP** (`--webp`) is smaller again (usually 25 to 35 percent below a compressed JPEG) and every browser supports it. It renames files from `.jpg`/`.png` to `.webp` and rewrites all references in `src/` automatically.
 3. Run it:
    ```bash
-   node .claude/skills/compress-images/compress.mjs                    # compress in place
-   node .claude/skills/compress-images/compress.mjs --webp             # convert to webp + fix references
-   node .claude/skills/compress-images/compress.mjs public/media/cms   # only new uploads
+   node .agents/skills/compress-images/compress.mjs                    # compress in place
+   node .agents/skills/compress-images/compress.mjs --webp             # convert to webp + fix references
+   node .agents/skills/compress-images/compress.mjs public/media/cms   # only new uploads
    ```
 4. `npm run build` and confirm it passes. Then tell the user the before/after size and how many files had references updated.
 

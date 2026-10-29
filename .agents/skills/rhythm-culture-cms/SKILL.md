@@ -11,7 +11,7 @@ The site is Astro + Keystatic. Content is plain files, so you edit files directl
 
 ## How every change goes live
 
-1. **Make a safe copy first.** `git switch -c update/<short-topic>` (for example `update/term-2-post`). Do not change the live site directly.
+1. **Get the latest, then make a safe copy.** `git switch main` and `git pull` (edits made in the website editor land on GitHub, not on this computer), then `git switch -c update/<short-topic>` (for example `update/term-2-post`). Do not change the live site directly.
 2. **Make the change** (recipes below).
 3. **Check it works:** `npm run build`. If it fails, fix or undo it. Never leave them with a broken site.
 4. **Show them before it goes live.** Describe what changed, and once they say yes, commit, push the branch and open a pull request. Give them the Vercel **preview link** and ask them to look at it.

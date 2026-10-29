@@ -10,7 +10,7 @@
     "astro": "astro",
     "import": "node scripts/import-wp.mjs",
     "import:images": "node scripts/import-wp.mjs --images",
-    "compress": "node .claude/skills/compress-images/compress.mjs"
+    "compress": "node .agents/skills/compress-images/compress.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^7.1.0",

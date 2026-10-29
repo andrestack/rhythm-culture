@@ -48,7 +48,7 @@ Node 24 was used. Copy `.env.example` to `.env` and set `FORM_WEBHOOK_URL` to tr
 
 ```
 scripts/import-wp.mjs     WP export -> src/content (one-time migration tool, guarded: see "Re-running the import")
-.claude/skills/           rhythm-culture-cms (client editing guide) and compress-images (+ compress.mjs, run via `npm run compress`)
+.agents/skills/           rhythm-culture-cms (client editing guide) and compress-images (+ compress.mjs, run via `npm run compress`)
 src/content/pages/*.mdoc  pages (markdown + YAML frontmatter)
 src/content/posts/*.mdoc  blog posts
 src/content/shop/*.json   one file per product
@@ -104,7 +104,7 @@ Once the domain is live and the client has started editing:
 
 1. **Delete the importer:** remove `scripts/import-wp.mjs` and the `import` and `import:images` entries in `package.json`. Without the tool there is nothing to overwrite their edits. Remove `turndown` from dependencies if nothing else uses it.
 2. **Delete `reference/wp-export.xml`** (contains customer orders) and, if not needed, `reference/products.csv`, `image-list.txt`, `image-failures.txt`.
-3. Update `AGENTS.md` and `.claude/skills/rhythm-culture-cms/SKILL.md`: drop the lines about not running the import.
+3. Update `AGENTS.md` and `.agents/skills/rhythm-culture-cms/SKILL.md`: drop the lines about not running the import.
 4. Tag the final migrated state (`git tag migration-complete`) so a known-good version is one command away.
 5. Turn on branch protection for `main` if it is not already on.
 6. Retire the old WordPress site only after Search Console shows no crawl problems, and keep a backup of it.
@@ -125,7 +125,7 @@ The idea (see Andre's harness-as-CMS plan): the client uses the **Claude or Code
 
 1. **Use the desktop app, not the CLI,** for clients. Give it access to this folder only.
 2. **Branch, don't edit `main`.** Add branch protection so `main` needs a pull request. Every Vercel branch gets a preview URL, so the client checks the preview before merging. Rule for the agent: never push to `main`, never push without the client saying yes.
-3. **`AGENTS.md`, `CLAUDE.md` and two skills are already in the repo** (`.claude/skills/`). `rhythm-culture-cms` is written for a non-developer client: it walks Claude through adding posts, editing pages, products and photos in plain language, and the branch, build, preview and publish flow, and tells it which changes need you (forms, redirects, config, URL changes). `compress-images` shrinks photos and can convert them to WebP. Codex does not read `.claude/skills`, so it relies on `AGENTS.md` (`CLAUDE.md` is a pointer to it). `AGENTS.md` says the user is the owner and not a developer, and:
+3. **`AGENTS.md`, `CLAUDE.md` and two skills are already in the repo** (`.agents/skills/`, symlinked at `.claude/skills` for Claude). `rhythm-culture-cms` is written for a non-developer client: it walks Claude through adding posts, editing pages, products and photos in plain language, and the branch, build, preview and publish flow, and tells it which changes need you (forms, redirects, config, URL changes). `compress-images` shrinks photos and can convert them to WebP. Codex (the ChatGPT desktop app) reads `AGENTS.md` and `.agents/skills/`, but not `CLAUDE.md` (`CLAUDE.md` is a pointer to `AGENTS.md` for Claude). `AGENTS.md` says the user is the owner and not a developer, and:
    - Stack: Astro 7 + Keystatic, content in `src/content`, forms in `src/lib/forms.ts`.
    - **Every form must use zod** via `forms.ts` / `formSchema.ts`.
    - Work on a branch, run `npm run build`, open a PR, wait for review. Never touch `main`.
