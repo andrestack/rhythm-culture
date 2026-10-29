@@ -1,0 +1,24 @@
+{
+  "name": "Camp Afro Foli - Saturday Sunday",
+  "wpId": "11272",
+  "category": "Camp Afro Foli",
+  "visible": false,
+  "soldOut": false,
+  "price": "",
+  "salePrice": "",
+  "image": "/media/2017/11/A08R9688-1.jpg",
+  "description": "# Camp Afro Foli Drum and Dance Retreat\n\n\\\\nWanting to know more? [Click here.](/camp-afro-foli-drum-dance-retreat/) \\\\n \\\\nCAMP AFRO FOLI DRUM AND DANCE RETREAT PRICING \\\\n\n\n**Saturday Pass**  \\\\n_Includes tuition for Saturday, morning tea, lunch, afternoon tea, dinner and African Performance. No accommodation._\n\n\\\\n\n\n**Sunday Pass**  \\\\n_Includes tuition, morning tea and lunch for Sunday. No accommodation._\n\n\\\\nThis is an no alcohol event. Please do not bring alcohol into the premise. \\\\n \\\\n_Terms and Conditions: All Camp Afro Foli Drum and Dance Retreat passes are non-refundable, non-transferable, and cannot be exchanged for classes or services at a later date. Artists may be subject to change due to unforeseen circumstances._",
+  "stripeUrl": "",
+  "options": [
+    {
+      "label": "Saturday Pass",
+      "price": "",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Sunday Pass",
+      "price": "",
+      "stripeUrl": ""
+    }
+  ]
+}

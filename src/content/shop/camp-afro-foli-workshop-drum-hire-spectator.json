@@ -1,0 +1,34 @@
+{
+  "name": "Camp Afro Foli - Drum Hire, Spectator",
+  "wpId": "11283",
+  "category": "Camp Afro Foli",
+  "visible": false,
+  "soldOut": false,
+  "price": "",
+  "salePrice": "",
+  "image": "/media/2018/04/campafrofoli-groupshot.jpg",
+  "description": "# Camp Afro Foli Drum and Dance Retreat\n\n\\\\nWanting to know more? [Click here.](/camp-afro-foli-drum-dance-retreat/) \\\\n \\\\nCAMP AFRO FOLI DRUM AND DANCE RETREAT PRICING \\\\n\n\n**Drum Hire:** \\\\n_There will be drums for hire and sale at the camp._\n\n\\\\n\n\n**Friend and Family Spectator Only Adult -**  \\\\nWant to come and enjoy the camp but not ready to drum or dance yet? \\\\n_Includes accommodation, Friday night dinner, Saturday breakfast, morning tea, lunch, afternoon tea, dinner, African performance, Sunday breakfast, morning tea and lunch._\n\n\\\\n\n\n**Friend and Family Spectator Only Children 5 -12 years -**  \\\\nWanting to bring your children to Camp?\n\n\\\\n\n\n_Includes accommodation, Friday night dinner, Saturday breakfast, morning tea, lunch, afternoon tea, dinner, African performance, Sunday breakfast, morning tea and lunch._\n\n\\\\n\n\nPlease do not bring alcohol into the premise. This is a no alcohol event.\n\n\\\\n_Terms and Conditions: All Camp Afro Foli Drum and Dance Retreat passes are non-refundable, non-transferable, and cannot be exchanged for classes or services at a later date. Artists may be subject to change due to unforeseen circumstances._",
+  "stripeUrl": "",
+  "options": [
+    {
+      "label": "Drum Hire Weekend",
+      "price": "",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Drum Hire Day",
+      "price": "",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Adult Spectator",
+      "price": "",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Child Spectator",
+      "price": "",
+      "stripeUrl": ""
+    }
+  ]
+}

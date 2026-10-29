@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap');
+@font-face { font-family: Assegai; src: url('/fonts/assegai.woff2') format('woff2'), url('/fonts/assegai.woff') format('woff'); font-display: swap; }
+
+:root { --green: #7cda24; --red: #e02b20; --ink: #282828; --dark: #222; --max: 1080px; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 400 16px/1.75 'Open Sans', Arial, sans-serif; color: var(--ink); background: #fff; }
+img { max-width: 100%; height: auto; }
+a { color: var(--red); font-weight: 500; text-decoration: none; }
+a:hover { text-decoration: underline; }
+h1, h2, h3 { font-family: Assegai, 'Open Sans', sans-serif; font-weight: 400; line-height: 1.15; margin: 0 0 .5em; }
+h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); color: var(--green); }
+h2 { font-size: 1.9rem; }
+h3 { font-size: 1.4rem; }
+.btn, .button { display: inline-block; background: var(--red); color: #fff; font-weight: 500; padding: .5em 1.4em; border-radius: 999px; font-size: 1.1rem; }
+.btn:hover { text-decoration: none; filter: brightness(1.08); }
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+/* header */
+.site-header { position: sticky; top: 0; z-index: 10; background: #fff; box-shadow: 0 1px 8px rgb(0 0 0 / .1); }
+.site-header .wrap { position: relative; display: flex; align-items: center; justify-content: space-between; min-height: 70px; gap: 16px; max-width: 1280px; }
+.site-header img { height: 44px; width: auto; display: block; }
+.nav, .nav ul { margin: 0; padding: 0; }
+.nav { display: flex; gap: 20px; align-items: center; }
+.nav li { list-style: none; position: relative; }
+.nav a { color: #000; font-size: 14px; font-weight: 400; text-transform: uppercase; letter-spacing: .02em; }
+.nav .sub { display: none; position: absolute; left: 0; top: 100%; background: #fff; min-width: 260px; padding: 10px 0; box-shadow: 0 6px 16px rgb(0 0 0 / .15); border-top: 3px solid var(--red); }
+.nav li:hover > .sub, .nav li:focus-within > .sub { display: block; }
+.sub a { display: block; padding: 7px 20px; text-transform: none; font-size: 14px; }
+.nav .tel { color: var(--red); font-weight: 700; white-space: nowrap; }
+.burger { display: none; background: none; border: 0; font-size: 28px; color: var(--red); cursor: pointer; }
+@media (max-width: 1060px) {
+  .burger { display: block; }
+  .nav { display: none; position: absolute; top: 100%; left: 0; right: 0; background: #fff; flex-direction: column; align-items: stretch; padding: 10px 20px 20px; gap: 0; box-shadow: 0 8px 12px rgb(0 0 0 / .12); }
+  .nav.open { display: flex; }
+  .nav .sub { display: block; position: static; box-shadow: none; border: 0; padding: 0 0 0 12px; min-width: 0; }
+  .nav > li > a { display: block; padding: 8px 0; }
+}
+
+/* content imported from Divi: neutralise the leftovers */
+.content { padding: 40px 20px 60px; }
+.content img { border-radius: 4px; }
+.content h1 { text-align: center; }
+.content { overflow-x: hidden; }
+.content .bg { background-size: cover; background-position: center; padding: 60px 20px; margin: 0 -20px; color: #fff; }
+.content .bg h1 { color: #fff; }
+.content [style*="#ffffff"] { color: var(--ink) !important; }
+.content .bg [style*="#ffffff"] { color: #fff !important; }
+.content h1, .content h2 { overflow-wrap: anywhere; }
+.content p { margin: 0 0 1em; }
+.content iframe { max-width: 100%; }
+.content table { border-collapse: collapse; width: 100%; }
+.content td, .content th { padding: 6px 10px; border: 1px solid #ddd; }
+
+/* blog */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 28px; padding: 30px 0 60px; }
+.card { border: 1px solid #eee; border-radius: 6px; overflow: hidden; background: #fff; }
+.card img { width: 100%; aspect-ratio: 3/2; object-fit: cover; display: block; border-radius: 0; }
+.card div { padding: 16px 18px 20px; }
+.card h3 { margin: 0 0 .3em; font-size: 1.3rem; color: var(--ink); }
+.meta { font-size: 13px; color: #777; }
+
+/* footer */
+.site-footer { background: var(--dark); color: #ddd; padding: 40px 0; font-size: 14px; text-align: center; }
+.site-footer a { color: #fff; }

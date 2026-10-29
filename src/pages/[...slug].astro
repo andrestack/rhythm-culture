@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import Form from '../components/Form.astro';
+import { pages, posts } from '../lib/content';
+
+export function getStaticPaths() {
+  const all = [...pages().map((e) => ({ e, post: false })), ...posts().map((e) => ({ e, post: true }))];
+  const seen = new Set<string>();
+  return all
+    .filter(({ e }) => e.link !== '/' && e.link !== '/blog/' && !seen.has(e.link) && seen.add(e.link))
+    .map(({ e, post }) => ({ params: { slug: e.link.replace(/^\/|\/$/g, '') }, props: { e, post } }));
+}
+const { e, post } = Astro.props;
+---
+<Base title={e.seoTitle || e.title} description={e.description}>
+  <article class="wrap content">
+    {post && <h1>{e.title}</h1>}
+    {post && <p class="meta" style="text-align:center">{e.date}</p>}
+    <div set:html={e.html} />
+    {e.form && <Form form={e.form} />}
+  </article>
+</Base>

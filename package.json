@@ -1,0 +1,31 @@
+{
+  "name": "rhythmculture",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "import": "node scripts/import-wp.mjs",
+    "import:images": "node scripts/import-wp.mjs --images",
+    "compress": "node .claude/skills/compress-images/compress.mjs"
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.1.0",
+    "@astrojs/vercel": "^11.0.15",
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.9",
+    "@types/turndown": "^5.0.6",
+    "astro": "^7.4.0",
+    "marked": "^18.1.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "turndown": "^7.2.4",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "Closh - African cow bells",
+  "wpId": "2417",
+  "category": "Percussion",
+  "visible": true,
+  "soldOut": false,
+  "price": "",
+  "salePrice": "",
+  "image": "/media/2013/02/DSC00807.jpg",
+  "description": "\\\\n\n\n# Closh African Cow Bell\n\n\\\\nThe closh is an African bell made from metal. It has a very bright high pitched sound and is usually struck with a metal rod, coin, or ring. It is often played with the [three dunduns](/product/dununs/), the kenkenni, sangban and dundunba. The three different sizes match the three different sizes of the dundun drums and give a high pitched melody to complement the bass melody of the dunduns",
+  "stripeUrl": "",
+  "options": [
+    {
+      "label": "Small",
+      "price": "45",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Medium",
+      "price": "50",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Large",
+      "price": "55",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Set of 3",
+      "price": "130",
+      "stripeUrl": ""
+    }
+  ]
+}

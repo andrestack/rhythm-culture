@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+import { menu } from '../lib/content';
+const { title, description = '' } = Astro.props;
+const nav = menu();
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a href="/"><img src="/media/2017/11/website_logo.png" alt="Rhythm Culture" /></a>
+        <button class="burger" aria-label="Menu" onclick="document.querySelector('.nav').classList.toggle('open')">☰</button>
+        <ul class="nav">
+          {nav.map((i) => (
+            <li>
+              <a href={i.url}>{i.title}</a>
+              {i.children.length > 0 && (
+                <ul class="sub">{i.children.map((c) => <li><a href={c.url}>{c.title}</a></li>)}</ul>
+              )}
+            </li>
+          ))}
+          <li><a class="tel" href="tel:0434585992">0434 585 992</a></li>
+        </ul>
+      </div>
+    </header>
+    <main><slot /></main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <p><a href="tel:0434585992">0434 585 992</a> · Palmwoods, Sunshine Coast, Queensland</p>
+        <p>© 2012–{new Date().getFullYear()} Rhythm Culture</p>
+      </div>
+    </footer>
+  </body>
+</html>

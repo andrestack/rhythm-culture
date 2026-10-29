@@ -1,0 +1,81 @@
+---
+import { FORMS } from '../lib/forms';
+const { form } = Astro.props;
+const def = FORMS[form];
+---
+{def && (
+  <form class="rc-form" data-form={form} novalidate>
+    {def.fields.map((fl) => (
+      <label class:list={['field', { check: fl.type === 'checkbox' }]}>
+        <span>{fl.label}{fl.required && ' *'}</span>
+        {fl.type === 'textarea' ? (
+          <textarea name={fl.name} rows="4"></textarea>
+        ) : fl.type === 'select' ? (
+          <select name={fl.name}>
+            <option value="">Please choose</option>
+            {fl.options?.map((o) => <option>{o}</option>)}
+          </select>
+        ) : (
+          <input type={fl.type ?? 'text'} name={fl.name} />
+        )}
+        <small class="err" data-for={fl.name}></small>
+      </label>
+    ))}
+    <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    <button class="btn" type="submit">{def.submit}</button>
+    <p class="status" role="status"></p>
+  </form>
+)}
+
+<script>
+  import { schemaFor, fieldErrors } from '../lib/formSchema';
+
+  document.querySelectorAll<HTMLFormElement>('.rc-form').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('.status')!;
+    const showErrors = (errors: Record<string, string>) => {
+      form.querySelectorAll<HTMLElement>('.err').forEach((el) => (el.textContent = errors[el.dataset.for!] ?? ''));
+      const first = Object.keys(errors).find((k) => form.elements.namedItem(k));
+      (form.elements.namedItem(first ?? '') as HTMLElement | null)?.focus();
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formType = form.dataset.form!;
+      const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+
+      // Inline errors in the browser; the server runs the same schema again.
+      const check = schemaFor(formType)!.safeParse(data);
+      if (!check.success) { showErrors(fieldErrors(check.error)); status.textContent = 'Please fix the highlighted fields.'; return; }
+      showErrors({});
+
+      status.textContent = 'Sending…';
+      try {
+        const res = await fetch('/api/form', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...data, formType, page: location.pathname }),
+        });
+        const out = await res.json().catch(() => ({}));
+        if (res.status === 422 && out.errors) { showErrors(out.errors); status.textContent = 'Please fix the highlighted fields.'; return; }
+        if (!res.ok) throw new Error(out.error ?? String(res.status));
+        form.reset();
+        status.textContent = 'Thank you! We’ll be in touch soon.';
+      } catch (err) {
+        status.textContent = `Sorry, that didn’t send (${(err as Error).message}). Please call 0434 585 992.`;
+      }
+    });
+  });
+</script>
+
+<style is:global>
+  .rc-form { max-width: 720px; margin: 30px auto; display: grid; gap: 16px; }
+  .rc-form .field { display: grid; gap: 4px; font-weight: 500; }
+  .rc-form .field.check { grid-template-columns: auto 1fr; align-items: start; gap: 4px 10px; }
+  .rc-form input, .rc-form select, .rc-form textarea { font: inherit; padding: 10px 12px; border: 1px solid #ccc; border-radius: 4px; width: 100%; }
+  .rc-form .check input { width: auto; margin-top: 6px; }
+  .rc-form .check .err { grid-column: 2; }
+  .rc-form .err { color: var(--red); font-weight: 400; font-size: 13px; min-height: 0; }
+  .rc-form .hp { position: absolute; left: -9999px; height: 0; width: 0; opacity: 0; }
+  .rc-form .btn { border: 0; cursor: pointer; justify-self: start; }
+  .rc-form .status { margin: 0; min-height: 1.5em; }
+</style>

@@ -1,0 +1,18 @@
+---
+import Base from '../layouts/Base.astro';
+import { posts } from '../lib/content';
+const list = posts();
+---
+<Base title="Blog | Rhythm Culture">
+  <div class="wrap">
+    <h1 style="text-align:center;margin-top:40px">Blog</h1>
+    <div class="cards">
+      {list.map((p) => (
+        <a class="card" href={p.link} style="color:inherit">
+          {p.featured && <img src={p.featured} alt="" loading="lazy" />}
+          <div><h3>{p.title}</h3><span class="meta">{p.date}</span></div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>

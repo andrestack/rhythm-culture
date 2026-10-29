@@ -1,0 +1,49 @@
+{
+  "name": "Camp Afro Foli Drum Camp and Dance Camp",
+  "wpId": "16885",
+  "category": "Camp Afro Foli",
+  "visible": false,
+  "soldOut": false,
+  "price": "",
+  "salePrice": "",
+  "image": "/media/2023/03/Afro-Camp-088-scaled.jpg",
+  "description": "",
+  "stripeUrl": "",
+  "options": [
+    {
+      "label": "Full 3 Days",
+      "price": "625.00",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Full 3 Days",
+      "price": "710",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Full 3 Days",
+      "price": "810",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Full 3 Days",
+      "price": "550",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Weekend 2 Days",
+      "price": "525",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Saturday",
+      "price": "295",
+      "stripeUrl": ""
+    },
+    {
+      "label": "Sunday",
+      "price": "275",
+      "stripeUrl": ""
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+---
+import Base from '../layouts/Base.astro';
+import { pages } from '../lib/content';
+const home = pages().find((p) => p.link === '/')!;
+---
+<Base title={home.seoTitle || home.title} description={home.description}>
+  <article class="wrap content"><div set:html={home.html} /></article>
+</Base>

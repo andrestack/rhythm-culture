@@ -1,0 +1,7 @@
+node_modules
+dist
+.astro
+.vercel
+.env
+# WP export contains customer orders (PII): never commit
+reference/wp-export.xml

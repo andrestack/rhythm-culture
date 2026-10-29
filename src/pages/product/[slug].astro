@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import Buy from '../../components/Buy.astro';
+import { products } from '../../lib/content';
+import { marked } from 'marked';
+
+// Every product keeps its old /product/<slug>/ address, hidden ones too (they show as sold out or unavailable).
+export function getStaticPaths() {
+  return products().map((p) => ({ params: { slug: p.slug }, props: { p } }));
+}
+const { p } = Astro.props;
+const money = (v: string) => (v ? `$${Number(v).toLocaleString('en-AU', { minimumFractionDigits: Number(v) % 1 ? 2 : 0 })}` : '');
+---
+<Base title={`${p.name} | Rhythm Culture`} description={p.description.slice(0, 160)}>
+  <div class="wrap product">
+    <a href="/shop/">&larr; Shop</a>
+    <div class="grid">
+      {p.image && <img src={p.image} alt={p.name} />}
+      <div>
+        <h1>{p.name}</h1>
+        {!p.options.length && (
+          <p class="price">{p.salePrice ? <><s>{money(p.price)}</s> <strong>{money(p.salePrice)}</strong></> : money(p.price)}</p>
+        )}
+        <div set:html={marked.parse(p.description, { async: false })} />
+        {p.options.length > 0 ? (
+          <ul class="opts">
+            {p.options.map((o) => (
+              <li><span>{o.label}{o.price && ` — ${money(o.price)}`}</span><Buy url={o.stripeUrl} soldOut={p.soldOut} /></li>
+            ))}
+          </ul>
+        ) : (
+          <Buy url={p.stripeUrl} soldOut={p.soldOut || !p.visible} />
+        )}
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .product { padding-top: 30px; padding-bottom: 60px; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 36px; margin-top: 20px; }
+  .grid img { width: 100%; border-radius: 4px; }
+  h1 { text-align: left; }
+  .price { font-size: 1.5rem; font-weight: 700; }
+  .price s { color: #888; font-weight: 400; }
+  .opts { list-style: none; padding: 0; display: grid; gap: 10px; }
+  .opts li { display: flex; justify-content: space-between; align-items: center; gap: 12px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+  @media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+</style>
