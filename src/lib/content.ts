@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { marked } from 'marked';
+import { renderMarkdoc } from './markdoc';
 import { load } from 'js-yaml';
 
 export interface Entry {
@@ -35,7 +35,7 @@ function read(d: string): Entry[] {
       link: data.link || `/${slug}/`, // new CMS entries without a URL path fall back to their file name
       date,
       body,
-      html: marked.parse(body, { async: false }) as string,
+      html: renderMarkdoc(body, `src/content/${d}/${f}`),
     } as Entry;
   });
 }

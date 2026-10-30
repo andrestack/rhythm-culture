@@ -1,4 +1,6 @@
 import { config, fields, collection } from '@keystatic/core';
+import { block, repeating, wrapper } from '@keystatic/core/content-components';
+import { ICONS } from './src/lib/icons';
 
 // Files are written by scripts/import-wp.mjs and edited here afterwards.
 // `link` is the public URL path: changing it changes the page's address (and breaks old links).
@@ -10,9 +12,79 @@ const common = {
   featured: fields.text({ label: 'Featured image path', description: 'e.g. /media/2019/01/photo.jpg' }),
 };
 
+// Page blocks. Each one renders through src/lib/markdoc.ts and is explained for the agent in
+// .agents/skills/rhythm-culture-cms/blocks.md. Keep the three in step.
+const opts = (labels: Record<string, string>) => Object.entries(labels).map(([value, label]) => ({ value, label }));
+const imagePath = (label: string) => fields.text({ label, description: 'e.g. /media/2026/10/photo.jpg' });
+const components = {
+  hero: wrapper({
+    label: 'Hero (photo banner)',
+    description: 'Full-width photo with the page title and a button on top. Use once, at the top of a page.',
+    schema: {
+      image: imagePath('Background photo'),
+      align: fields.select({ label: 'Text position', options: opts({ center: 'Centre', left: 'Left' }), defaultValue: 'center' }),
+      size: fields.select({ label: 'Height', options: opts({ tall: 'Tall', short: 'Short' }), defaultValue: 'tall' }),
+    },
+  }),
+  section: wrapper({
+    label: 'Coloured band',
+    description: 'A full-width band with a background colour or photo, to set a part of the page apart.',
+    schema: {
+      tone: fields.select({ label: 'Background', options: opts({ grey: 'Light grey', white: 'White', dark: 'Dark', red: 'Red', image: 'Photo' }), defaultValue: 'grey' }),
+      image: imagePath('Background photo (only for "Photo")'),
+    },
+  }),
+  columns: repeating({
+    label: 'Columns',
+    description: 'Side-by-side columns (2 to 5). They stack on phones.',
+    children: ['column'],
+    validation: { children: { min: 2, max: 5 } },
+    schema: {
+      layout: fields.select({ label: 'Widths', options: opts({ equal: 'Equal', 'wide-left': 'Wide left', 'wide-right': 'Wide right' }), defaultValue: 'equal' }),
+      align: fields.select({ label: 'Vertical alignment', options: opts({ top: 'Top', center: 'Middle' }), defaultValue: 'top' }),
+    },
+  }),
+  column: wrapper({ label: 'Column', forSpecificLocations: true, schema: {} }),
+  feature: wrapper({
+    label: 'Feature with icon',
+    description: 'A red icon above a short heading and sentence, e.g. "Free drum hire". Put 3 or 4 in Columns.',
+    schema: { icon: fields.select({ label: 'Icon', options: Object.keys(ICONS).map((k) => ({ value: k, label: k })), defaultValue: 'check' }) },
+  }),
+  testimonial: wrapper({
+    label: 'Testimonial',
+    description: 'A client quote on a grey card. Put several in Columns.',
+    schema: { name: fields.text({ label: 'Name' }), role: fields.text({ label: 'Role and organisation' }) },
+  }),
+  button: block({
+    label: 'Button',
+    description: 'A red button, e.g. "Request a quote" → /quick-quote/',
+    schema: {
+      label: fields.text({ label: 'Button text', validation: { length: { min: 1 } } }),
+      href: fields.text({ label: 'Link', description: 'e.g. /quick-quote/ or https://…', validation: { length: { min: 1 } } }),
+      align: fields.select({ label: 'Position', options: opts({ center: 'Centre', left: 'Left' }), defaultValue: 'center' }),
+    },
+  }),
+  banner: wrapper({
+    label: 'Colour stripe banner',
+    description: 'The multicoloured stripe with one line of big text, e.g. "Bring everyone together".',
+    schema: { image: imagePath('Stripe image') },
+  }),
+  callout: wrapper({ label: 'Red statement', description: 'One or two sentences in large red text, centred.', schema: {} }),
+  embed: block({
+    label: 'Video, map or Facebook post',
+    description: 'Paste the embed link (YouTube, Vimeo, Google Maps or Facebook). Other sites are not shown.',
+    schema: {
+      src: fields.url({ label: 'Embed link', validation: { isRequired: true } }),
+      title: fields.text({ label: 'Short description (for screen readers)' }),
+      ratio: fields.select({ label: 'Shape', options: opts({ video: 'Video (wide)', map: 'Map', post: 'Facebook post (tall)' }), defaultValue: 'video' }),
+    },
+  }),
+};
+
 const content = fields.markdoc({
   label: 'Content',
   options: { image: { directory: 'public/media/cms', publicPath: '/media/cms/' } },
+  components,
 });
 
 const stripe = (label: string) =>
