@@ -20,7 +20,11 @@ function limited(ip: string) {
 export const POST: APIRoute = async ({ request, clientAddress }) => {
   // Same-site posts only.
   const origin = request.headers.get('origin');
-  if (origin && new URL(origin).host !== new URL(request.url).host) return json({ ok: false, error: 'Forbidden' }, 403);
+  if (origin) {
+    let host = '';
+    try { host = new URL(origin).host; } catch { /* "null" or malformed origin */ }
+    if (host !== new URL(request.url).host) return json({ ok: false, error: 'Forbidden' }, 403);
+  }
   if (!request.headers.get('content-type')?.includes('application/json')) return json({ ok: false, error: 'Bad request' }, 415);
   if (Number(request.headers.get('content-length') ?? 0) > 50_000) return json({ ok: false, error: 'Too large' }, 413);
 
