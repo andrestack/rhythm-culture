@@ -102,7 +102,8 @@ p { text-wrap: pretty; }
 .blk-section__inner > h1, .blk-section__inner > h2 { text-align: center; }
 .blk-section__inner > :first-child { margin-top: 0; }
 .blk-section__inner > :last-child { margin-bottom: 0; }
-.blk-section.is-white { background-color: #fff; }
+.blk-section.is-white { background-color: #fff; padding: 0; }
+.blk-section__inner > h3 { text-align: center; }
 .blk-section:is(.is-dark, .is-red, .is-image) { color: #fff; }
 .blk-section.is-dark { background-color: var(--dark); }
 .blk-section.is-red { background-color: var(--red); }
@@ -148,7 +149,7 @@ p { text-wrap: pretty; }
 .blk-quote figcaption strong { display: block; color: var(--ink); font-weight: 600; }
 .blk-section.is-grey .blk-quote { background: #fff; }
 
-.blk-quotes { display: grid; gap: 24px; margin: 1.5em 0 2em; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); align-items: stretch; }
+.blk-quotes { display: grid; gap: 24px; margin: 1.5em 0 2em; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); align-items: stretch; }
 .blk-section:is(.is-dark, .is-image) .blk-quote { background: #fff; color: var(--ink); }
 .blk-section:is(.is-dark, .is-image) .blk-quote strong { color: var(--ink); }
 
@@ -198,3 +199,6 @@ p { text-wrap: pretty; }
 .blk-col > .blk-section { margin: 0; padding: 28px 24px; border-radius: 8px; }
 .blk-col > .blk-section .blk-section__inner { width: auto; }
 .blk-col > .blk-section h3 { text-align: left; }
+/* the short line straight under a centred title (e.g. the locations list) is centred with it */
+.content > :is(h1, h2) + p, .blk-section__inner > :is(h1, h2) + p { text-align: center; }
+.blk-hero + .blk-banner { margin-top: calc(-1 * var(--space)); }

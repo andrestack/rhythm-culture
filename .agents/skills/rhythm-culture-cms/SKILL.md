@@ -42,7 +42,7 @@ Body in markdown.
 The top block is YAML in the same layout Keystatic writes: keys in this order, the date in single quotes, and any field with no value left out entirely (no `featured` line if there is no photo). Put a value in quotes if it contains a colon. `link` must be `/<slug>/` and different from every other page. New posts show up on `/blog/` automatically, newest first. Ask for any facts you do not have (dates, times, prices, places): never invent them.
 
 ### Change a page
-Find it: `grep -l 'link: "/about/"' src/content/pages/*.mdoc`, then edit the body text only. Keep `link:` as it is. A page can show a form under its text: set `form:` to `contact`, `quote`, `booking`, `camp`, or `""` for none.
+Find it: `grep -l 'link: /about/' src/content/pages/*.mdoc`, then edit the body text only. Keep `link:` as it is. Pages are laid out with blocks such as `{% hero %}`, `{% columns %}` and `{% testimonials %}`: **read `blocks.md` in this folder before changing a page's layout or adding a section**, and keep every block's opening and closing tags. A page can show a form under its text: set `form:` to `contact`, `quote`, `booking`, `camp`, or `""` for none.
 
 ### Shop product, price, payment link
 `src/content/shop/<slug>.json`. The useful fields:
@@ -71,6 +71,6 @@ These are outside normal updates. Explain why, suggest they contact Andre (the d
 
 ## Keep it right
 
-- Keep the look as it is (green `#7cda24`, red `#e02b20`, Assegai headings, Open Sans text) unless they ask for a change.
+- Keep the look as it is (green `#7cda24`, red `#e02b20`, Assegai headings, Open Sans text) unless they ask for a change. Build layouts from the blocks in `blocks.md`; never add inline styles or HTML.
 - If you are not sure what they mean, ask one short question before changing anything.
 - End every job with a plain summary: what changed, which web address to look at, and what happens next (preview, then publish).
