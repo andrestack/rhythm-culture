@@ -48,21 +48,29 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
   if (!parsed.success) return json({ ok: false, errors: fieldErrors(parsed.error) }, 422);
 
   const hook = import.meta.env.FORM_WEBHOOK_URL;
-  if (!hook) return json({ ok: false, error: 'Form is not connected yet.' }, 503);
+  if (!hook || !import.meta.env.FORM_WEBHOOK_SECRET) return json({ ok: false, error: 'Form is not connected yet.' }, 503);
 
   try {
     const res = await fetch(hook, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        // Shared secret: n8n rejects calls without it, so the webhook can't be used to skip these checks.
+        'X-RC-Secret': import.meta.env.FORM_WEBHOOK_SECRET ?? '',
+      },
       body: JSON.stringify({
         formType,
         subject: FORMS[formType].subject,
         page: String(body.page ?? '').slice(0, 200),
         submittedAt: new Date().toISOString(),
         data: parsed.data,
+        // Labels in form order, so the email reads like the form.
+        fields: FORMS[formType].fields.map((f) => ({ name: f.name, label: f.label })),
       }),
     });
-    if (!res.ok) throw new Error(String(res.status));
+    // Count it as delivered only when n8n confirms it saved the enquiry: a 200 alone has proven unreliable.
+    const reply = (await res.json().catch(() => null)) as { ok?: boolean } | null;
+    if (!res.ok || reply?.ok !== true) throw new Error(String(res.status));
   } catch {
     return json({ ok: false, error: 'Could not deliver your message.' }, 502);
   }
