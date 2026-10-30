@@ -106,7 +106,7 @@ Once the domain is live and the client has started editing:
 2. **Delete `reference/wp-export.xml`** (contains customer orders) and, if not needed, `reference/products.csv`, `image-list.txt`, `image-failures.txt`.
 3. Update `AGENTS.md` and `.agents/skills/rhythm-culture-cms/SKILL.md`: drop the lines about not running the import.
 4. Tag the final migrated state (`git tag migration-complete`) so a known-good version is one command away.
-5. Turn on branch protection for `main` if it is not already on.
+5. **Before Nathaniel gets push access:** branch protection on `main` (require a pull request). The repo is private on a free GitHub account, where protection is unavailable (API returns 403 "Upgrade to GitHub Pro"); needs GitHub Pro (~US$4/mo) or a paid org. Until then the agent rules and Keystatic's `update/` branches are habits, not locks.
 6. Retire the old WordPress site only after Search Console shows no crawl problems, and keep a backup of it.
 
 ---

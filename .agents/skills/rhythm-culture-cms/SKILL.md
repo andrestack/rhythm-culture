@@ -17,6 +17,8 @@ The site is Astro + Keystatic. Content is plain files, so you edit files directl
 4. **Show them before it goes live.** Describe what changed, and once they say yes, commit, push the branch and open a pull request. Give them the Vercel **preview link** and ask them to look at it.
 5. **Publish only when they say so:** merge the pull request. If they are not sure, wait.
 
+**Using the website editor (`/keystatic`) instead?** Before editing, use the branch menu at the top left to create a new branch (it will start with `update/`). Saves then go to that branch and get a preview link, and you publish by merging its pull request on GitHub. Editing on `main` publishes immediately with no preview.
+
 Never push or merge without a clear yes. If something goes wrong after publishing, the previous version can be restored from Vercel (Deployments, then promote the previous one) or by reverting the pull request.
 
 ## What you can do yourself

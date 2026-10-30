@@ -23,10 +23,12 @@ const stripe = (label: string) =>
   });
 
 // PUBLIC_KEYSTATIC_STORAGE=local|github overrides; default is local in dev, github in builds.
+// branchPrefix: new CMS branches are named update/..., same as the agent's. It does NOT stop saves to main
+// (Keystatic always lists the default branch); only GitHub branch protection on main does that.
 const storageKind = import.meta.env.PUBLIC_KEYSTATIC_STORAGE ?? (import.meta.env.DEV ? 'local' : 'github');
 
 export default config({
-  storage: storageKind === 'local' ? { kind: 'local' } : { kind: 'github', repo: 'andrestack/rhythm-culture' },
+  storage: storageKind === 'local' ? { kind: 'local' } : { kind: 'github', repo: 'andrestack/rhythm-culture', branchPrefix: 'update/' },
   ui: { brand: { name: 'Rhythm Culture' } },
   collections: {
     pages: collection({
