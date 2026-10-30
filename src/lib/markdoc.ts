@@ -18,10 +18,11 @@ export const markdocConfig: Config = {
         image: { type: String, required: true },
         align: { type: String, default: 'center', matches: ['center', 'left'] },
         size: { type: String, default: 'tall', matches: ['tall', 'short'] },
+        accent: { type: String, default: 'white', matches: ['white', 'green'] },
       },
       transform(node, config) {
         const a = node.transformAttributes(config);
-        return new Tag('section', { class: `blk-hero is-${a.align} is-${a.size}`, style: bgStyle(a.image) }, [
+        return new Tag('section', { class: `blk-hero is-${a.align} is-${a.size} h-${a.accent}`, style: bgStyle(a.image) }, [
           new Tag('div', { class: 'blk-hero__inner' }, kids(node, config)),
         ]);
       },
@@ -62,6 +63,11 @@ export const markdocConfig: Config = {
           new Tag('span', { class: 'blk-feature__icon', 'data-icon': a.icon, 'aria-hidden': 'true' }, []),
           ...kids(node, config),
         ]);
+      },
+    },
+    testimonials: {
+      transform(node, config) {
+        return new Tag('div', { class: 'blk-quotes' }, kids(node, config));
       },
     },
     testimonial: {

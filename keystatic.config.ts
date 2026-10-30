@@ -24,6 +24,7 @@ const components = {
       image: imagePath('Background photo'),
       align: fields.select({ label: 'Text position', options: opts({ center: 'Centre', left: 'Left' }), defaultValue: 'center' }),
       size: fields.select({ label: 'Height', options: opts({ tall: 'Tall', short: 'Short' }), defaultValue: 'tall' }),
+      accent: fields.select({ label: 'Heading colour', options: opts({ white: 'White', green: 'Green' }), defaultValue: 'white' }),
     },
   }),
   section: wrapper({
@@ -50,9 +51,15 @@ const components = {
     description: 'A red icon above a short heading and sentence, e.g. "Free drum hire". Put 3 or 4 in Columns.',
     schema: { icon: fields.select({ label: 'Icon', options: Object.keys(ICONS).map((k) => ({ value: k, label: k })), defaultValue: 'check' }) },
   }),
+  testimonials: repeating({
+    label: 'Testimonials grid',
+    description: 'Holds any number of Testimonials and lays them out in rows.',
+    children: ['testimonial'],
+    schema: {},
+  }),
   testimonial: wrapper({
     label: 'Testimonial',
-    description: 'A client quote on a grey card. Put several in Columns.',
+    description: 'A client quote on a grey card. Put it inside a Testimonials grid.',
     schema: { name: fields.text({ label: 'Name' }), role: fields.text({ label: 'Role and organisation' }) },
   }),
   button: block({

@@ -77,7 +77,7 @@ p { text-wrap: pretty; }
 /* hero: photo with a dark scrim so white text always reads */
 .blk-hero {
   position: relative; display: grid; align-items: center; min-height: clamp(380px, 62vh, 640px);
-  background: #333 var(--bg) center / cover no-repeat; color: #fff; margin-bottom: var(--space);
+  background: #333 var(--bg, none) center / cover no-repeat; color: #fff; margin-bottom: var(--space);
 }
 .blk-hero.is-short { min-height: clamp(240px, 34vh, 360px); }
 .blk-hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(0 0 0 / .55), rgb(0 0 0 / .25)); }
@@ -87,6 +87,7 @@ p { text-wrap: pretty; }
 .blk-hero.is-left .blk-hero__inner { text-align: left; }
 .blk-hero.is-left .blk-hero__inner > :not(.blk-cols) { max-width: 36rem; }
 .blk-hero :is(h1, h2, h3, h4, h5, h6, p, a:not(.btn)) { color: #fff; text-shadow: 0 1px 12px rgb(0 0 0 / .35); }
+.blk-hero.h-green h1 { color: var(--green); } /* green only ever sits on the dark scrim */
 .blk-hero h1 { font-size: clamp(2.4rem, 1.4rem + 4vw, 4.4rem); line-height: 1.05; margin-bottom: .35em; }
 .blk-hero h6 { opacity: .95; }
 .blk-hero .blk-cols { margin-top: 2.5rem; gap: 16px; }
@@ -95,7 +96,7 @@ p { text-wrap: pretty; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
 
 /* coloured band */
-.blk-section { background: var(--grey) var(--bg) center / cover no-repeat; padding: var(--space) 0; margin: var(--space) 0; position: relative; }
+.blk-section { background: var(--grey) var(--bg, none) center / cover no-repeat; padding: var(--space) 0; margin: var(--space) 0; position: relative; }
 .blk-section + .blk-section { margin-top: calc(-1 * var(--space)); }
 .blk-section__inner { position: relative; width: min(100% - 2 * var(--gutter), var(--max)); margin: 0 auto; }
 .blk-section__inner > h1, .blk-section__inner > h2 { text-align: center; }
@@ -147,13 +148,17 @@ p { text-wrap: pretty; }
 .blk-quote figcaption strong { display: block; color: var(--ink); font-weight: 600; }
 .blk-section.is-grey .blk-quote { background: #fff; }
 
+.blk-quotes { display: grid; gap: 24px; margin: 1.5em 0 2em; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); align-items: stretch; }
+.blk-section:is(.is-dark, .is-image) .blk-quote { background: #fff; color: var(--ink); }
+.blk-section:is(.is-dark, .is-image) .blk-quote strong { color: var(--ink); }
+
 /* button row */
 .blk-btn { margin: 1.5em 0; text-align: center; }
 .blk-btn.is-left { text-align: left; }
 .blk-hero .blk-btn { margin: 1.4em 0 0; }
 
 /* multicoloured stripe banner */
-.blk-banner { position: relative; background: var(--red) var(--bg) center / cover no-repeat; padding: 26px var(--gutter); margin: var(--space) 0; text-align: center; }
+.blk-banner { position: relative; background: var(--red) var(--bg, none) center / cover no-repeat; padding: 26px var(--gutter); margin: var(--space) 0; text-align: center; }
 .blk-banner::before { content: ''; position: absolute; inset: 0; background: rgb(0 0 0 / .28); }
 .blk-banner > * { position: relative; margin: 0 auto; color: #fff; font-family: var(--display); font-size: clamp(1.4rem, 1rem + 1.6vw, 2.3rem); line-height: 1.2; text-shadow: 0 1px 8px rgb(0 0 0 / .35); max-width: var(--max); }
 
@@ -188,3 +193,8 @@ p { text-wrap: pretty; }
 /* headings inside columns stay left-aligned and smaller than section titles */
 .blk-col > h2 { font-size: clamp(1.35rem, 1.2rem + .6vw, 1.7rem); }
 .blk-col > :is(h2, h3) + h3 { font-size: 1.15rem; margin-top: -.2em; }
+.content > .blk-quote { max-width: 46rem; margin: 0 auto; height: auto; }
+/* a band used inside a column becomes a padded panel */
+.blk-col > .blk-section { margin: 0; padding: 28px 24px; border-radius: 8px; }
+.blk-col > .blk-section .blk-section__inner { width: auto; }
+.blk-col > .blk-section h3 { text-align: left; }

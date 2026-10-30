@@ -6,11 +6,13 @@ description: >-
   enquiries, event bookings and adult drum and dance classes.
 date: '2017-11-09'
 ---
+{% hero image="/media/2017/11/Untitled-design-9.png" size="short" %}
 # CONTACT RHYTHM CULTURE
+{% /hero %}
 
-### Contact Rhythm Culture
-
-# Get in Touch – African Drumming & Dance Workshops
+{% columns layout="wide-left" %}
+{% column %}
+## Get in Touch – African Drumming & Dance Workshops
 
 We'd love to hear from you!
 
@@ -29,14 +31,26 @@ We love building community, sharing drumming and dancing and, most of all, havin
 We look forward to hearing from you.
 
 **The Rhythm Culture Team**
+{% /column %}
+{% column %}
+{% section tone="grey" %}
+### Contact Us
 
-# Contact Us
+M: [0434 585 992](tel:0434585992)
 
-M: 0434 585 992  
 W: rhythmculture.com.au
+{% /section %}
+{% /column %}
+{% /columns %}
 
-[BOOKING FORM](/booking-form/)
-
-[GET A QUICK & EASY QUOTE](/quick-quote/)
-
-[CONTACT US](/contact-form/)
+{% columns %}
+{% column %}
+{% button label="BOOKING FORM" href="/booking-form/" /%}
+{% /column %}
+{% column %}
+{% button label="GET A QUICK & EASY QUOTE" href="/quick-quote/" /%}
+{% /column %}
+{% column %}
+{% button label="CONTACT US" href="/contact-form/" /%}
+{% /column %}
+{% /columns %}
