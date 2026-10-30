@@ -47,7 +47,14 @@ export const markdocConfig: Config = {
       transform(node, config) {
         const a = node.transformAttributes(config);
         const cols = kids(node, config).filter((c) => Markdoc.Tag.isTag(c));
-        return new Tag('div', { class: `blk-cols n-${cols.length} is-${a.layout} v-${a.align}` }, cols);
+        // A row where every column is just one image is a photo gallery (cropped to match, stays side by side on phones).
+        const onlyImage = (c: RenderableTreeNode) => {
+          const k = Markdoc.Tag.isTag(c) ? c.children.filter((x) => Markdoc.Tag.isTag(x)) : [];
+          return k.length === 1 && Markdoc.Tag.isTag(k[0]) && k[0].name === 'p' &&
+            k[0].children.length === 1 && Markdoc.Tag.isTag(k[0].children[0]) && k[0].children[0].name === 'img';
+        };
+        const gallery = cols.length > 1 && cols.every(onlyImage) ? ' is-gallery' : '';
+        return new Tag('div', { class: `blk-cols n-${cols.length} is-${a.layout} v-${a.align}${gallery}` }, cols);
       },
     },
     column: {

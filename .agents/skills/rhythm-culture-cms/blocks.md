@@ -10,7 +10,7 @@ Each block is defined in three places that must match: `src/lib/markdoc.ts` (how
 |---|---|---|
 | `hero` | The photo at the top of a page, with the title and usually a button. Once per page, first thing. | `image` (required), `align` center/left, `size` tall/short, `accent` white/green (heading colour) |
 | `section` | A full-width band to set part of the page apart. | `tone` grey/white/dark/red/image, `image` (only with tone "image") |
-| `columns` + `column` | Side-by-side content: 2 to 5 columns. Stacks on phones. | `layout` equal/wide-left/wide-right, `align` top/center |
+| `columns` + `column` | Side-by-side content: 2 to 5 columns. Stacks on phones. If every column holds just one photo, the row becomes a photo gallery: photos are cropped to the same shape and stay side by side on phones. | `layout` equal/wide-left/wide-right, `align` top/center |
 | `feature` | A red icon above a short heading and sentence ("Free drum hire"). Put 3 or 4 in `columns`. | `icon`: dollar, pin, thumbs-up, check, people, music, star, heart, calendar, school, chat, smile |
 | `testimonials` + `testimonial` | Client quotes on cards. Put the quotes inside one `testimonials` block. | `name`, `role` (role and organisation) |
 | `button` | A red button. Self-closing (ends with `/%}`). | `label`, `href` (both required), `align` center/left |
@@ -72,6 +72,7 @@ No need to buy a drum to start.
 
 ## Rules
 
+- Prefer photos over Facebook embeds. Embedded posts load slowly and show as empty boxes when a browser blocks Facebook; link to the page with a `button` instead.
 - Every block that opens must close: `{% columns %}` … `{% /columns %}`. `button` and `embed` close themselves with `/%}`.
 - Inside `columns`, put each column's content between `{% column %}` and `{% /column %}`, with nothing outside them.
 - Never paste raw HTML or `<iframe>` code: it won't show. Use `embed` with the link from YouTube's Share → Embed (the `src="…"` part) or Google Maps' Share → Embed a map.
