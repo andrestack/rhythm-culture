@@ -50,6 +50,7 @@ Node 24 was used. Copy `.env.example` to `.env` and set `FORM_WEBHOOK_URL` to tr
 scripts/import-wp.mjs     WP export -> src/content (one-time migration tool, guarded: see "Re-running the import")
 .agents/skills/           rhythm-culture-cms (client editing guide) and compress-images (+ compress.mjs, run via `npm run compress`). Edit skills here only.
 .claude/skills/           generated copy of .agents/skills for Claude Code (scripts/sync-skills.mjs, runs before every build)
+docs/editing-guide.html   client guide: how editing works (diagram) and when to call André; open in a browser
 src/content/pages/*.mdoc  pages (markdown + YAML frontmatter)
 src/content/posts/*.mdoc  blog posts
 src/content/shop/*.json   one file per product
