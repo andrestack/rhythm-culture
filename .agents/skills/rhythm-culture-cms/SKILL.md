@@ -14,10 +14,16 @@ The site is Astro + Keystatic. Content is plain files, so you edit files directl
 1. **Get the latest, then make a safe copy.** `git switch main` and `git pull` (edits made in the website editor land on GitHub, not on this computer), then `git switch -c update/<short-topic>` (for example `update/term-2-post`). Do not change the live site directly.
 2. **Make the change** (recipes below).
 3. **Check it works:** `npm run build`. If it fails, fix or undo it. Never leave them with a broken site.
-4. **Show them before it goes live.** Describe what changed, and once they say yes, commit, push the branch and open a pull request. Give them the Vercel **preview link** and ask them to look at it.
-5. **Publish only when they say so:** merge the pull request. If they are not sure, wait.
+4. **Show them on their own computer, before anything is saved online.** Start the site locally and open the exact page that changed, so they see it as a visitor would:
+   - In the Claude desktop app, start the **"Rhythm Culture (local preview)"** server and open the page in the app's browser pane. Anywhere else, run `npm run dev` and open `http://localhost:4321/<page>` (the home page is `http://localhost:4321/`).
+   - Tell them in plain words what to look at ("scroll to the new paragraph", "the price should say $130"). For phone view, resize the window narrow.
+   - Forms won't send from here. That's expected.
+   - Not right? Change it and show it again. Don't commit yet.
+   - If the site won't start because `node` or `npm` is missing, say so and tell them to contact Andre. If it says packages are missing, run `npm install` once (it needs Node 24, see `.nvmrc`), then start it again.
+5. **Save it online only when they say yes.** Commit, push the branch and open a pull request. Do **not** send the Vercel preview link: it asks for a Vercel login they don't have.
+6. **Publish only when they say so:** merge the pull request. If they are not sure, wait. The live site updates a couple of minutes later.
 
-**Using the website editor (`/keystatic`) instead?** Before editing, use the branch menu at the top left to create a new branch (it will start with `update/`). Saves then go to that branch and get a preview link, and you publish by merging its pull request on GitHub. Editing on `main` publishes immediately with no preview.
+**Used the website editor (`/keystatic`) instead?** Edits made there on a branch starting with `update/` are saved to GitHub. To look at one, run `git fetch`, switch to that branch (`git switch update/<name>`), then show it locally exactly as in step 4. Publish by merging its pull request. Edits made on `main` go live immediately with no preview.
 
 Never push or merge without a clear yes. If something goes wrong after publishing, the previous version can be restored from Vercel (Deployments, then promote the previous one) or by reverting the pull request.
 
@@ -73,4 +79,4 @@ These are outside normal updates. Explain why, suggest they contact Andre (the d
 
 - Keep the look as it is (green `#7cda24`, red `#e02b20`, Assegai headings, Open Sans text) unless they ask for a change. Build layouts from the blocks in `blocks.md`; never add inline styles or HTML.
 - If you are not sure what they mean, ask one short question before changing anything.
-- End every job with a plain summary: what changed, which web address to look at, and what happens next (preview, then publish).
+- End every job with a plain summary: what changed, which page to look at on their own computer, and what happens next (look, then say "publish").

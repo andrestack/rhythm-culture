@@ -143,7 +143,7 @@ footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
   <header>
     <p class="eyebrow"><span class="star">✦</span> Rhythm Culture · your new website</p>
     <h1>Change your website <span class="mark">by asking</span>, then <span class="accent-word">check</span> before it goes live.</h1>
-    <p class="lede">Two ways in. One safety net. You never touch code. Every change lands on a draft first, you look at it, and only your yes puts it on the real site.</p>
+    <p class="lede">Two ways in. One safety net. You never touch code. You look at every change on your own computer first. Your yes saves it, and a second yes puts it on the real site.</p>
     <div class="byline"><span>From André, Hinterland Web</span><span class="mono">2 Nov 2026</span></div>
     <div class="live">
       <span class="chip">Live now</span>
@@ -159,7 +159,7 @@ footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
     </header>
     <figure>
       <div class="diagram-wrap">
-        <svg viewBox="0 0 720 640" role="img" aria-label="You make a change in the website editor or by asking Claude or ChatGPT. Either way it is saved as a draft copy on GitHub, Vercel builds a private preview link, you check it, and only when you say publish does the live website update. If it is not right you ask for a fix and it goes back to the draft.">
+        <svg viewBox="0 0 770 620" role="img" aria-label="You make a change in the website editor or by asking Claude or ChatGPT. Changes made with the assistant are shown on your own computer first, with nothing saved online. If it looks right you say save it and it becomes a draft on GitHub. Website editor changes are saved straight to a draft, and you ask the assistant to show them on your computer. When you say publish, Vercel builds the draft and the live website updates.">
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
               <path d="M0 0 L10 5 L0 10 z" class="d-arrow"/>
@@ -167,66 +167,78 @@ footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
           </defs>
 
           <!-- you -->
-          <rect x="315" y="12" width="90" height="36" rx="18" class="d-pill"/>
-          <text x="360" y="35" text-anchor="middle" class="d-pill-text">You</text>
-          <path d="M360 48 V68 H185 V96" class="d-line" marker-end="url(#arrow)"/>
-          <path d="M360 68 H535 V96" class="d-line" marker-end="url(#arrow)"/>
-          <text x="272" y="61" text-anchor="middle" class="d-label">small edits</text>
-          <text x="448" y="61" text-anchor="middle" class="d-label">bigger jobs</text>
+          <rect x="335" y="12" width="90" height="36" rx="18" class="d-pill"/>
+          <text x="380" y="35" text-anchor="middle" class="d-pill-text">You</text>
+          <path d="M380 48 V68 H180 V96" class="d-line" marker-end="url(#arrow)"/>
+          <path d="M380 68 H570 V96" class="d-line" marker-end="url(#arrow)"/>
+          <text x="280" y="62" text-anchor="middle" class="d-label">small edits</text>
+          <text x="475" y="62" text-anchor="middle" class="d-label">bigger jobs</text>
 
           <!-- two doors -->
-          <rect x="40" y="100" width="290" height="96" rx="14" class="d-box"/>
+          <rect x="40" y="100" width="280" height="96" rx="14" class="d-box"/>
           <text x="60" y="130" class="d-title">Website editor</text>
           <text x="60" y="152" class="d-sub">In your browser, at /keystatic</text>
           <text x="60" y="179" class="d-tag">text · prices · payment links</text>
 
-          <rect x="390" y="100" width="290" height="96" rx="14" class="d-box"/>
-          <text x="410" y="130" class="d-title">Claude or ChatGPT app</text>
-          <text x="410" y="152" class="d-sub">On your PC. You ask in plain words.</text>
-          <text x="410" y="179" class="d-tag">posts · pages · photos</text>
+          <rect x="420" y="100" width="300" height="96" rx="14" class="d-box"/>
+          <text x="440" y="130" class="d-title">Claude or ChatGPT app</text>
+          <text x="440" y="152" class="d-sub">On your PC. You ask in plain words.</text>
+          <text x="440" y="179" class="d-tag">posts · pages · photos</text>
 
-          <path d="M185 196 V246" class="d-line" marker-end="url(#arrow)"/>
-          <path d="M535 196 V246" class="d-line" marker-end="url(#arrow)"/>
-          <text x="195" y="226" class="d-label">saves a draft</text>
-          <text x="525" y="226" text-anchor="end" class="d-label">saves a draft</text>
+          <!-- editor saves straight to a draft -->
+          <path d="M180 196 V246" class="d-line" marker-end="url(#arrow)"/>
+          <text x="192" y="226" class="d-label">saves a draft</text>
+
+          <!-- assistant changes files on the PC -->
+          <path d="M570 196 V246" class="d-line" marker-end="url(#arrow)"/>
+          <text x="582" y="226" class="d-label">changes files on your PC</text>
 
           <!-- draft -->
-          <rect x="170" y="250" width="380" height="86" rx="14" class="d-box"/>
-          <text x="190" y="280" class="d-title">Draft copy</text>
-          <text x="190" y="302" class="d-sub">Saved on GitHub as its own branch</text>
-          <text x="190" y="324" class="d-tag">the live site is untouched</text>
+          <rect x="40" y="250" width="280" height="86" rx="14" class="d-box"/>
+          <text x="60" y="280" class="d-title">Draft copy</text>
+          <text x="60" y="302" class="d-sub">Saved on GitHub as its own branch</text>
+          <text x="60" y="324" class="d-tag">the live site is untouched</text>
 
-          <path d="M360 336 V372" class="d-line" marker-end="url(#arrow)"/>
-          <text x="372" y="359" class="d-label">built in a minute or two</text>
+          <!-- look on PC -->
+          <rect x="420" y="250" width="300" height="86" rx="14" class="d-live"/>
+          <text x="440" y="280" class="d-title">Look on your PC</text>
+          <text x="440" y="302" class="d-sub" style="fill: var(--fg)">The site runs only on your computer</text>
+          <text x="440" y="324" class="d-tag">nothing is saved online yet</text>
 
-          <!-- preview -->
-          <rect x="170" y="376" width="380" height="78" rx="14" class="d-box"/>
-          <text x="190" y="406" class="d-title">Preview link</text>
-          <text x="190" y="428" class="d-sub">A private test version of the whole site</text>
-          <text x="530" y="406" text-anchor="end" class="d-tag">Vercel</text>
-
-          <path d="M360 454 V482" class="d-line" marker-end="url(#arrow)"/>
+          <!-- editor drafts can be looked at too -->
+          <path d="M320 285 H416" class="d-line d-dash" marker-end="url(#arrow)"/>
+          <text x="368" y="277" text-anchor="middle" class="d-label">to look</text>
 
           <!-- decision -->
-          <polygon points="360,486 436,512 360,538 284,512" class="d-diamond"/>
-          <text x="360" y="516" text-anchor="middle" class="d-label" style="fill: var(--fg)">Looks right?</text>
+          <path d="M570 336 V372" class="d-line" marker-end="url(#arrow)"/>
+          <polygon points="570,376 646,410 570,444 494,410" class="d-diamond"/>
+          <text x="570" y="414" text-anchor="middle" class="d-label" style="fill: var(--fg)">Looks right?</text>
+          <text x="570" y="478" text-anchor="middle" class="d-label">Nothing is saved online</text>
+          <text x="570" y="494" text-anchor="middle" class="d-label">until you say yes.</text>
 
-          <path d="M284 512 H110 V293 H166" class="d-line d-dash" marker-end="url(#arrow)"/>
-          <text x="197" y="504" text-anchor="middle" class="d-label">no: ask for a fix</text>
+          <!-- no: loop back to assistant -->
+          <path d="M646 410 H744 V148 H724" class="d-line d-dash" marker-end="url(#arrow)"/>
+          <text x="758" y="280" text-anchor="middle" class="d-label" transform="rotate(-90 758 280)">no: ask for a fix</text>
 
-          <path d="M360 538 V568" class="d-line" marker-end="url(#arrow)"/>
-          <text x="372" y="558" class="d-label">yes: you say “publish”</text>
+          <!-- yes: save as draft -->
+          <path d="M494 410 H370 V322 H324" class="d-line" marker-end="url(#arrow)"/>
+          <text x="432" y="430" text-anchor="middle" class="d-label">yes: “save it”</text>
+
+          <!-- publish -->
+          <path d="M180 336 V516" class="d-line" marker-end="url(#arrow)"/>
+          <text x="192" y="420" class="d-label">you say “publish”</text>
+          <text x="192" y="438" class="d-label">Vercel builds it, 1 to 2 minutes</text>
 
           <!-- live -->
-          <rect x="170" y="572" width="380" height="58" rx="14" class="d-live"/>
-          <text x="190" y="598" class="d-title">Live website</text>
-          <text x="190" y="619" class="d-sub" style="fill: var(--fg)">rhythmculture.com.au, updated in a couple of minutes</text>
-          <path d="M550 601 H562" class="d-line d-dash"/>
-          <text x="568" y="596" class="d-label">Undo: I can put</text>
-          <text x="568" y="612" class="d-label">the last version back</text>
+          <rect x="40" y="520" width="280" height="70" rx="14" class="d-live"/>
+          <text x="60" y="548" class="d-title">Live website</text>
+          <text x="60" y="570" class="d-sub" style="fill: var(--fg)">rhythmculture.com.au</text>
+          <path d="M320 555 H344" class="d-line d-dash"/>
+          <text x="350" y="551" class="d-label">Undo: I can put</text>
+          <text x="350" y="567" class="d-label">the last version back</text>
         </svg>
       </div>
-      <figcaption>Both ways in end at the same draft and the same preview. Nothing reaches the live website until you have looked at the preview and said publish. If something slips through, the previous version can be put back in about a minute.</figcaption>
+      <figcaption>When you ask the assistant, the change is shown on your own computer before anything is saved online. Edits made in the website editor are saved straight to a draft, and you ask the assistant to show you that draft the same way. Nothing reaches the live website until you say publish. If something slips through, the previous version can be put back in about a minute.</figcaption>
     </figure>
     <p class="muted">The contact, quote, booking and camp forms are wired up by me. Each enquiry is checked for spam, saved to a spreadsheet and emailed to info@rhythmculture.com.au. Hit reply and it goes straight to the customer. You don't need to edit any of that.</p>
   </section>
@@ -246,6 +258,7 @@ footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
           <li>Paste in a Stripe payment link</li>
           <li>Tick a product as sold out or hide it</li>
         </ul>
+        <p class="where">Saved edits wait as a draft. To look at one, ask the assistant: <span class="quote">“show me my draft.”</span></p>
       </article>
       <article class="door ai">
         <h3>Claude or ChatGPT on your PC</h3>
@@ -267,10 +280,10 @@ footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
     </header>
     <ol class="steps">
       <li><p><strong>Ask.</strong> <span class="quote">“Add a post saying Term 1 drum classes start Monday 2 February in Palmwoods. Use this photo.”</span></p></li>
-      <li><p><strong>It makes a draft.</strong> The assistant starts from the latest version of the site, writes the post, shrinks the photo and checks the site still builds.</p></li>
-      <li><p><strong>It tells you what it did</strong> in plain words, and asks before saving the draft to GitHub.</p></li>
-      <li><p><strong>You get a preview link.</strong> Open it on your phone. Read it the way a customer would.</p></li>
-      <li><p><strong>Say “publish”.</strong> The live site updates a couple of minutes later. Not right? Say what to change and it goes back to step 2.</p></li>
+      <li><p><strong>It makes the change on your computer.</strong> The assistant starts from the latest version of the site, writes the post, shrinks the photo and checks the site still builds.</p></li>
+      <li><p><strong>It shows you.</strong> The page opens right in the app, running only on your computer. Read it the way a customer would. Nothing is online yet. Not right? Say what to change and it shows you again.</p></li>
+      <li><p><strong>Say “save it”.</strong> It saves a draft to GitHub and tells you in plain words what it did.</p></li>
+      <li><p><strong>Say “publish”.</strong> The live site updates a couple of minutes later.</p></li>
     </ol>
     <p class="muted">It never makes up dates, prices or payment links. If something is missing, it asks you.</p>
   </section>
@@ -288,7 +301,7 @@ footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
           <li>A customer says a form didn't send, or enquiries have stopped arriving in the inbox.</li>
           <li>A payment link charges the wrong amount, or a customer can't pay.</li>
           <li>The assistant asks you to paste a password, code or token anywhere. Don't. Send me a screenshot instead.</li>
-          <li>The assistant says git or GitHub is “in a state”, or the preview shows an error twice in a row.</li>
+          <li>The assistant says git or GitHub is “in a state”, or it can't start the site on your computer.</li>
         </ul>
       </article>
       <article class="call">
@@ -303,7 +316,7 @@ footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
         </ul>
       </article>
       <article class="call fine">
-        <header><h3>No need to call</h3><span class="chip">just do it, then check the preview</span></header>
+        <header><h3>No need to call</h3><span class="chip">just do it, then look on your PC</span></header>
         <ul>
           <li>Typos, opening hours, class times, term dates.</li>
           <li>Prices, sold out, new payment links from your Stripe account.</li>
@@ -314,7 +327,7 @@ footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
     <div class="send">
       <h3>When you message me, send three things</h3>
       <ol class="steps">
-        <li><p>The page address, or the preview link.</p></li>
+        <li><p>The page you were looking at, or its address.</p></li>
         <li><p>What you asked the assistant, copied from the chat.</p></li>
         <li><p>A screenshot of what looks wrong.</p></li>
       </ol>
@@ -332,7 +345,7 @@ footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
       <li><span class="state">Done</span><span>The house rules for Claude and ChatGPT are in the project, and it works on Windows.</span></li>
       <li><span class="state">To do</span><span>Your login for the website editor. I'm setting this up before handover.</span></li>
       <li><span class="state">To do</span><span>Stripe payment links for the class passes and shop items.</span></li>
-      <li><span class="state">To do</span><span>Installing the desktop app on your PC. We do that together, about 30 minutes.</span></li>
+      <li><span class="state">To do</span><span>Installing the desktop app and the tool it needs to run the site (Node), then a first test run. We do that together, about 45 minutes.</span></li>
       <li><span class="state">Launch</span><span>Moving rhythmculture.com.au across. Your old WordPress site stays untouched until then.</span></li>
     </ul>
   </section>

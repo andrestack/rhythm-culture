@@ -11,8 +11,9 @@ Read `README.md` first: project map, what is done, next steps.
 1. Start from the latest site: `git switch main`, then `git pull`. The website editor (Keystatic) saves straight to GitHub, so the local copy goes stale.
 2. Make a branch for this one change: `git switch -c update/<topic>`. Never commit on `main`.
 3. Make the change. Run `npm run build`; never leave a broken build.
-4. Describe the change. Once the owner says yes, commit, push the branch and open a pull request. Share the Vercel preview link so they can check it first.
-5. Merge only when the owner clearly says to publish.
+4. Show the change on their own computer before anything is saved online: start the site locally (in the Claude app, the "Rhythm Culture (local preview)" server in `.claude/launch.json`; otherwise `npm run dev`, then `http://localhost:4321/`) and open the page that changed. Don't send Vercel preview links: they need a Vercel login the owner doesn't have. Details in the CMS skill.
+5. Once the owner says yes, commit, push the branch and open a pull request.
+6. Merge only when the owner clearly says to publish.
 
 ## Rules
 

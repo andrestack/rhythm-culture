@@ -120,13 +120,13 @@ The idea (see Andre's harness-as-CMS plan): the client uses the **Claude or Code
 | | Keystatic (`/keystatic`) | Claude / Codex desktop app |
 |---|---|---|
 | Best for | Fixing text, prices, a blog post, swapping a Stripe link | New pages, restructuring, bulk edits, SEO, "make this section look like that" |
-| Safe by | Typed fields, only touches content files | Branches + preview + review (below) |
+| Safe by | Typed fields, only touches content files | Branches + a local look on their own PC + review (below) |
 | Needs | A browser and GitHub login | Desktop app, the folder, Git |
 
 ### Setup checklist
 
 1. **Use the desktop app, not the CLI,** for clients. Give it access to this folder only.
-2. **Branch, don't edit `main`.** Add branch protection so `main` needs a pull request. Every Vercel branch gets a preview URL, so the client checks the preview before merging. Rule for the agent: never push to `main`, never push without the client saying yes.
+2. **Branch, don't edit `main`.** Add branch protection so `main` needs a pull request. The client checks each change **locally on their own PC** before anything is committed (see *Local preview* below). Vercel also builds a preview URL per branch, but it sits behind a Vercel login the client doesn't have, so it is for you, not them. Rule for the agent: never push to `main`, never push without the client saying yes.
 3. **`AGENTS.md`, `CLAUDE.md` and two skills are already in the repo** (`.agents/skills/`, copied to `.claude/skills/` for Claude). The copy is a real folder, not a symlink, because Git on Windows can't create symlinks without Developer Mode and the client uses Windows. `npm run build` refreshes it automatically (`prebuild` runs `scripts/sync-skills.mjs`), so after editing a skill, build and commit both folders; `npm run sync-skills -- --check` reports drift. `rhythm-culture-cms` is written for a non-developer client: it walks Claude through adding posts, editing pages, products and photos in plain language, and the branch, build, preview and publish flow, and tells it which changes need you (forms, redirects, config, URL changes). `compress-images` shrinks photos and can convert them to WebP. Codex (the ChatGPT desktop app) reads `AGENTS.md` and `.agents/skills/`, but not `CLAUDE.md` (`CLAUDE.md` is a pointer to `AGENTS.md` for Claude). `AGENTS.md` says the user is the owner and not a developer, and:
    - Stack: Astro 7 + Keystatic, content in `src/content`, forms in `src/lib/forms.ts`.
    - **Every form must use zod** via `forms.ts` / `formSchema.ts`.
@@ -136,17 +136,28 @@ The idea (see Andre's harness-as-CMS plan): the client uses the **Claude or Code
    - Page URLs (`link:` frontmatter) must not change without adding a redirect in `astro.config.mjs`.
    - Don't invent prices, dates or Stripe links; ask before deleting any page.
    - Forms, redirects and config need Andre (the agent explains and suggests contacting you).
-4. **Pre-load a few safe tasks** in the demo: "add a blog post about the new term", "update the 4 class pass price", "add a school incursion testimonial to the Incursions page", "change the homepage hero text". Each ends in a branch, a build check and a preview link.
+4. **Pre-load a few safe tasks** in the demo: "add a blog post about the new term", "update the 4 class pass price", "add a school incursion testimonial to the Incursions page", "change the homepage hero text". Each ends in a local look, a branch and a build check.
 5. **Guard sensitive files.** `src/lib/forms.ts` and `/api/form` (spam protection and validation), `astro.config.mjs` (redirects). `AGENTS.md` and the skill already tell the agent to stop and refer the client to you. This is guidance, not enforcement: branch protection and PR review on `main` are what actually stop a bad change.
 6. **Ownership.** Decide before handing over who owns the GitHub repo, the Vercel account (Pro is a paid seat per person) and the domain. Vercel project transfer can hand it over later.
 7. **Keep Keystatic for the boring edits.** Telling the client "text and prices: Keystatic; anything structural: ask Claude" cuts the chance an agent rewrites the wrong thing.
 
+### Local preview (the client's preview step)
+
+Vercel preview links need a Vercel login, so the client doesn't use them. Instead the assistant runs the site on their own PC and shows the changed page in the app **before anything is committed**:
+
+- **Claude desktop app:** `.claude/launch.json` defines "Rhythm Culture (local preview)" (`npm run dev`, port 4321). The assistant starts it and opens the page in the app's browser pane. **Untested here:** I ran the same command and viewed the site in the browser pane, but the app's own `launch.json` lookup only works when the app is opened on this project folder. Check it on the client's PC.
+- **Codex / ChatGPT desktop app:** not verified. The rules say to run `npm run dev` and open `http://localhost:4321/`. Test whether the app can show a local page before promising it.
+- **One-time setup on the client's PC (about 15 minutes):** install Node 24 (`.nvmrc`), run `npm install` in the project folder, then ask the assistant to start the site and check it opens.
+- **Editor drafts:** edits saved in `/keystatic` on an `update/` branch can be looked at by asking "show me my draft": the assistant fetches that branch and runs it locally.
+- **Limits:** only the client sees it, forms don't send from a local run (no webhook secret there), and Vercel's own build after merge is still the final check. `npm run build` runs before every commit.
+- **Keystatic-only clients** (no assistant) have no preview: Keystatic saves straight to `main` unless `branchPrefix` is set, and then the preview needs a Vercel login again.
+
 ### Demo script (10 minutes)
 
-1. Open the live preview. Show `/shop/` and a class pass.
-2. In `/keystatic`, change a price, save, show the preview update (GitHub storage must be set up first, step 3 above).
-3. In the desktop app, ask: "Add a new blog post 'Term 1 classes start' with this text." Show the branch, the diff and the Vercel preview, then merge.
-4. Submit the quote form on the preview and show the email arriving (needs step 4 above).
+1. Open the live site at https://rhythm-culture.vercel.app. Show `/shop/` and a class pass.
+2. In `/keystatic`, create a branch (top left), change a price, save, then ask the assistant "show me my draft" and it runs that branch on this PC (GitHub storage must be set up first, step 3 above).
+3. In the desktop app, ask: "Add a new blog post 'Term 1 classes start' with this text." It starts the site on this PC and shows the post in the app. Nothing is online yet. Say "save it" (branch and PR), then "publish" (merge).
+4. Submit the quote form on the live site and show the email arriving (needs step 4 above).
 5. Show how to roll back: Vercel -> Deployments -> promote the previous one.
 
 ### Caveats to tell the client honestly
@@ -154,4 +165,4 @@ The idea (see Andre's harness-as-CMS plan): the client uses the **Claude or Code
 - Divi layout (columns, hero sections) was simplified. Some pages look plainer than before until step 7 is done.
 - No cart: each product is a separate Stripe checkout. Fine for class passes, less so for mixed baskets.
 - The in-memory rate limit is best effort.
-- The agent can make mistakes, which is why previews and PRs exist. Do not hand over `main` push rights.
+- The agent can make mistakes, which is why the local look and PRs exist. Do not hand over `main` push rights.
