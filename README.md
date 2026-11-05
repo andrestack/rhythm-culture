@@ -77,6 +77,28 @@ reference/                original exports (products.csv, wp-export.xml (git-ign
 
 ---
 
+## Work in progress: homepage redesign (5 Nov 2026)
+
+On branch `update/homepage-redesign`, not built yet. The owner chose the **"Big Beat"** direction (big hero photo, four audience photo tiles **with clear space between them**, dark strip of cities). Everything needed to continue:
+
+- Design notes and open questions: `docs/superpowers/specs/2026-11-05-homepage-redesign-design.md`
+- Mockups of all three directions (A is the chosen one): `docs/mockups/homepage-directions.html`
+
+To pick it up on another computer:
+
+```bash
+git fetch
+git switch update/homepage-redesign
+npm install
+npm run dev
+```
+
+Then ask the assistant to "continue the homepage redesign from the design notes".
+
+**Node version gotcha:** the site needs Node 24 (`.nvmrc`); Astro refuses anything below 22.23.4. On Andre's Mac the app's preview button picked up an older Node bundled with another tool (`~/.local/bin/node`, from Hermes) and crashed. The workaround was to start the site in a terminal with Node 24 first on the PATH and point the preview at `http://127.0.0.1:4321/`. Check `node -v` before starting.
+
+---
+
 ## Next steps, in order
 
 1. **Repo.** Create the GitHub repo (`https://github.com/andrestack/rhythm-culture`; the CMS config already points at it). Before the first commit check size: `public/media` is now about 110 MB after `npm run compress`. `node_modules`, `dist`, `.vercel`, `.env` and `reference/wp-export.xml` are already git-ignored.

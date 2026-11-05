@@ -1,0 +1,143 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Homepage directions</title>
+<style>body{margin:0;padding:24px 16px 48px;background:#f2f2ee;font-family:"Open Sans",sans-serif;color:#1d1d1d}main{max-width:900px;margin:0 auto}h2{font-size:24px;margin:0 0 6px}.subtitle{color:#666;margin:0 0 10px}.option{cursor:default}.option.selected{outline:3px solid #7cda24}</style></head><body><main>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  @font-face { font-family: Assegai; src: url('../../public/fonts/assegai.woff2') format('woff2'), url('../../public/fonts/assegai.woff') format('woff'); }
+  .rc { --g:#7cda24; --r:#e02b20; --ink:#1d1d1d; font-family:'Open Sans',sans-serif; color:var(--ink); background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 2px 18px rgb(0 0 0/.12); margin:0 0 14px; }
+  .rc * { box-sizing:border-box; }
+  .rc .d { font-family:Assegai,'Open Sans',sans-serif; font-weight:400; line-height:1; margin:0; }
+  .rc .ph { background:#333 center/cover no-repeat; }
+  .rc .btn { display:inline-block; background:var(--r); color:#fff; font-weight:700; padding:10px 22px; border-radius:999px; font-size:14px; }
+  .rc .btn.g { background:var(--g); color:var(--ink); }
+  .rc .bar { display:flex; justify-content:space-between; align-items:center; padding:10px 18px; font-size:12px; font-weight:600; }
+  .rc .bar img { height:26px; }
+  .label-row { display:flex; justify-content:space-between; align-items:baseline; margin:26px 0 8px; }
+  .label-row h3 { margin:0; }
+
+  /* A: Big Beat */
+  .a .hero { height:380px; position:relative; display:flex; align-items:flex-end; padding:28px; background-image:linear-gradient(0deg,rgb(0 0 0/.75),rgb(0 0 0/.05) 60%),url('../../public/media/2018/09/A08R7271-e1550205581543.jpg'); }
+  .a .hero .d { color:#fff; font-size:64px; max-width:640px; }
+  .a .hero .d span { color:var(--g); }
+  .a .hero p { color:#fff; margin:10px 0 16px; font-size:15px; }
+  .a .tiles { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; padding:18px; }
+  .a .tile { border-radius:10px; overflow:hidden; }
+  .a .tile { height:170px; position:relative; display:flex; align-items:flex-end; padding:12px; color:#fff; font-weight:800; font-size:15px; }
+  .a .tile::before { content:''; position:absolute; inset:0; background:linear-gradient(0deg,rgb(0 0 0/.7),transparent 60%); }
+  .a .tile span { position:relative; }
+  .a .tile b { display:block; font-weight:400; font-size:12px; color:var(--g); }
+  .a .strip { background:var(--ink); color:#fff; padding:26px 28px; display:flex; justify-content:space-between; align-items:center; gap:20px; }
+  .a .strip .d { font-size:30px; color:var(--g); }
+
+  /* B: Poster */
+  .b .top { display:grid; grid-template-columns:1.1fr 1fr; background:var(--g); }
+  .b .top .txt { padding:34px 28px; }
+  .b .top .d { font-size:58px; color:var(--ink); }
+  .b .top .d em { font-style:normal; color:var(--r); }
+  .b .top p { font-size:15px; font-weight:600; margin:14px 0 18px; }
+  .b .collage { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:6px; padding:6px; }
+  .b .collage .ph:first-child { grid-row:span 2; }
+  .b .band { background:var(--r); color:#fff; padding:12px 0; overflow:hidden; white-space:nowrap; font-family:Assegai,sans-serif; font-size:22px; }
+  .b .rows { display:grid; grid-template-columns:repeat(3,1fr); }
+  .b .row { padding:22px; border-right:3px solid var(--ink); }
+  .b .row:last-child { border:0; }
+  .b .row .n { font-family:Assegai,sans-serif; font-size:40px; color:var(--r); }
+  .b .row h4 { margin:4px 0; font-size:16px; }
+  .b .row p { margin:0; font-size:13px; color:#555; }
+
+  /* C: Pick your path */
+  .c .hero { display:grid; grid-template-columns:1fr 1fr; min-height:340px; }
+  .c .left { padding:34px 28px; background:#fafaf6; }
+  .c .left .d { font-size:46px; }
+  .c .left .d span { color:var(--r); }
+  .c .left p { font-size:14px; color:#555; margin:10px 0 18px; }
+  .c .pick { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .c .pick div { border:2px solid var(--ink); border-radius:12px; padding:10px 12px; font-weight:700; font-size:14px; background:#fff; }
+  .c .pick div small { display:block; font-weight:400; color:#666; font-size:11px; }
+  .c .pick div:first-child { background:var(--g); border-color:var(--g); }
+  .c .trust { display:flex; gap:28px; justify-content:center; padding:16px; background:var(--ink); color:#fff; font-size:13px; font-weight:600; flex-wrap:wrap; }
+  .c .trust span { color:var(--g); }
+  .c .mosaic { display:grid; grid-template-columns:2fr 1fr 1fr; grid-template-rows:120px 120px; gap:6px; padding:6px; }
+  .c .mosaic .ph:first-child { grid-row:span 2; }
+</style>
+
+<h2>Three very different homepages. Which one feels most like Rhythm Culture?</h2>
+<p class="subtitle">All three use your real photos, green and red, and your fonts. Click the one you like (or tell me what to steal from each).</p>
+
+<!-- A -->
+<div class="label-row"><h3>A · Big Beat: photo-first and loud (CHOSEN, with more space between photos)</h3></div>
+<div class="option" data-choice="a" onclick="toggleSelect(this)" style="display:block;padding:0;border:0">
+<div class="rc a">
+  <div class="bar"><img src="../../public/media/2017/11/website_logo.png" alt=""><span>Incursions · Classes · Corporate · Shop &nbsp; <span class="btn" style="padding:6px 14px">Get a quote</span></span></div>
+  <div class="hero ph"><div>
+    <h1 class="d">Bring the drums <span>to your school</span></h1>
+    <p>African drumming &amp; dance incursions, workshops and classes across Australia.</p>
+    <span class="btn">Get a quick quote</span> &nbsp; <span class="btn g">See programs</span>
+  </div></div>
+  <div class="tiles">
+    <div class="tile ph" style="background-image:url('../../public/media/2019/02/RC-Kindy-601.jpg')"><span><b>Ages 2–5</b>Kindy &amp; Early Learning</span></div>
+    <div class="tile ph" style="background-image:url('../../public/media/2018/09/A08R7253.jpg')"><span><b>Primary &amp; High</b>School Incursions</span></div>
+    <div class="tile ph" style="background-image:url('../../public/media/2018/05/180321121002_BJA2651.jpg')"><span><b>Teams</b>Corporate Drumming</span></div>
+    <div class="tile ph" style="background-image:url('../../public/media/2021/07/BecAfro-02-scaled.jpg')"><span><b>Sunshine Coast</b>Weekly Classes</span></div>
+  </div>
+  <div class="strip"><div class="d">Sunshine Coast · Brisbane · Melbourne · Sydney · Perth · Adelaide</div><span class="btn">Book now</span></div>
+</div>
+</div>
+<p style="font-size:13px;color:#666;margin:4px 0 0">Feels like: a festival poster. Big photo, one strong line, then four photo doors into each audience.</p>
+
+<!-- B -->
+<div class="label-row"><h3>B · Poster: colour blocks and bold type</h3></div>
+<div class="option" data-choice="b" onclick="toggleSelect(this)" style="display:block;padding:0;border:0">
+<div class="rc b">
+  <div class="bar" style="background:var(--ink);color:#fff"><img src="../../public/media/2017/11/website_logo.png" alt="" style="background:#fff;border-radius:4px;padding:2px"><span>Incursions · Classes · Corporate · Shop</span></div>
+  <div class="top">
+    <div class="txt">
+      <h1 class="d">Drum. Sing. <em>Dance.</em></h1>
+      <p>West African rhythm for schools, kindies, teams and anyone who wants to play.</p>
+      <span class="btn">Get a quick quote</span>
+    </div>
+    <div class="collage">
+      <div class="ph" style="background-image:url('../../public/media/2024/11/Afro-Camp-100-scaled.jpg')"></div>
+      <div class="ph" style="background-image:url('../../public/media/2019/02/Wildlings-1921.jpg')"></div>
+      <div class="ph" style="background-image:url('../../public/media/2021/07/A08R0539-scaled.jpg')"></div>
+    </div>
+  </div>
+  <div class="band">&nbsp; Kindy ✦ Primary ✦ High School ✦ Vacation Care ✦ Corporate ✦ Weekly Classes ✦ Camp Afro Foli ✦ Kindy ✦ Primary</div>
+  <div class="rows">
+    <div class="row"><div class="n">01</div><h4>We bring the drums</h4><p>Real African drums for every student, set up at your school.</p></div>
+    <div class="row"><div class="n">02</div><h4>Everyone plays</h4><p>Rhythms, songs and dance adapted to the age of the group.</p></div>
+    <div class="row"><div class="n">03</div><h4>They perform</h4><p>The group finishes as one ensemble.</p></div>
+  </div>
+</div>
+</div>
+<p style="font-size:13px;color:#666;margin:4px 0 0">Feels like: a gig flyer. The green fills the screen, a moving red ticker lists every audience, and "how it works" in three steps.</p>
+
+<!-- C -->
+<div class="label-row"><h3>C · Pick your path: straight to the right page</h3></div>
+<div class="option" data-choice="c" onclick="toggleSelect(this)" style="display:block;padding:0;border:0">
+<div class="rc c">
+  <div class="bar"><img src="../../public/media/2017/11/website_logo.png" alt=""><span>Incursions · Classes · Corporate · Shop</span></div>
+  <div class="hero">
+    <div class="left">
+      <h1 class="d">Who's the <span>drumming</span> for?</h1>
+      <p>Pick one and we'll show you the right program and a quick quote.</p>
+      <div class="pick">
+        <div>Kindy / Early Learning<small>Drum Sing Dance for little ones</small></div>
+        <div>Primary or High School<small>Incursions &amp; workshops</small></div>
+        <div>Business or Team<small>Corporate team building</small></div>
+        <div>Just me!<small>Weekly classes &amp; Camp Afro Foli</small></div>
+      </div>
+    </div>
+    <div class="ph" style="background-image:url('../../public/media/2019/02/Wildlings-1921.jpg')"></div>
+  </div>
+  <div class="trust">We bring the drums · <span>Sunshine Coast</span> · <span>Brisbane</span> · <span>Melbourne</span> · <span>Sydney</span> · <span>Perth</span> · <span>Adelaide</span></div>
+  <div class="mosaic">
+    <div class="ph" style="background-image:url('../../public/media/2024/11/Afro-Camp-140-scaled.jpg')"></div>
+    <div class="ph" style="background-image:url('../../public/media/2018/09/A08R7253.jpg')"></div>
+    <div class="ph" style="background-image:url('../../public/media/2021/07/Afro-Advance-12-scaled.jpg')"></div>
+    <div class="ph" style="background-image:url('../../public/media/2019/02/RC-Kindy-601.jpg')"></div>
+    <div class="ph" style="background-image:url('../../public/media/2018/05/180321121002_BJA2651.jpg')"></div>
+  </div>
+</div>
+</div>
+<p style="font-size:13px;color:#666;margin:4px 0 0">Feels like: a helpful front desk. Visitors pick who they are first, so a kindy director never has to scroll past corporate info.</p>
+<script>function toggleSelect(e){document.querySelectorAll(".option").forEach(o=>o.classList.toggle("selected",o===e&&!o.classList.contains("selected")))}</script></main></body></html>
