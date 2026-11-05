@@ -1,8 +1,7 @@
 ---
 import '../styles/global.css';
-import { menu } from '../lib/content';
+import { NAV } from '../lib/nav';
 const { title, description = '' } = Astro.props;
-const nav = menu();
 ---
 <!doctype html>
 <html lang="en-AU">
@@ -15,28 +14,68 @@ const nav = menu();
   </head>
   <body>
     <header class="site-header">
-      <div class="wrap">
-        <a href="/"><img src="/media/2017/11/website_logo.png" alt="Rhythm Culture" /></a>
-        <button class="burger" aria-label="Menu" onclick="document.querySelector('.nav').classList.toggle('open')">☰</button>
-        <ul class="nav">
-          {nav.map((i) => (
-            <li>
-              <a href={i.url}>{i.title}</a>
-              {i.children.length > 0 && (
-                <ul class="sub">{i.children.map((c) => <li><a href={c.url}>{c.title}</a></li>)}</ul>
-              )}
-            </li>
-          ))}
-          <li><a class="tel" href="tel:0434585992">0434 585 992</a></li>
+      <div class="bar">
+        <a class="logo" href="/" aria-label="Rhythm Culture, home"><img src="/media/2017/11/website_logo.png" alt="Rhythm Culture" /></a>
+        <ul class="nav" id="site-nav">
+          {NAV.map((i) => {
+            const kids = i.children ?? [];
+            const mega = kids.length > 3;
+            return (
+              <li class={kids.length ? 'has-sub' : ''}>
+                <a href={i.href}>{i.title}{kids.length > 0 && <svg class="caret" viewBox="0 0 12 12" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>}</a>
+                {kids.length > 0 && (
+                  <ul class={mega ? 'sub mega' : 'sub'}>
+                    {kids.map((c) => (
+                      <li>
+                        <a href={c.href}>
+                          {mega && c.img && <img src={c.img} alt="" width="120" height="90" loading="lazy" />}
+                          <span><strong>{c.title}</strong>{mega && c.note && <small>{c.note}</small>}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
         </ul>
+        <div class="bar-actions">
+          <a class="bar-tel" href="tel:0434585992">0434 585 992</a>
+          <a class="icon-btn" href="/shop/" aria-label="Shop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z" /><path d="M9 8V7a3 3 0 0 1 6 0v1" /></svg>
+          </a>
+          <a class="btn bar-cta" href="/quick-quote/">Get a quote</a>
+          <button class="burger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="site-nav">
+            <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 8h20M4 14h20M4 20h20" /></svg>
+          </button>
+        </div>
       </div>
     </header>
     <main><slot /></main>
     <footer class="site-footer">
       <div class="wrap">
+        <p class="foot-links"><a href="/blog/">Blog</a> · <a href="/workshops/">Workshops</a> · <a href="/events/">Events</a> · <a href="/shop/">Shop</a> · <a href="/contact-us-2/">Contact</a></p>
         <p><a href="tel:0434585992">0434 585 992</a> · Palmwoods, Sunshine Coast, Queensland</p>
         <p>© 2012–{new Date().getFullYear()} Rhythm Culture</p>
       </div>
     </footer>
+    <div class="dock">
+      <a class="dock-call" href="tel:0434585992">Call us</a>
+      <a class="btn" href="/quick-quote/">Get a quote</a>
+    </div>
+    <script>
+      const header = document.querySelector('.site-header');
+      const burger = document.querySelector('.burger');
+      const nav = document.querySelector('#site-nav');
+      // Over a full-width photo the bar is clear; it turns solid once the page scrolls or the menu is open.
+      const sync = () => header?.classList.toggle('is-solid', scrollY > 24 || !!nav?.classList.contains('open'));
+      addEventListener('scroll', sync, { passive: true });
+      burger?.addEventListener('click', () => {
+        const open = nav?.classList.toggle('open');
+        burger.setAttribute('aria-expanded', String(!!open));
+        sync();
+      });
+      sync();
+    </script>
   </body>
 </html>

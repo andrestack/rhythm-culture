@@ -1,8 +1,26 @@
 ---
 import Base from '../layouts/Base.astro';
+import HomeBigBeat from '../components/HomeBigBeat.astro';
 import { pages } from '../lib/content';
 const home = pages().find((p) => p.link === '/')!;
 ---
 <Base title={home.seoTitle || home.title} description={home.description}>
-  <article class="content"><Fragment set:html={home.html} /></article>
+  <HomeBigBeat />
+  <article class="content home-rest"><Fragment set:html={home.html} /></article>
 </Base>
+
+<script>
+  // Each part of a section eases in once as it scrolls into view. Content stays visible without script or with reduced motion.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    document.documentElement.classList.add('reveal-on');
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }, { rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.bb-tile, .bb-cities, .home-rest h2, .home-rest .blk-callout, .home-rest .blk-col, .home-rest .blk-quote, .home-rest .blk-btn').forEach((el) => {
+      const i = [...(el.parentElement?.children ?? [])].indexOf(el);
+      el.style.setProperty('--i', String(Math.min(i, 4)));
+      el.classList.add('rv');
+      io.observe(el);
+    });
+  }
+</script>

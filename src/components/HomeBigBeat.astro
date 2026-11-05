@@ -1,0 +1,114 @@
+---
+// "Big Beat" homepage sections: hero, four audience tiles, city strip.
+// Wording is the approved draft from docs/mockups. Tile links point at existing pages.
+const tiles = [
+  { href: '/early-learning-and-kindergarten-incursions/', note: 'Ages 2–5', label: 'Kindy & Early Learning', img: '/media/2019/02/RC-Kindy-601.jpg' },
+  { href: '/school-incursions/', note: 'Primary & High', label: 'School Incursions', img: '/media/2018/09/A08R7253.jpg' },
+  { href: '/team-building/', note: 'Teams', label: 'Corporate Drumming', img: '/media/2018/05/180321121002_BJA2651.jpg' },
+  { href: '/african-drumming-classes/', note: 'Sunshine Coast', label: 'Weekly Classes', img: '/media/2021/07/BecAfro-02-scaled.jpg' },
+];
+const cities = ['Sunshine Coast', 'Brisbane', 'Melbourne', 'Sydney', 'Perth', 'Adelaide'];
+---
+<div class="bb">
+  <section class="bb-hero">
+    <img class="bb-hero__img" src="/media/2018/09/A08R7271-e1550205581543.jpg" alt="" fetchpriority="high" />
+    <div class="bb-hero__inner">
+      <h1>Bring the drums <span>to your school</span></h1>
+      <p>African drumming &amp; dance incursions, workshops and classes across Australia.</p>
+      <div class="bb-actions">
+        <a class="btn" href="/quick-quote/">Get a quick quote</a>
+        <a class="btn bb-btn-green" href="/drum-sing-dance-program/">See programs</a>
+      </div>
+    </div>
+  </section>
+
+  <nav class="bb-tiles" aria-label="Choose your program">
+    {tiles.map((t) => (
+      <a class="bb-tile" href={t.href}>
+        <img src={t.img} alt="" loading="lazy" />
+        <span class="bb-tile__text"><small>{t.note}</small>{t.label}</span>
+      </a>
+    ))}
+  </nav>
+
+  <section class="bb-strip">
+    <div class="bb-strip__inner">
+      <p class="bb-cities">
+        {cities.map((c, i) => (<><span>{c}</span>{i < cities.length - 1 && <i aria-hidden="true">·</i>}</>))}
+      </p>
+      <a class="btn" href="/quick-quote/">Book now</a>
+    </div>
+  </section>
+</div>
+
+<style>
+  .bb {
+    --bb-gap: clamp(24px, 3.2vw, 48px);
+    --bb-frame: min(100% - 2 * var(--gutter), 1240px);
+    --bb-rest: clamp(64px, 9vw, 128px);
+    --bb-ease: cubic-bezier(.22, 1, .36, 1);
+  }
+
+  /* hero: tall, calm, text anchored low-left with plenty of room around it */
+  .bb-hero {
+    position: relative; isolation: isolate; overflow: clip; display: flex; align-items: flex-end;
+    min-height: clamp(520px, 80vh, 780px); background: #333; color: #fff;
+  }
+  .bb-hero__img { animation: bb-settle 1.8s var(--bb-ease) both; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; border-radius: 0; }
+  .bb-hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgb(0 0 0 / .82), rgb(0 0 0 / .5) 40%, rgb(0 0 0 / .12) 72%); }
+  .bb-hero__inner {
+    width: var(--bb-frame); margin: 0 auto;
+    padding: clamp(96px, 14vw, 180px) 0 clamp(56px, 8vw, 112px);
+    animation: bb-rise .8s var(--bb-ease) both;
+  }
+  .bb-hero h1 { color: #fff; font-size: clamp(2.6rem, 1.4rem + 5.2vw, 5.4rem); line-height: 1.04; max-width: 13ch; margin: 0 0 .45em; }
+  .bb-hero h1 span { color: var(--green); } /* green only on the dark scrim */
+  .bb-hero p { color: #fff; font-size: clamp(1.05rem, .95rem + .5vw, 1.3rem); line-height: 1.6; max-width: 34rem; margin: 0 0 clamp(28px, 3.5vw, 44px); }
+  .bb-actions { display: flex; flex-wrap: wrap; gap: 16px 20px; }
+  .bb-btn-green { background: var(--green); color: var(--ink); }
+  .bb-btn-green:hover { background: #8fe83a; }
+
+  /* tiles: air on every side, the gap between photos is the point */
+  .bb-tiles {
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--bb-gap);
+    width: var(--bb-frame); margin: 0 auto; padding: var(--bb-rest) 0;
+  }
+  .bb-tile {
+    position: relative; display: flex; align-items: flex-end; overflow: hidden; isolation: isolate;
+    aspect-ratio: 4 / 5; padding: clamp(20px, 2.2vw, 32px); border-radius: 18px;
+    background: #333; color: #fff; font-weight: 700; font-size: clamp(1.05rem, .95rem + .35vw, 1.3rem); line-height: 1.25;
+    transition: transform .35s var(--bb-ease);
+  }
+  .bb-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; border-radius: 0; transition: transform .6s var(--bb-ease); }
+  .bb-tile::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgb(0 0 0 / .78), rgb(0 0 0 / .1) 62%); }
+  .bb-tile__text small { display: block; margin-bottom: .35em; font-weight: 600; font-size: .85em; color: var(--green); }
+  .bb-tile:hover { text-decoration: none; }
+  .bb-tile:active { transform: scale(.985); }
+  @media (hover: hover) and (pointer: fine) {
+    .bb-tile:hover img { transform: scale(1.05); }
+  }
+
+  /* city strip */
+  .bb-strip { background: var(--dark); color: #fff; padding: clamp(56px, 8vw, 112px) 0; }
+  .bb-strip__inner {
+    width: var(--bb-frame); margin: 0 auto;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 40px clamp(32px, 6vw, 96px);
+  }
+  .bb-cities { flex: 1 1 28rem; display: flex; flex-wrap: wrap; gap: .3em .7em; margin: 0; font-family: var(--display); font-size: clamp(1.25rem, .9rem + 1.4vw, 2.4rem); line-height: 1.25; color: var(--green); }
+  .bb-cities i { font-style: normal; opacity: .55; }
+
+  @media (max-width: 1100px) { .bb-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } .bb-tile { aspect-ratio: 5 / 4; } }
+  @media (max-width: 640px) {
+    .bb-tiles { grid-template-columns: minmax(0, 1fr); }
+    .bb-tile { aspect-ratio: 16 / 11; }
+    .bb-hero { min-height: clamp(480px, 82svh, 640px); }
+    .bb-actions .btn { flex: 1 1 100%; text-align: center; }
+  }
+  @keyframes bb-settle { from { transform: scale(1.06); } }
+  @keyframes bb-rise { from { opacity: 0; transform: translateY(16px); } }
+  @media (prefers-reduced-motion: reduce) {
+    .bb-hero__inner, .bb-hero__img { animation: none; }
+    .bb-tile, .bb-tile img { transition: none; }
+    .bb-tile:hover img { transform: none; }
+  }
+</style>
