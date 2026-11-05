@@ -17,6 +17,7 @@ img { max-width: 100%; height: auto; }
 a { color: var(--red); font-weight: 500; text-decoration: none; }
 a:hover { text-decoration: underline; }
 h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: 1.15; margin: 0 0 .5em; color: var(--ink); text-wrap: balance; }
+h3 { font-weight: 700; } /* Assegai has one weight, so the browser thickens it */
 h1 { font-size: clamp(2.1rem, 1.5rem + 2.6vw, 3.4rem); }
 h2 { font-size: clamp(1.7rem, 1.35rem + 1.5vw, 2.5rem); }
 h3 { font-size: clamp(1.25rem, 1.15rem + .4vw, 1.5rem); }
@@ -207,7 +208,7 @@ body:has(main > .bb:first-child, main > .content > .blk-hero:first-child) .site-
 .blk-feature { text-align: center; }
 .blk-feature__icon { display: block; width: 64px; height: 64px; margin: 0 auto 14px; color: var(--red); }
 .blk-feature__icon svg { width: 100%; height: 100%; display: block; }
-.blk-feature :is(h3, h4) { font-family: 'Open Sans', sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; margin-bottom: .35em; }
+.blk-feature :is(h3, h4) { font-family: 'Open Sans', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: .35em; }
 .blk-feature p { font-size: .95rem; color: var(--muted); }
 .blk-hero .blk-feature p { color: #fff; }
 
@@ -318,3 +319,18 @@ body:has(main > .bb:first-child, main > .content > .blk-hero:first-child) .site-
 /* a page that ends on a coloured band runs straight into the footer */
 .content > .blk-section:last-child { margin-bottom: 0; }
 .content:has(> .blk-section:last-child) { padding-bottom: 0; }
+
+/* text beside a photo: the photo is cropped top and bottom to match the height of the text */
+@media (min-width: 681px) {
+  .home-rest .blk-cols.n-2.v-center:not(.is-gallery) > .blk-col:has(> p > img:only-child) { position: relative; align-self: stretch; min-height: 340px; }
+  .home-rest .blk-cols.n-2.v-center:not(.is-gallery) > .blk-col > p:has(> img:only-child) { position: absolute; inset: 0; margin: 0; }
+  .home-rest .blk-cols.n-2.v-center:not(.is-gallery) > .blk-col > p > img:only-child { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+}
+@media (max-width: 680px) { .home-rest .blk-cols.n-2.v-center:not(.is-gallery) > .blk-col > p > img:only-child { aspect-ratio: 4 / 3; object-fit: cover; width: 100%; } }
+
+/* three short points in a row of cards (the quick read of the Drum Sing Dance program) */
+.home-rest .blk-cols.n-3 > .blk-col > .blk-feature { height: 100%; padding: clamp(28px, 3vw, 44px) clamp(22px, 2.4vw, 36px); background: var(--grey); border-radius: 22px; transition: translate .3s var(--ease-out), box-shadow .3s var(--ease-out); }
+.home-rest .blk-cols.n-3 > .blk-col > .blk-feature h3 { text-transform: none; letter-spacing: 0; font-family: var(--display); font-size: 1.35rem; font-weight: 700; line-height: 1.2; margin-bottom: .5em; color: var(--ink); }
+@media (hover: hover) { .home-rest .blk-cols.n-3 > .blk-col > .blk-feature:hover { translate: 0 -4px; box-shadow: 0 14px 30px rgb(0 0 0 / .1); } }
+@media (prefers-reduced-motion: reduce) { .home-rest .blk-cols.n-3 > .blk-col > .blk-feature { transition: none; } }
+@media (max-width: 680px) { .home-rest .blk-cols.n-3:has(> .blk-col > .blk-feature) { grid-template-columns: minmax(0, 1fr); gap: 16px; } }
