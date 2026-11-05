@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { NAV } from '../lib/nav';
+import Footer from '../components/Footer.astro';
 const { title, description = '' } = Astro.props;
 ---
 <!doctype html>
@@ -52,13 +53,7 @@ const { title, description = '' } = Astro.props;
       </div>
     </header>
     <main><slot /></main>
-    <footer class="site-footer">
-      <div class="wrap">
-        <p class="foot-links"><a href="/blog/">Blog</a> · <a href="/workshops/">Workshops</a> · <a href="/events/">Events</a> · <a href="/shop/">Shop</a> · <a href="/contact-us-2/">Contact</a></p>
-        <p><a href="tel:0434585992">0434 585 992</a> · Palmwoods, Sunshine Coast, Queensland</p>
-        <p>© 2012–{new Date().getFullYear()} Rhythm Culture</p>
-      </div>
-    </footer>
+    <Footer />
     <div class="dock">
       <a class="dock-call" href="tel:0434585992">Call us</a>
       <a class="btn" href="/quick-quote/">Get a quote</a>

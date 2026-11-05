@@ -101,7 +101,6 @@ body:has(main > .bb:first-child, main > .content > .blk-hero:first-child) .site-
   body { padding-bottom: calc(72px + env(safe-area-inset-bottom)); }
 }
 @media (prefers-reduced-motion: reduce) { .has-sub:hover > .sub, .has-sub:focus-within > .sub { animation: none; } }
-.foot-links { margin-bottom: 1em; }
 
 /* page content: a centred column; blocks marked "bleed" span the full window */
 .content {
@@ -260,8 +259,6 @@ body:has(main > .bb:first-child, main > .content > .blk-hero:first-child) .site-
 .meta { font-size: 13px; color: #777; }
 
 /* footer */
-.site-footer { background: var(--dark); color: #ddd; padding: 40px 0; font-size: 14px; text-align: center; }
-.site-footer a { color: #fff; }
 
 /* headings inside columns stay left-aligned and smaller than section titles */
 .blk-col > h2 { font-size: clamp(1.35rem, 1.2rem + .6vw, 1.7rem); }
@@ -317,3 +314,7 @@ body:has(main > .bb:first-child, main > .content > .blk-hero:first-child) .site-
 .blk-q__body { padding: 0 26px 24px; }
 .blk-q__body > :last-child { margin-bottom: 0; }
 @media (prefers-reduced-motion: reduce) { .blk-q, .blk-q summary::after { transition: none; } }
+
+/* a page that ends on a coloured band runs straight into the footer */
+.content > .blk-section:last-child { margin-bottom: 0; }
+.content:has(> .blk-section:last-child) { padding-bottom: 0; }
