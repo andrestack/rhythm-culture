@@ -1,0 +1,15 @@
+source,target,code,regex,hits_to_05_11
+/dundun-dance-classes/,/dance-classes/,301,no,20
+/teachers-2/,/about/#team,301,no,10
+/contact-us/,/contact-us-2/,301,no,8
+^/classes/16973-2/(.*)$,/classes/student-resources/$1,301,yes,8
+/more-workshops/,/workshops/,301,no,7
+/nathaniel-full-bio/,/about/#team,301,no,7
+/full-bio-bec/,/about/#team,301,no,6
+/more-artists/,/about/,301,no,6
+/school-kindergarten/,/school-incursions/,301,no,6
+/more-classes/,/classes/,301,no,6
+/classes-calender/,/classes/,301,no,3
+/bassidi-full-bio/,/about/,301,no,2
+/full-bio-amadou/,/about/,301,no,2
+/product/12-class-pass-drum-dance-classes/,/product-category/rhythm-culture-drum-dance-classes/,301,no,2
