@@ -11,6 +11,8 @@ export default defineConfig({
   integrations: [react(), keystatic()],
   trailingSlash: 'ignore',
   devToolbar: { enabled: false },
+  // Put the stylesheet in the page itself: one less file to wait for before the first paint.
+  build: { inlineStylesheets: 'always' },
   // WooCommerce URLs that no longer exist.
   redirects: {
     '/cart': '/shop/',
