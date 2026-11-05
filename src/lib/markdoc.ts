@@ -12,6 +12,13 @@ const bgStyle = (image?: string) => (image ? `--bg: url("${css(image)}")` : unde
 const kids = (node: Node, config: Config) => node.transformChildren(config);
 
 export const markdocConfig: Config = {
+  // Pictures further down the page load as they are scrolled to; this keeps the first screen quick.
+  nodes: {
+    image: {
+      ...Markdoc.nodes.image,
+      attributes: { ...Markdoc.nodes.image.attributes, loading: { type: String, default: 'lazy' }, decoding: { type: String, default: 'async' } },
+    },
+  },
   tags: {
     hero: {
       attributes: {

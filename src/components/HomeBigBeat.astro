@@ -2,16 +2,16 @@
 // "Big Beat" homepage sections: hero, four audience tiles, city strip.
 // Wording is the approved draft from docs/mockups. Tile links point at existing pages.
 const tiles = [
-  { href: '/early-learning-and-kindergarten-incursions/', note: 'Ages 2–5', label: 'Kindy & Early Learning', img: '/media/2019/02/RC-Kindy-601.jpg' },
-  { href: '/school-incursions/', note: 'Primary & High', label: 'School Incursions', img: '/media/2018/09/A08R7253.jpg' },
-  { href: '/team-building/', note: 'Teams', label: 'Corporate Drumming', img: '/media/2018/05/180321121002_BJA2651.jpg' },
-  { href: '/african-drumming-classes/', note: 'Sunshine Coast', label: 'Weekly Classes', img: '/media/2021/07/BecAfro-02-scaled.jpg' },
+  { href: '/early-learning-and-kindergarten-incursions/', note: 'Ages 2–5', label: 'Kindy & Early Learning', img: '/media/2019/02/RC-Kindy-601.webp' },
+  { href: '/school-incursions/', note: 'Primary & High', label: 'School Incursions', img: '/media/2018/09/A08R7253.webp' },
+  { href: '/team-building/', note: 'Teams', label: 'Corporate Drumming', img: '/media/2018/05/180321121002_BJA2651.webp' },
+  { href: '/african-drumming-classes/', note: 'Sunshine Coast', label: 'Weekly Classes', img: '/media/2021/07/BecAfro-02-scaled.webp' },
 ];
 const cities = ['Sunshine Coast', 'Brisbane', 'Melbourne', 'Sydney', 'Perth', 'Adelaide'];
 ---
 <div class="bb">
   <section class="bb-hero">
-    <img class="bb-hero__img" src="/media/2018/09/A08R7271-e1550205581543.jpg" alt="" fetchpriority="high" />
+    <img class="bb-hero__img" src="/media/2018/09/A08R7271-e1550205581543.webp" alt="" fetchpriority="high" />
     <div class="bb-hero__inner">
       <h1>Bring the drums <span>to your school</span></h1>
       <p>African drumming &amp; dance incursions, workshops and classes across Australia.</p>
@@ -105,7 +105,7 @@ const cities = ['Sunshine Coast', 'Brisbane', 'Melbourne', 'Sydney', 'Perth', 'A
     .bb-actions .btn { flex: 1 1 100%; text-align: center; }
   }
   @keyframes bb-settle { from { transform: scale(1.06); } }
-  @keyframes bb-rise { from { opacity: 0; transform: translateY(16px); } }
+  @keyframes bb-rise { from { transform: translateY(16px); } } /* movement only: text that starts invisible delays the first paint */
   @media (prefers-reduced-motion: reduce) {
     .bb-hero__inner, .bb-hero__img { animation: none; }
     .bb-tile, .bb-tile img { transition: none; }
