@@ -90,6 +90,21 @@ export const markdocConfig: Config = {
         ]);
       },
     },
+    faq: {
+      transform(node, config) {
+        return new Tag('div', { class: 'blk-faq' }, kids(node, config));
+      },
+    },
+    question: {
+      attributes: { title: { type: String, required: true } },
+      transform(node, config) {
+        const a = node.transformAttributes(config);
+        return new Tag('details', { class: 'blk-q' }, [
+          new Tag('summary', {}, [a.title]),
+          new Tag('div', { class: 'blk-q__body' }, kids(node, config)),
+        ]);
+      },
+    },
     button: {
       selfClosing: true,
       attributes: {

@@ -1,0 +1,102 @@
+---
+// Site-wide footer: every page and sub page, the logo, contact details and a photo.
+const groups = [
+  { title: 'Incursions', links: [
+    ['School incursions', '/school-incursions/'],
+    ['Sunshine Coast schools', '/school-incursions/school-incursion-sunshine-coast/'],
+    ['Kindergartens', '/early-learning-and-kindergarten-incursions/'],
+    ['Vacation care', '/vacation-care/'],
+    ['Team building', '/team-building/'],
+  ] },
+  { title: 'Classes & camps', links: [
+    ['All classes', '/classes/'],
+    ['Drumming classes', '/african-drumming-classes/'],
+    ['Dance classes', '/dance-classes/'],
+    ['Camp Afro Foli', '/camp-afro-foli-drum-dance-retreat/'],
+    ['Drum & dance ensemble', '/community/'],
+  ] },
+  { title: 'Events & more', links: [
+    ['Events', '/events/'],
+    ['Workshops', '/workshops/'],
+    ['Testimonials', '/testimonials/'],
+    ['Blog', '/blog/'],
+    ['Shop', '/shop/'],
+  ] },
+  { title: 'About', links: [
+    ['About us', '/about/'],
+    ['Contact us', '/contact-us-2/'],
+    ['Get a quote', '/quick-quote/'],
+  ] },
+];
+---
+<footer class="mfoot">
+  <div class="mfoot-in">
+    <div class="mfoot-top">
+      <div class="mfoot-brand">
+        <a class="mfoot-logo" href="/" aria-label="Rhythm Culture, home"><img src="/media/2017/11/Circle-final.png" alt="" width="60" height="60" /><span>Rhythm Culture</span></a>
+        <p>African drumming &amp; dance incursions, workshops and classes. Based on the Sunshine Coast, serving schools Australia-wide.</p>
+        <p class="mfoot-contact">
+          <a href="tel:0434585992">0434 585 992</a><br />
+          <a href="mailto:info@rhythmculture.com.au">info@rhythmculture.com.au</a>
+        </p>
+        <a class="btn" href="/quick-quote/">Get a quote</a>
+      </div>
+
+      <figure class="mfoot-photo">
+        <img src="/media/2023/03/homepageimage2-scaled.webp" alt="A Rhythm Culture artist leading a circle of students on djembes in a school hall" width="2048" height="1208" loading="lazy" />
+      </figure>
+    </div>
+
+    <nav class="mfoot-cols" aria-label="All pages">
+      {groups.map((g) => (
+        <div>
+          <h2>{g.title}</h2>
+          <ul>{g.links.map(([t, h]) => <li><a href={h}>{t}</a></li>)}</ul>
+        </div>
+      ))}
+    </nav>
+
+    <div class="mfoot-base">
+      <p>© 2012–{new Date().getFullYear()} Rhythm Culture · Palmwoods, Sunshine Coast, Queensland</p>
+      <p><a href="https://www.facebook.com/drumsingdance/">Facebook</a> · <a href="https://www.instagram.com/rhythmculturedrumsingdance/">Instagram</a></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .mfoot { background: var(--dark); color: #fff; font-family: var(--display); font-size: 20px; line-height: 1.5; overflow: clip; }
+  .mfoot-in { width: min(100% - 2 * var(--gutter), 1240px); margin: 0 auto; padding: clamp(64px, 8vw, 112px) 0 clamp(32px, 4vw, 48px); }
+  .mfoot a { color: #fff; font-weight: 400; }
+  .mfoot a:hover { color: var(--green); text-decoration: none; }
+  .mfoot a:focus-visible, .mfoot button:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; border-radius: 8px; }
+  .mfoot .btn { font-family: 'Open Sans', sans-serif; font-size: 1.05rem; color: #fff; }
+  .mfoot .btn:hover { color: #fff; }
+
+  .mfoot-top { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(40px, 6vw, 96px); align-items: center; padding-bottom: clamp(48px, 6vw, 88px); }
+  .mfoot-logo { display: inline-flex; align-items: center; gap: 14px; font-size: 1.9em; line-height: 1; }
+  .mfoot-logo img { display: block; height: 60px; width: 60px; border-radius: 0; transition: rotate .8s var(--ease-out); }
+  .mfoot-logo:hover img { rotate: 90deg; }
+  @media (prefers-reduced-motion: reduce) { .mfoot-logo img { transition: none; } .mfoot-logo:hover img { rotate: none; } }
+  .mfoot-brand p { margin: 1.2em 0; max-width: 28rem; }
+  .mfoot-brand .mfoot-contact { margin: 1.4em 0 1.8em; }
+
+  .mfoot-photo { margin: 0; }
+  .mfoot-photo img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: 30% 50%; border-radius: 28px; }
+
+  .mfoot-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px clamp(24px, 4vw, 64px); padding: clamp(40px, 5vw, 64px) 0; border-top: 1px solid rgb(255 255 255 / .16); }
+  .mfoot-cols h2 { margin: 0 0 .6em; color: var(--green); font-size: 1em; font-weight: 400; line-height: 1.3; }
+  .mfoot-cols ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .3em; }
+  .mfoot-cols a { display: inline-block; padding: .1em 0; transition: translate .2s var(--ease-out), color .2s; }
+  .mfoot-cols a:hover { translate: 4px 0; }
+
+  .mfoot-base { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; padding-top: 28px; border-top: 1px solid rgb(255 255 255 / .16); font-size: .8em; color: #ccc; }
+  .mfoot-base p { margin: 0; }
+  .mfoot-base a { color: #ccc; text-decoration: underline; text-underline-offset: 3px; }
+
+  @media (max-width: 960px) {
+    .mfoot-top { grid-template-columns: minmax(0, 1fr); }
+    .mfoot-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 520px) { .mfoot-cols { grid-template-columns: minmax(0, 1fr); } }
+  @media (prefers-reduced-motion: reduce) { .mfoot-cols a:hover { translate: none; } }
+</style>

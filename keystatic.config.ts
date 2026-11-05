@@ -62,6 +62,17 @@ const components = {
     description: 'A client quote on a grey card. Put it inside a Testimonials grid.',
     schema: { name: fields.text({ label: 'Name' }), role: fields.text({ label: 'Role and organisation' }) },
   }),
+  faq: repeating({
+    label: 'Questions and answers',
+    description: 'A list of questions that open to show the answer. Holds any number of Questions.',
+    children: ['question'],
+    schema: {},
+  }),
+  question: wrapper({
+    label: 'Question',
+    description: 'One question (the title) with its answer inside. Put it in a Questions and answers list.',
+    schema: { title: fields.text({ label: 'Question', validation: { length: { min: 1 } } }) },
+  }),
   button: block({
     label: 'Button',
     description: 'A red button, e.g. "Request a quote" → /quick-quote/',
