@@ -32,20 +32,20 @@ export default defineConfig({
   // Redirects set up on WordPress (Redirection plugin), carried over 05/11/2026.
   redirects: {
     '/dundun-dance-classes': '/dance-classes/',
-    '/teachers-2': '/about/#team',
+    '/teachers-2': '/about/',
     '/contact-us': '/contact-us-2/',
     '/more-workshops': '/workshops/',
-    '/nathaniel-full-bio': '/about/#team',
-    '/full-bio-bec': '/about/#team',
+    '/nathaniel-full-bio': '/about/',
+    '/full-bio-bec': '/about/',
     '/more-artists': '/about/',
     '/school-kindergarten': '/school-incursions/',
     '/more-classes': '/classes/',
     '/classes-calender': '/classes/',
     '/bassidi-full-bio': '/about/',
     '/full-bio-amadou': '/about/',
-    '/classes/16973-2/drum-and-dance-2025': '/classes/student-resources/drum-and-dance-2025/',
-    '/classes/16973-2/drum-and-dance-2025/classes-february-to-april': '/classes/student-resources/drum-and-dance-2025/classes-february-to-april/',
-    '/classes/16973-2': '/classes/student-resources/',
+    // Student video pages are password-protected on WordPress and not published here yet; send visitors to Classes.
+    ...Object.fromEntries(['16973-2', 'student-resources'].flatMap((d) => ['', '/drum-and-dance-2025', '/drum-and-dance-2025/classes-february-to-april']
+      .map((sub) => [`/classes/${d}${sub}`, '/classes/']))),
     '/product/12-class-pass-drum-dance-classes': '/shop/',
     // WooCommerce URLs that no longer exist.
     '/cart': '/shop/',

@@ -43,7 +43,7 @@ function read(d: string): Entry[] {
 // Utility pages that belonged to WooCommerce / WP, or stale student-only pages.
 const HIDE = new Set([
   '/cart/', '/checkout/', '/my-account/', '/test-page/', '/shop/', '/shop-2/',
-  '/classes/16973-2/', '/classes/16973-2/drum-and-dance-2025/', '/classes/16973-2/drum-and-dance-2025/classes-february-to-april/',
+  '/classes/student-resources/', '/classes/student-resources/drum-and-dance-2025/', '/classes/student-resources/drum-and-dance-2025/classes-february-to-april/',
 ]);
 
 export const pages = () => read('pages').filter((p) => !HIDE.has(p.link));
