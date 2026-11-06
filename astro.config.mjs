@@ -2,13 +2,29 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import vercel from '@astrojs/vercel';
 import keystatic from '@keystatic/astro';
+import fs from 'node:fs';
+
+// Vercel matches a redirect like "/cart" exactly, so "/cart/" (how old WordPress links end) would 404.
+// After the build, let every redirect also match with a trailing slash.
+const redirectSlashes = {
+  name: 'redirect-slashes',
+  hooks: {
+    'astro:build:done': () => {
+      const file = new URL('./.vercel/output/config.json', import.meta.url);
+      if (!fs.existsSync(file)) return;
+      const cfg = JSON.parse(fs.readFileSync(file, 'utf8'));
+      for (const r of cfg.routes) if (r.status >= 300 && r.status < 400 && r.src?.endsWith('$') && !r.src.endsWith('/?$')) r.src = r.src.replace(/\/?\$$/, '/?$');
+      fs.writeFileSync(file, JSON.stringify(cfg, null, 2));
+    },
+  },
+};
 
 // Site pages prerender to static HTML; only /keystatic (admin) and /api/form run on demand.
 export default defineConfig({
   site: 'https://rhythmculture.com.au',
   output: 'static',
   adapter: vercel(),
-  integrations: [react(), keystatic()],
+  integrations: [react(), keystatic(), redirectSlashes],
   trailingSlash: 'ignore',
   devToolbar: { enabled: false },
   // Put the stylesheet in the page itself: one less file to wait for before the first paint.
