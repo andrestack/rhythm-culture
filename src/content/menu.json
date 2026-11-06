@@ -11,7 +11,7 @@
     "parent": "122",
     "order": 2,
     "title": "Teachers",
-    "url": "/teachers-2/"
+    "url": "/about/#team"
   },
   {
     "id": "226",
@@ -39,14 +39,14 @@
     "parent": "122",
     "order": 6,
     "title": "More Artists",
-    "url": "/more-artists/"
+    "url": "/about/"
   },
   {
     "id": "150",
     "parent": "137",
     "order": 7,
     "title": "Bassidi Koné",
-    "url": "/more-artists/#basidi"
+    "url": "/about/#basidi"
   },
   {
     "id": "125",
@@ -81,49 +81,49 @@
     "parent": "128",
     "order": 12,
     "title": "Dundun Dance Class",
-    "url": "/dundun-dance-classes/"
+    "url": "/dance-classes/"
   },
   {
     "id": "16984",
     "parent": "128",
     "order": 13,
     "title": "Student Video Resources",
-    "url": "/classes/16973-2/"
+    "url": "/classes/student-resources/"
   },
   {
     "id": "17717",
     "parent": "16984",
     "order": 14,
     "title": "Drum and Dance 2025",
-    "url": "/classes/16973-2/drum-and-dance-2025/"
+    "url": "/classes/student-resources/drum-and-dance-2025/"
   },
   {
     "id": "17716",
     "parent": "17717",
     "order": 15,
     "title": "Classes February to April",
-    "url": "/classes/16973-2/drum-and-dance-2025/classes-february-to-april/"
+    "url": "/classes/student-resources/drum-and-dance-2025/classes-february-to-april/"
   },
   {
     "id": "138",
     "parent": "128",
     "order": 16,
     "title": "More Classes",
-    "url": "/more-classes/"
+    "url": "/classes/"
   },
   {
     "id": "168",
     "parent": "138",
     "order": 17,
     "title": "Free Online Drum Classes",
-    "url": "/more-classes/#freeonlinedrum"
+    "url": "/classes/#freeonlinedrum"
   },
   {
     "id": "16233",
     "parent": "0",
     "order": 18,
     "title": "Incursions",
-    "url": "/school-kindergarten/"
+    "url": "/school-incursions/"
   },
   {
     "id": "9159",
@@ -186,14 +186,14 @@
     "parent": "222",
     "order": 27,
     "title": "Hens Dance Parties",
-    "url": "/more-workshops/#hens"
+    "url": "/workshops/#hens"
   },
   {
     "id": "176",
     "parent": "222",
     "order": 28,
     "title": "Kids Drum & Dance Parties",
-    "url": "/more-workshops/#kids"
+    "url": "/workshops/#kids"
   },
   {
     "id": "177",
@@ -214,7 +214,7 @@
     "parent": "222",
     "order": 31,
     "title": "All Abilities / Disabilities",
-    "url": "/more-workshops/#disabilities"
+    "url": "/workshops/#disabilities"
   },
   {
     "id": "143",

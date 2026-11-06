@@ -13,8 +13,25 @@ export default defineConfig({
   devToolbar: { enabled: false },
   // Put the stylesheet in the page itself: one less file to wait for before the first paint.
   build: { inlineStylesheets: 'always' },
-  // WooCommerce URLs that no longer exist.
+  // Redirects set up on WordPress (Redirection plugin), carried over 05/11/2026.
   redirects: {
+    '/dundun-dance-classes': '/dance-classes/',
+    '/teachers-2': '/about/#team',
+    '/contact-us': '/contact-us-2/',
+    '/more-workshops': '/workshops/',
+    '/nathaniel-full-bio': '/about/#team',
+    '/full-bio-bec': '/about/#team',
+    '/more-artists': '/about/',
+    '/school-kindergarten': '/school-incursions/',
+    '/more-classes': '/classes/',
+    '/classes-calender': '/classes/',
+    '/bassidi-full-bio': '/about/',
+    '/full-bio-amadou': '/about/',
+    '/classes/16973-2/drum-and-dance-2025': '/classes/student-resources/drum-and-dance-2025/',
+    '/classes/16973-2/drum-and-dance-2025/classes-february-to-april': '/classes/student-resources/drum-and-dance-2025/classes-february-to-april/',
+    '/classes/16973-2': '/classes/student-resources/',
+    '/product/12-class-pass-drum-dance-classes': '/shop/',
+    // WooCommerce URLs that no longer exist.
     '/cart': '/shop/',
     '/checkout': '/shop/',
     '/my-account': '/',
