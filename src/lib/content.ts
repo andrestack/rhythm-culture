@@ -40,11 +40,14 @@ function read(d: string): Entry[] {
   });
 }
 
-// Utility pages that belonged to WooCommerce / WP, or stale student-only pages.
+// Pages not built from the pages collection (/shop/ has its own route), or stale student-only pages.
 const HIDE = new Set([
-  '/cart/', '/checkout/', '/my-account/', '/test-page/', '/shop/', '/shop-2/',
+  '/shop/',
   '/classes/student-resources/', '/classes/student-resources/drum-and-dance-2025/', '/classes/student-resources/drum-and-dance-2025/classes-february-to-april/',
 ]);
+
+// Pages sent to students after they sign up: they work, but stay out of Google.
+export const NOINDEX = new Set(['/welcome/', '/level-up/', '/did-you-enjoy-your-class/', '/what-to-bring-what-to-expect/']);
 
 export const pages = () => read('pages').filter((p) => !HIDE.has(p.link));
 export const posts = () => read('posts').sort((a, b) => b.date.localeCompare(a.date));

@@ -52,6 +52,10 @@ export default defineConfig({
     '/checkout': '/shop/',
     '/my-account': '/',
     '/shop-2': '/shop/',
+    // Old WordPress pages Nat agreed to drop (10/11/2026).
+    '/test-page': '/',
+    '/mobile-booking-page': '/booking-form/',
+    '/mobile-booking-page-2': '/booking-form/',
     ...Object.fromEntries([
       'product-category/africandrums', 'product-category/camp-afro-foli', 'product-category/percussion',
       'product-category/rhythm-culture-drum-dance-classes', 'product-category/rhythm-culture-events',
