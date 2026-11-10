@@ -6,7 +6,7 @@
 /* Brand: kept from the WordPress site. Green is decoration only (1.7:1 on white fails as text);
    red #e02b20 passes AA on white (4.6:1) and white passes on red. */
 :root {
-  --green: #7cda24; --red: #e02b20; --red-dark: #b81e15;
+  --green: #7cda24; --green-deep: #357a0e; --red: #e02b20; --red-dark: #b81e15;
   --ink: #282828; --muted: #595959; --dark: #222; --grey: #f5f5f5; --line: #e6e6e6;
   --max: 1080px; --gutter: 20px;
   --space: clamp(48px, 6vw, 88px);
@@ -139,10 +139,29 @@ body:has(main > .bb:first-child, main > .content > .blk-hero:first-child) .site-
 .home-rest .blk-col > .blk-btn.is-left { margin-top: 2em; }
 .home-rest .blk-callout { margin: 1.6em auto 2.4em; }
 .home-rest .blk-quotes { gap: clamp(24px, 3vw, 40px); }
-/* small italic line above a heading becomes a quiet label */
-.home-rest .blk-col > p:has(> em:only-child) { margin: 0 0 .8em; }
-.home-rest .blk-col > p > em:only-child { font-style: normal; font-size: 1rem; font-weight: 600; color: var(--muted); }
-.home-rest .blk-section.is-dark .blk-col > p > em:only-child { color: var(--green); } /* green only on dark */
+/* small italic line above a heading becomes a green capitals label.
+   Bright green only on dark; on light backgrounds a deeper green so it stays readable (5:1). */
+.home-rest :is(.blk-col, .blk-section__inner) > p:has(> em:only-child) { margin: 0 0 .8em; }
+.home-rest > p:has(> em:only-child) { margin: 0 0 .6em; text-align: center; }
+.home-rest > p:has(> em:only-child) + h2 { margin-top: 0; }
+.home-rest :is(.blk-col, .blk-section__inner) > p > em:only-child, .home-rest > p > em:only-child {
+  font-style: normal; font-size: .9rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--green-deep); }
+.home-rest .blk-section.is-dark :is(.blk-col, .blk-section__inner) > p > em:only-child { color: var(--green); }
+
+/* column cards: dark box with green heading, or white box (sits best on a grey band) */
+.blk-col.is-card { border-radius: 18px; padding: clamp(28px, 3vw, 44px); }
+.blk-col.is-card > :last-child { margin-bottom: 0; }
+.blk-col.card-dark { background: var(--dark); color: #fff; }
+.blk-col.card-dark :is(h3, h4) { color: var(--green); margin-top: 0; }
+.blk-col.card-dark a { color: #fff; text-decoration: underline; }
+.blk-col.card-light { background: #fff; align-self: start; }
+.blk-col.card-light > h3:first-child { margin-top: 0; }
+/* numbered list in a card: red number circles */
+.blk-col.is-card ol { list-style: none; counter-reset: step; padding: 0; margin: 1.4em 0; }
+.blk-col.is-card ol > li { counter-increment: step; position: relative; padding-left: 3.2em; margin-bottom: 1.1em; }
+.blk-col.is-card ol > li::before {
+  content: counter(step); position: absolute; left: 0; top: .1em; width: 2.2em; height: 2.2em; border-radius: 50%;
+  display: grid; place-items: center; background: var(--red); color: #fff; font-weight: 700; font-size: .85em; line-height: 1; }
 .home-rest .blk-section.is-dark .blk-col > h2 { margin-top: 0; }
 .home-rest .blk-col > h2 { margin-top: 0; text-align: left; }
 .home-rest .blk-section.is-red { text-align: center; }

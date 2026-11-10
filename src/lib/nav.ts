@@ -23,7 +23,7 @@ export const NAV: NavItem[] = [
       { title: 'School drum sets', href: '/shop/', note: 'Djembes and dunduns for schools', img: '/media/nav/sets.webp' },
     ],
   },
-  { title: 'Events', href: '/events/' },
+  { title: 'Team building', href: '/team-building/' },
   { title: 'About', href: '/about/' },
   { title: 'Contact', href: '/contact-us-2/' },
 ];
