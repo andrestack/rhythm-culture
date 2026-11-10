@@ -2,7 +2,7 @@
 import '../styles/global.css';
 import { NAV } from '../lib/nav';
 import Footer from '../components/Footer.astro';
-const { title, description = '' } = Astro.props;
+const { title, description = '', noindex = false } = Astro.props;
 ---
 <!doctype html>
 <html lang="en-AU">
@@ -11,6 +11,7 @@ const { title, description = '' } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
