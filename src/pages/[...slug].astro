@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Form from '../components/Form.astro';
+import Reveal from '../components/Reveal.astro';
 import { pages, posts } from '../lib/content';
 
 export function getStaticPaths() {
@@ -11,12 +12,15 @@ export function getStaticPaths() {
     .map(({ e, post }) => ({ params: { slug: e.link.replace(/^\/|\/$/g, '') }, props: { e, post } }));
 }
 const { e, post } = Astro.props;
+// Pages laid out with blocks get the homepage look; posts and old flat pages keep the plain one for now.
+const designed = !post && e.html.includes('class="blk-');
 ---
 <Base title={e.seoTitle || e.title} description={e.description}>
-  <article class="content">
+  <article class={designed ? 'content designed' : 'content'}>
     {post && <h1 class="post-title">{e.title}</h1>}
     {post && <p class="meta post-date">{e.date}</p>}
     <Fragment set:html={e.html} />
     {e.form && <div class="form-wrap"><Form form={e.form} /></div>}
   </article>
+  {designed && <Reveal />}
 </Base>

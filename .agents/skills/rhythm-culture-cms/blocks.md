@@ -17,6 +17,7 @@ Each block is defined in three places that must match: `src/lib/markdoc.ts` (how
 | `button` | A red button. Self-closing (ends with `/%}`). | `label`, `href` (both required), `align` center/left |
 | `banner` | The multicoloured stripe with one line of big text. | `image` (leave out to use the standard stripe) |
 | `callout` | One or two sentences in large red text, centred. | none |
+| `chips` | Wrap a bullet list to show it as small rounded tags (lists of schools, quick benefits). | none |
 | `embed` | A YouTube/Vimeo video, Google map or Facebook post. Self-closing. | `src` (the *embed* link), `title`, `ratio` video/map/post |
 
 ## Examples

@@ -94,6 +94,7 @@ const components = {
     schema: { image: imagePath('Stripe image') },
   }),
   callout: wrapper({ label: 'Red statement', description: 'One or two sentences in large red text, centred.', schema: {} }),
+  chips: wrapper({ label: 'Tags', description: 'Turns a bullet list into small rounded tags, e.g. a list of schools or benefits.', schema: {} }),
   embed: block({
     label: 'Video, map or Facebook post',
     description: 'Paste the embed link (YouTube, Vimeo, Google Maps or Facebook). Other sites are not shown.',

@@ -139,6 +139,11 @@ export const markdocConfig: Config = {
         return new Tag('div', { class: 'blk-callout' }, kids(node, config));
       },
     },
+    chips: {
+      transform(node, config) {
+        return new Tag('div', { class: 'blk-chips' }, kids(node, config));
+      },
+    },
     embed: {
       selfClosing: true,
       attributes: {
