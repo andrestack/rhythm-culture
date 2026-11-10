@@ -65,8 +65,11 @@ export const markdocConfig: Config = {
       },
     },
     column: {
+      attributes: { card: { type: String, default: 'none', matches: ['none', 'dark', 'light'] } },
       transform(node, config) {
-        return new Tag('div', { class: 'blk-col' }, kids(node, config));
+        const a = node.transformAttributes(config);
+        const card = a.card && a.card !== 'none' ? ` is-card card-${a.card}` : '';
+        return new Tag('div', { class: `blk-col${card}` }, kids(node, config));
       },
     },
     feature: {

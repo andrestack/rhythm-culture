@@ -45,7 +45,13 @@ const components = {
       align: fields.select({ label: 'Vertical alignment', options: opts({ top: 'Top', center: 'Middle' }), defaultValue: 'top' }),
     },
   }),
-  column: wrapper({ label: 'Column', forSpecificLocations: true, schema: {} }),
+  column: wrapper({
+    label: 'Column',
+    forSpecificLocations: true,
+    schema: {
+      card: fields.select({ label: 'Card', description: 'Put the column in a rounded box', options: opts({ none: 'No card', dark: 'Dark card', light: 'White card' }), defaultValue: 'none' }),
+    },
+  }),
   feature: wrapper({
     label: 'Feature with icon',
     description: 'A red icon above a short heading and sentence, e.g. "Free drum hire". Put 3 or 4 in Columns.',
