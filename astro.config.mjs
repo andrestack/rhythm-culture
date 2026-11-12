@@ -43,9 +43,10 @@ export default defineConfig({
     '/classes-calender': '/classes/',
     '/bassidi-full-bio': '/about/',
     '/full-bio-amadou': '/about/',
-    // Student video pages are password-protected on WordPress and not published here yet; send visitors to Classes.
-    ...Object.fromEntries(['16973-2', 'student-resources'].flatMap((d) => ['', '/drum-and-dance-2025', '/drum-and-dance-2025/classes-february-to-april']
-      .map((sub) => [`/classes/${d}${sub}`, '/classes/']))),
+    // Student video pages live behind a password at /classes/student-resources/ (src/pages/classes/student-resources).
+    // The old WordPress page id URL points there too. Never redirect /classes/student-resources/ itself: redirects run before the page.
+    ...Object.fromEntries(['', '/drum-and-dance-2025', '/drum-and-dance-2025/classes-february-to-april']
+      .map((sub) => [`/classes/16973-2${sub}`, `/classes/student-resources${sub}/`])),
     '/product/12-class-pass-drum-dance-classes': '/shop/',
     // WooCommerce URLs that no longer exist.
     '/cart': '/shop/',
