@@ -49,6 +49,10 @@ const HIDE = new Set([
 // Pages sent to students after they sign up: they work, but stay out of Google.
 export const NOINDEX = new Set(['/welcome/', '/level-up/', '/did-you-enjoy-your-class/', '/what-to-bring-what-to-expect/']);
 
+// Student video pages: hidden from the static build, served one at a time behind the student password.
+export const studentPage = (link: string) =>
+  read('pages').find((p) => p.link.startsWith('/classes/student-resources/') && p.link === link);
+
 export const pages = () => read('pages').filter((p) => !HIDE.has(p.link));
 export const posts = () => read('posts').sort((a, b) => b.date.localeCompare(a.date));
 export interface Product {

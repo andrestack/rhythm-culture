@@ -1,0 +1,55 @@
+---
+// Student video pages, behind one shared password. Runs on demand so the videos never sit in public HTML.
+import Base from '../../../layouts/Base.astro';
+import { studentPage } from '../../../lib/content';
+import { COOKIE, cookieOk, cookieValue, limited, passwordOk } from '../../../lib/studentAuth';
+
+export const prerender = false;
+
+const path = Astro.url.pathname.replace(/\/?$/, '/');
+const page = studentPage(path);
+// Never let the CDN keep a copy: an unlocked page must not reach the next visitor.
+Astro.response.headers.set('Cache-Control', 'private, no-store');
+if (!page) return new Response('Not found', { status: 404, headers: { 'Cache-Control': 'private, no-store' } });
+
+let error = '';
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData();
+  if (limited(Astro.clientAddress ?? 'unknown')) error = 'Too many tries. Please wait a few minutes.';
+  else if (passwordOk(String(form.get('password') ?? ''))) {
+    Astro.cookies.set(COOKIE, cookieValue(), {
+      path: '/classes/student-resources/', httpOnly: true, secure: import.meta.env.PROD, sameSite: 'lax', maxAge: 60 * 60 * 24 * 180,
+    });
+    return Astro.redirect(path, 303);
+  } else error = 'That password is not right. Check your class email or ask us.';
+}
+const unlocked = cookieOk(Astro.cookies.get(COOKIE)?.value);
+---
+<Base title={unlocked ? page.title : 'Student video resources'} noindex>
+  {unlocked ? (
+    <article class="content">
+      <Fragment set:html={page.html} />
+    </article>
+  ) : (
+    <article class="content student-lock">
+      <h1>Student video resources</h1>
+      <p>These class videos are for Rhythm Culture students. Enter the password from your class email.</p>
+      <form method="post" class="student-lock__form">
+        <label for="student-password">Password</label>
+        <input id="student-password" name="password" type="password" autocomplete="current-password" required autofocus />
+        {error && <p class="student-lock__error" role="alert">{error}</p>}
+        <button class="btn" type="submit">Open videos</button>
+      </form>
+    </article>
+  )}
+</Base>
+
+<style>
+  .student-lock { max-width: 32rem; margin-inline: auto; padding-inline: var(--gutter); box-sizing: content-box; }
+  .student-lock__form { display: grid; gap: 12px; margin-top: 1.5em; }
+  .student-lock__form label { font-weight: 700; }
+  .student-lock__form input { font: inherit; padding: 12px 14px; border: 2px solid #ccc; border-radius: 10px; }
+  .student-lock__form input:focus { outline: 3px solid var(--green); outline-offset: 1px; border-color: var(--ink); }
+  .student-lock__form .btn { justify-self: start; border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+  .student-lock__error { color: var(--red); margin: 0; font-weight: 700; }
+</style>
