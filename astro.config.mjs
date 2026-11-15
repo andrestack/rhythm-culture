@@ -53,6 +53,11 @@ export default defineConfig({
     '/checkout': '/shop/',
     '/my-account': '/',
     '/shop-2': '/shop/',
+    // Yoast sitemap URLs Google already knows from WordPress.
+    '/sitemap_index.xml': '/sitemap.xml',
+    '/page-sitemap.xml': '/sitemap.xml',
+    '/post-sitemap.xml': '/sitemap.xml',
+    '/product-sitemap.xml': '/sitemap.xml',
     // Old WordPress pages Nat agreed to drop (10/11/2026).
     '/test-page': '/',
     '/mobile-booking-page': '/booking-form/',
