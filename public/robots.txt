@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /keystatic/
+Disallow: /api/
+Disallow: /classes/student-resources/
+
+Sitemap: https://rhythmculture.com.au/sitemap.xml
