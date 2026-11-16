@@ -66,6 +66,11 @@ export const FORMS: Record<string, { subject: string; submit: string; fields: Fi
       f('onsiteLastName', 'Contact last name (at the event)', { required: true }),
       f('onsiteMobile', 'Contact mobile (at the event)', { type: 'tel', required: true }),
       f('eventLocation', 'Event location', { required: true }),
+      // Street address block, as on the old Gravity Form; the email adds a "Map it" link.
+      f('streetAddress', 'Street address', { required: true }),
+      f('suburb', 'Suburb / city', { required: true }),
+      f('state', 'State', { type: 'select', options: ['QLD', 'NSW', 'VIC', 'SA', 'WA', 'TAS', 'NT', 'ACT'] }),
+      f('postcode', 'Postcode'),
       f('eventDate', 'Event date', { type: 'date', required: true }),
       f('arrivalTime', 'Event arrival time', { type: 'time' }),
       f('startTime', 'Event start time', { type: 'time', required: true }),

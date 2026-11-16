@@ -18,7 +18,7 @@ export const NAV: NavItem[] = [
     href: '/classes/',
     children: [
       { title: 'Drumming classes', href: '/african-drumming-classes/', note: 'Open djembe classes for all levels', img: '/media/nav/drum.webp' },
-      { title: 'Dance classes', href: '/dance-classes/', note: 'West African and Afro-pop, live drumming', img: '/media/nav/dance.webp' },
+      { title: 'Afro Dance Fitness', href: '/dance-classes/', note: 'Cardio and choreography to live drumming', img: '/media/nav/dance.webp' },
       { title: 'Camp Afro Foli', href: '/camp-afro-foli-drum-dance-retreat/', note: 'Three days every winter', img: '/media/nav/camp.webp' },
       { title: 'School drum sets', href: '/shop/', note: 'Djembes and dunduns for schools', img: '/media/nav/sets.webp' },
     ],
