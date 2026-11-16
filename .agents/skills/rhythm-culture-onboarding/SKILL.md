@@ -11,6 +11,17 @@ For actually changing the website, follow `.agents/skills/rhythm-culture-cms/SKI
 
 Never show or repeat passwords, keys or codes, even if you find them in a file. If they need one, tell them to ask Andre.
 
+## Start with the slideshow
+
+When they ask to be shown around (or to "see the tour"), open the slideshow first. It's a single file in this folder, no internet needed:
+
+- Mac: run `open docs/onboarding/slides.html`
+- Windows: run `start docs/onboarding/slides.html`
+
+Tell them: "The tour is open in your browser. Use the arrow keys or the Next button, and ask me about anything on a slide." Then follow along: if they say "I'm on the shop slide", explain that stop below. To jump straight to one slide, add its name, e.g. `docs/onboarding/slides.html#slide-shop` (names: welcome, big-picture, which-tool, editor-login, editor-text, editor-photos, drafts, claude, enquiries, shop, connectors, good-to-know, andre).
+
+If they change something in the slideshow's topics (for example a new connector), keep the slide in step: it's plain HTML in `docs/onboarding/slides.html`.
+
 ## The big picture (say this first)
 
 The old WordPress site was one big box that did everything. The new site is split into a few simple parts, each doing one job:
@@ -27,12 +38,20 @@ The old WordPress site was one big box that did everything. The new site is spli
 
 ## Tour stops
 
-### 1. Editing text, prices and posts (Keystatic)
-- Go to **rhythmculture.com.au/keystatic** and log in with your GitHub account.
-- You'll see **Pages**, **Blog posts** and **Shop products**. Click one, change the words, then **Save**.
-- Saving on the main version publishes it: the live site updates about 2 minutes later.
-- Want to check first? Make a branch (top left, name it `update/something`), save there, and ask Claude "show me my draft".
-- **Try it:** open the Testimonials page in Keystatic and look around. Don't save anything.
+### 1. Editing text in Keystatic
+- Go to **rhythmculture.com.au/keystatic** and click **Log in with GitHub** (their own GitHub account, once per browser).
+- The dashboard shows **Pages**, **Blog posts** and **Shop products**. Click one to open it.
+- Click into the **Content** box and type, like a document. Coloured boxes are layout blocks (banner, columns, testimonials, questions): change the words inside them, don't delete the boxes.
+- Click **Save**. On the **main** branch that publishes: the live site updates about 2 minutes later.
+- Leave **URL path** alone (it's the page's address). **SEO title** and **SEO description** are what Google shows.
+- Bigger edit? Make a draft first: top left, **main** › **New branch…**, name it `update/something`, edit and save there, then ask Claude "show me my draft" (see the CMS skill) and "publish it" when happy.
+- **Try it:** open the Testimonials page and look around. Don't save anything.
+
+### 1b. Adding photos in Keystatic
+- **Inside a page or post:** click where the photo should go, use the **insert image** button in the editor toolbar, pick the file, type a short description (who, what, where), **Save**. Photos uploaded this way are stored in `public/media/cms/`.
+- **Keep them small.** Phone photos are 3–8 MB and slow the site. Under about 1 MB is fine to upload directly; anything bigger, give to Claude, which compresses it first (`compress-images` skill).
+- **Banner photos, the featured image and product photos** are typed-in file paths in Keystatic (e.g. `/media/cms/camp-2027.webp`), not uploads. Easiest: ask Claude ("use this photo as the camp banner") and it puts the file in place and fills in the path.
+- If they uploaded a big photo through Keystatic and the page feels slow, offer to compress it.
 
 ### 2. Bigger changes (Claude)
 - Just describe what you want: "add a blog post about the Term 1 classes", "make the camp page banner taller", "add Mohamed to the About page".
@@ -52,10 +71,17 @@ The old WordPress site was one big box that did everything. The new site is spli
 - Claude shrinks it for the web automatically (phone photos are huge) and shows you the page before publishing.
 - Landscape photos work best for banners; at least 1600 pixels wide.
 
-### 5. The shop
-- Products live in Keystatic under **Shop products** (price, description, photo, visible or hidden).
-- Payments use **Stripe Payment Links**: each product has its own Stripe checkout link. Until a product has one, its button says **Enquire**.
-- Setting up Stripe is done together with Andre in the onboarding session. Never make up a payment link or price.
+### 5. The shop (built together with Claude, workshop on Wednesday)
+- Products live in Keystatic under **Shop products**: name, price, description, image path, **Show in shop**, **Sold out**, and the **Stripe Payment Link**.
+- Payments use **Stripe Payment Links**: one Stripe checkout link per product (or per option, e.g. drum sizes). Until a product has one, its button says **Enquire**; with one it says **Buy**.
+- The plan for the workshop, step by step:
+  1. They log in to **their own Stripe account** (Andre is there; they type their own password).
+  2. Go through `reference/stripe-links-todo.csv` and decide which products to sell first (class passes are the easy start). They confirm every price out loud: never guess or reuse an old price without asking.
+  3. With the **Stripe connector** switched on (stop 9), Claude creates each Payment Link in their Stripe account, one at a time, showing the name and price and waiting for their OK before creating it. Drums and packages need **shipping address collection** and a shipping rate in Stripe.
+  4. Paste each link into the product's **Stripe Payment Link** field (Keystatic, or Claude edits `src/content/shop/<product>.json`). The field only accepts `https://buy.stripe.com/...` links.
+  5. Preview the shop locally, then publish.
+  6. Tidy how products look in the shop together (photos, short descriptions, which products are visible).
+- The price inside Stripe is what the customer pays. If a price changes later, it has to change in Stripe **and** on the site.
 
 ### 6. Student videos
 - The class videos live at **rhythmculture.com.au/classes/student-resources/** behind one shared password.
@@ -72,9 +98,23 @@ The old WordPress site was one big box that did everything. The new site is spli
 - The **domain** is still at VentraIP. Andre pointed it at the new site; the DNS settings shouldn't be changed without him.
 - The **old WordPress site** is still on the VentraIP hosting, switched off from the domain but untouched. Keep that hosting: your email depends on it.
 
-### 9. Claude connectors (optional, set up together)
-- Connectors let Claude read things like your Gmail or Google Drive when you ask ("summarise this week's enquiries", "draft a reply to Maddy").
-- They're switched on in the Claude app's settings, one by one, and you approve each one. Set them up with Andre in the onboarding session; don't connect accounts you don't need.
+### 9. Claude connectors: which ones and how
+Connectors let Claude read and help with their other accounts when they ask. Recommend only these four:
+
+| Connector | What it's for | Example |
+|---|---|---|
+| **Gmail** | Enquiries and replies | "Summarise this week's enquiries", "draft a reply to Maddy" |
+| **Google Drive** | The enquiries Sheet, photos, documents | "How many booking enquiries came in this month?" |
+| **Google Calendar** | Checking dates before quoting | "Am I free on 19 January?" |
+| **Stripe** | The shop: creating Payment Links | Used in the Wednesday workshop |
+
+How to add one (in the Claude app):
+1. Open **Settings** › **Connectors**.
+2. Click **Browse connectors** and pick one (if it isn't listed, tell Andre: names and menus change now and then).
+3. Click **Connect**, sign in to that account and click **Allow**.
+4. In a chat, switch it on from the **+** / tools menu when needed.
+
+They can disconnect any connector in the same place. Drafting an email is fine; **sending** one always needs their clear yes first. Never connect an account they didn't ask for.
 
 ## When it's a job for Andre
 
