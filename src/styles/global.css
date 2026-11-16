@@ -38,6 +38,12 @@ p { text-wrap: pretty; }
 .site-header { position: sticky; top: 0; z-index: 30; background: #fff; box-shadow: 0 1px 10px rgb(0 0 0 / .1);
   transition: background-color .3s var(--ease-out), box-shadow .3s var(--ease-out); }
 .bar { display: flex; align-items: center; gap: clamp(16px, 2.5vw, 40px); max-width: 1280px; margin: 0 auto; padding: 0 var(--gutter); min-height: var(--bar-h); }
+/* cities strip on every page: where they work, same order as their email signature */
+.cities { display: flex; justify-content: center; flex-wrap: wrap; gap: 0 .9em; margin: 0; padding: 6px var(--gutter); background: var(--ink); color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; line-height: 1.4; }
+.cities span + span::before { content: '•'; margin-right: .9em; color: var(--green, #7cda24); }
+@media (max-width: 600px) { .cities { overflow: hidden; flex-wrap: nowrap; white-space: nowrap; padding: 5px 8px; font-size: 9.5px; gap: 0 .45em; letter-spacing: .02em; } .cities span + span::before { margin-right: .45em; } }
+@media (max-width: 380px) { .cities { font-size: 8.5px; letter-spacing: 0; } }
 .logo { flex: none; display: block; }
 .logo img { display: block; height: 44px; width: auto; border-radius: 0; transition: filter .3s var(--ease-out); }
 .nav, .nav ul { margin: 0; padding: 0; }
