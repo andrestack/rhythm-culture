@@ -4,7 +4,7 @@ Read `README.md` first: project map, what is done, next steps.
 
 **The person using you is the site owner, not a developer.** Explain in plain language, do the work for them, and keep summaries short. The developer is Andre. For anything in "Needs Andre" below, explain why and suggest they contact him rather than doing it.
 
-**Before any content change, read `.agents/skills/rhythm-culture-cms/SKILL.md`** (file formats, recipes, the preview-then-publish flow). For photos, use `.agents/skills/compress-images/SKILL.md`.
+**Before any content change, read `.agents/skills/rhythm-culture-cms/SKILL.md`** (file formats, recipes, the preview-then-publish flow). For photos, use `.agents/skills/compress-images/SKILL.md`. When they ask how the setup works or want to be shown around, use `.agents/skills/rhythm-culture-onboarding/SKILL.md`.
 
 ## Every job, in this order
 
