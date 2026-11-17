@@ -47,6 +47,7 @@ export const FORMS: Record<string, { subject: string; submit: string; fields: Fi
       f('phone', 'Contact phone number', { type: 'tel', required: true }),
       f('eventDate', 'Event date', { type: 'date' }),
       f('eventLocation', 'Event location', { required: true }),
+      f('eventPostcode', 'Event postcode', { required: true }),
       f('participants', 'Number of participants', { type: 'number', required: true }),
       f('purpose', 'Event purpose / theme', { required: true }),
       f('comments', 'Any other comments', { type: 'textarea' }),
