@@ -44,17 +44,43 @@ const def = FORMS[form];
       (form.elements.namedItem(first ?? '') as HTMLElement | null)?.focus();
     };
 
+    // Double-submit guard: the button locks while sending and stays on "Sent" afterwards (17/11: the
+    // same booking arrived twice, 1 second apart). Typing in the form again unlocks it for a new enquiry.
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const label = button.textContent ?? '';
+    const setStatus = (text: string, tone = '') => { status.textContent = text; status.dataset.tone = tone; };
+    // Same details sent again in this browser session (e.g. after a reload): say so instead of resending.
+    const SENT_KEY = 'rc-form-sent';
+    const fingerprint = (formType: string, data: Record<string, string>) =>
+      formType + '|' + Object.keys(data).sort().map((k) => `${k}=${data[k]}`).join('&');
+    const sentBefore = (fp: string) => { try { return (JSON.parse(sessionStorage.getItem(SENT_KEY) ?? '[]') as string[]).includes(fp); } catch { return false; } };
+    const remember = (fp: string) => { try { const all = JSON.parse(sessionStorage.getItem(SENT_KEY) ?? '[]') as string[]; sessionStorage.setItem(SENT_KEY, JSON.stringify([...all, fp].slice(-10))); } catch {} };
+
+    form.addEventListener('input', () => {
+      if (button.dataset.state === 'sent') { button.disabled = false; button.textContent = label; delete button.dataset.state; setStatus(''); }
+    });
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (button.disabled) return;
       const formType = form.dataset.form!;
       const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
 
       // Inline errors in the browser; the server runs the same schema again.
       const check = schemaFor(formType)!.safeParse(data);
-      if (!check.success) { showErrors(fieldErrors(check.error)); status.textContent = 'Please fix the highlighted fields.'; return; }
+      if (!check.success) { showErrors(fieldErrors(check.error)); setStatus('Please fix the highlighted fields.'); return; }
       showErrors({});
 
-      status.textContent = 'Sending…';
+      const fp = fingerprint(formType, data);
+      if (sentBefore(fp)) {
+        setStatus('You’ve already sent this one: we’ve got it and will be in touch soon.', 'ok');
+        status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      setStatus('Sending…');
       try {
         const res = await fetch('/api/form', {
           method: 'POST',
@@ -62,12 +88,18 @@ const def = FORMS[form];
           body: JSON.stringify({ ...data, formType, page: location.pathname }),
         });
         const out = await res.json().catch(() => ({}));
-        if (res.status === 422 && out.errors) { showErrors(out.errors); status.textContent = 'Please fix the highlighted fields.'; return; }
+        if (res.status === 422 && out.errors) { showErrors(out.errors); setStatus('Please fix the highlighted fields.'); button.disabled = false; button.textContent = label; return; }
         if (!res.ok) throw new Error(out.error ?? String(res.status));
+        remember(fp);
         form.reset();
-        status.textContent = 'Thank you! We’ll be in touch soon.';
+        button.textContent = 'Sent ✓';
+        button.dataset.state = 'sent';
+        setStatus('Thank you! Your enquiry has been sent and we’ll be in touch soon.', 'ok');
+        status.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } catch (err) {
-        status.textContent = `Sorry, that didn’t send (${(err as Error).message}). Please call 0434 585 992.`;
+        button.disabled = false;
+        button.textContent = label;
+        setStatus(`Sorry, that didn’t send (${(err as Error).message}). Please call 0434 585 992.`, 'error');
       }
     });
   });
@@ -85,5 +117,8 @@ const def = FORMS[form];
   .rc-form .note ol { margin: 6px 0 0; padding-left: 20px; }
   .rc-form .hp { position: absolute; left: -9999px; height: 0; width: 0; opacity: 0; }
   .rc-form .btn { border: 0; cursor: pointer; justify-self: start; }
+  .rc-form .btn:disabled { opacity: .7; cursor: default; }
   .rc-form .status { margin: 0; min-height: 1.5em; }
+  .rc-form .status[data-tone='ok'] { background: #eef8e6; border-left: 4px solid #357a0e; padding: 12px 16px; font-weight: 600; color: #1f4a08; }
+  .rc-form .status[data-tone='error'] { background: #fdecea; border-left: 4px solid var(--red); padding: 12px 16px; }
 </style>

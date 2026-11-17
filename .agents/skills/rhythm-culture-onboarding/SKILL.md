@@ -42,9 +42,9 @@ The old WordPress site was one big box that did everything. The new site is spli
 - Go to **rhythmculture.com.au/keystatic** and click **Log in with GitHub** (their own GitHub account, once per browser).
 - The dashboard shows **Pages**, **Blog posts** and **Shop products**. Click one to open it.
 - Click into the **Content** box and type, like a document. Coloured boxes are layout blocks (banner, columns, testimonials, questions): change the words inside them, don't delete the boxes.
-- Click **Save**. On the **main** branch that publishes: the live site updates about 2 minutes later.
+- Click **Save**. That publishes: the live site updates about 2 minutes later.
 - Leave **URL path** alone (it's the page's address). **SEO title** and **SEO description** are what Google shows.
-- Bigger edit? Make a draft first: top left, **main** › **New branch…**, name it `update/something`, edit and save there, then ask Claude "show me my draft" (see the CMS skill) and "publish it" when happy.
+- Bigger edit (a new section, a new page, a layout change)? Ask Claude instead: it shows a preview on this computer first and publishes only when they say so. No branches: they never need the branch menu in the editor.
 - **Try it:** open the Testimonials page and look around. Don't save anything.
 
 ### 1b. Adding photos in Keystatic
