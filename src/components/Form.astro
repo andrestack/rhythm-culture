@@ -56,6 +56,11 @@ const def = FORMS[form];
     const sentBefore = (fp: string) => { try { return (JSON.parse(sessionStorage.getItem(SENT_KEY) ?? '[]') as string[]).includes(fp); } catch { return false; } };
     const remember = (fp: string) => { try { const all = JSON.parse(sessionStorage.getItem(SENT_KEY) ?? '[]') as string[]; sessionStorage.setItem(SENT_KEY, JSON.stringify([...all, fp].slice(-10))); } catch {} };
 
+    // Back button from the thank-you page can restore this page as it was left ("Sent ✓", disabled).
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) { button.disabled = false; button.textContent = label; delete button.dataset.state; setStatus(''); }
+    });
+
     form.addEventListener('input', () => {
       if (button.dataset.state === 'sent') { button.disabled = false; button.textContent = label; delete button.dataset.state; setStatus(''); }
     });
@@ -95,7 +100,8 @@ const def = FORMS[form];
         button.textContent = 'Sent ✓';
         button.dataset.state = 'sent';
         setStatus('Thank you! Your enquiry has been sent and we’ll be in touch soon.', 'ok');
-        status.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Each form has its own thank-you page (Nat's request; also a clean URL to count enquiries).
+        location.assign(`/thank-you-${formType}/`);
       } catch (err) {
         button.disabled = false;
         button.textContent = label;

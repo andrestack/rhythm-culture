@@ -412,3 +412,8 @@ body:has(main > .bb:first-child, main > .content > .blk-hero:first-child) .site-
 /* testimonials: three across at most, so long quotes stay readable and rows fill evenly */
 .designed .blk-quotes { grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
 .designed .blk-col.is-card ol > li { margin-bottom: 0; }
+
+/* A row of columns holding nothing but one button each (thank-you pages): keep the buttons together, centred. */
+.blk-cols:not(:has(> .blk-col > :not(.blk-btn))) { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 16px; }
+.blk-cols:not(:has(> .blk-col > :not(.blk-btn))) > .blk-col { flex: 0 0 auto; }
+.blk-cols:not(:has(> .blk-col > :not(.blk-btn))) .blk-btn { margin: 0; }

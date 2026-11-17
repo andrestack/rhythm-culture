@@ -15,7 +15,7 @@ const { e, post } = Astro.props;
 // Pages laid out with blocks get the homepage look; posts and old flat pages keep the plain one for now.
 const designed = !post && e.html.includes('class="blk-');
 ---
-<Base title={e.seoTitle || e.title} description={e.description} noindex={NOINDEX.has(e.link)}>
+<Base title={e.seoTitle || e.title} description={e.description} noindex={NOINDEX.has(e.link) || e.link.startsWith('/thank-you')}>
   <article class={designed ? 'content designed' : 'content'}>
     {post && <h1 class="post-title">{e.title}</h1>}
     {post && <p class="meta post-date">{e.date}</p>}
