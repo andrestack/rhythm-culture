@@ -5,3 +5,4 @@ dist
 .env
 # WP export contains customer orders (PII): never commit
 reference/wp-export.xml
+.gstack/
