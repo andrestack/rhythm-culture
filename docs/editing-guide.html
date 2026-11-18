@@ -3,357 +3,428 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<!-- Client guide. Published copy: https://claude.ai/artifact/BYEQ5HxYfT6owcGVw17mUt (private). Open this file in a browser. -->
+<!-- Client editing guide, as a slideshow. Open this file in a browser; arrow keys or Next/Back. -->
 <title>Rhythm Culture Editing Guide</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@500&display=swap">
 <style>
-/* Layout: one left-aligned reading column (Hinterland Web system), a single flow diagram as the centrepiece,
-   then plain cards for "which tool" and "when to call". Light = sage document theme, dark = Hinterland navy. */
+/* Hinterland Web system: sage document theme (light), navy (dark). One idea per slide. */
 :root {
-  --bg: #d8e5cf;
-  --frame: #eef4ea;
-  --surface: #cddbc3;
-  --surface-teal: #c4e3dc;
-  --fg: #143144;
-  --headline: #143144;
-  --muted-fg: #4a6270;
-  --border: #bccdb1;
-  --accent: #1fa6a0;
-  --link: #0d6863;
-  --marker: #d9b24c;
-  --sans: "Geist", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bg: #d8e5cf; --frame: #eef4ea; --surface: #cddbc3; --surface-teal: #c4e3dc;
+  --fg: #143144; --headline: #143144; --muted-fg: #4a6270; --border: #bccdb1;
+  --accent: #1fa6a0; --link: #0d6863; --marker: #d9b24c; --btn: #143144; --btn-fg: #eef4ea;
+  --sans: "Geist", system-ui, "Segoe UI", sans-serif;
   --mono: "Geist Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   --serif: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #143144; --frame: #0e2431; --surface: #183a50; --surface-teal: #17434a;
     --fg: #e9efe3; --headline: #f3f1e6; --muted-fg: #9fb4ae; --border: #24475c;
-    --link: #3cc8c0; color-scheme: dark;
+    --link: #3cc8c0; --btn: #3cc8c0; --btn-fg: #0e2431; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #143144; --frame: #0e2431; --surface: #183a50; --surface-teal: #17434a;
   --fg: #e9efe3; --headline: #f3f1e6; --muted-fg: #9fb4ae; --border: #24475c;
-  --link: #3cc8c0; color-scheme: dark;
+  --link: #3cc8c0; --btn: #3cc8c0; --btn-fg: #0e2431; color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
-body {
-  background: var(--bg); color: var(--fg);
-  font: 400 16px/1.6 var(--sans);
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-}
-.page { max-width: 760px; margin: 0 auto; padding-block: 48px 64px; display: grid; gap: 56px; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--fg); font: 400 17px/1.55 var(--sans); }
 a { color: var(--link); text-underline-offset: 3px; }
-a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
 
+.deck { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+.gutter { padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; flex-wrap: wrap; padding-block: 14px; border-bottom: 1px solid var(--border); }
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted-fg); margin: 0; }
-.eyebrow .star { color: var(--marker); }
+.star { color: var(--marker); }
+
+.stage { position: relative; overflow: hidden; }
+.slide { position: absolute; inset: 0; overflow-y: auto; visibility: hidden;
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; align-content: center;
+  padding-block: clamp(20px, 4vh, 48px); max-width: 1180px; margin: 0 auto; }
+.slide.on { visibility: visible; }
+.slide.wide { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+.slide.wide > .copy { justify-self: stretch; max-width: 820px; width: 100%; margin: 0 auto; }
+@media (prefers-reduced-motion: no-preference) {
+  .slide.on .in { animation: rise .45s cubic-bezier(.2, .8, .2, 1) both; }
+  .slide.on .in + .in { animation-delay: .06s; }
+  @keyframes rise { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+}
+
+.copy { display: grid; gap: 16px; align-content: center; min-width: 0; }
 h1, h2, h3 { color: var(--headline); text-wrap: balance; margin: 0; letter-spacing: -0.025em; }
-h1 { font-size: clamp(36px, 7vw, 56px); line-height: 1.05; font-weight: 600; }
-h2 { font-size: clamp(26px, 4.4vw, 34px); line-height: 1.1; font-weight: 600; }
+h1 { font-size: clamp(36px, 5.6vw, 60px); line-height: 1.05; font-weight: 600; }
+h2 { font-size: clamp(28px, 4vw, 42px); line-height: 1.1; font-weight: 600; }
 h3 { font-size: 18px; line-height: 1.35; font-weight: 600; letter-spacing: -0.01em; }
+p { margin: 0; max-width: 60ch; }
+.lede { font-size: 19px; }
+.muted { color: var(--muted-fg); }
+.mono { font-family: var(--mono); font-size: .85em; letter-spacing: .02em; }
+.quote { font-style: italic; }
 .accent-word { font-family: var(--serif); font-style: italic; color: var(--link); font-weight: 600; }
 .mark { text-decoration: underline; text-decoration-color: var(--marker); text-decoration-thickness: .06em; text-underline-offset: .14em; }
-p { margin: 0; max-width: 65ch; }
-.lede { font-size: 18px; line-height: 1.55; color: var(--fg); }
-.muted { color: var(--muted-fg); }
-.mono { font-family: var(--mono); font-size: 13px; letter-spacing: .02em; }
-
-header { display: grid; gap: 18px; }
-.byline { display: flex; flex-wrap: wrap; gap: 8px 16px; color: var(--muted-fg); font-size: 14px; }
-.live {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
-  border: 1px solid var(--border); background: var(--frame); border-radius: 16px; padding: 14px 18px;
-}
-.live .url { font-family: var(--mono); font-size: 14px; overflow-wrap: anywhere; }
 .chip { border: 1px solid var(--border); border-radius: 9999px; padding: 2px 10px; font-size: 12px; font-weight: 500; color: var(--muted-fg); white-space: nowrap; }
+.live { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; border: 1px solid var(--border); background: var(--frame); border-radius: 16px; padding: 14px 18px; justify-self: start; }
+.live .url { font-family: var(--mono); font-size: 15px; overflow-wrap: anywhere; }
 
-section { display: grid; gap: 20px; }
-section > header { gap: 10px; }
+.card { border: 1px solid var(--border); border-radius: 16px; padding: 20px; background: var(--frame); display: grid; gap: 12px; align-content: start; min-width: 0; }
+.card.teal { background: var(--surface-teal); }
+.card.urgent { border-color: var(--marker); border-width: 2px; }
+.card.plain { background: transparent; }
+.card .where { font-size: 14px; color: var(--muted-fg); }
+.card ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.card li { font-size: 15px; }
+.stack { display: grid; gap: 16px; min-width: 0; }
+.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 
-/* diagram */
-figure { margin: 0; display: grid; gap: 12px; }
-.diagram-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 24px; background: var(--frame); padding: 20px 12px; }
-.diagram-wrap svg { display: block; width: 100%; min-width: 560px; max-width: 720px; height: auto; margin: 0 auto; color: var(--fg); }
-figcaption { font-size: 14px; color: var(--muted-fg); max-width: 65ch; }
-.d-box { fill: var(--surface); stroke: var(--border); stroke-width: 1.5; }
+ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; counter-reset: s; }
+ol.steps li { counter-increment: s; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px; align-items: start; }
+ol.steps li::before { content: counter(s); font: 500 13px var(--mono); width: 28px; height: 28px; border-radius: 9999px; border: 1px solid var(--border); display: grid; place-items: center; color: var(--muted-fg); background: var(--frame); }
+
+.prompt { border: 1px solid var(--border); background: var(--frame); border-radius: 16px; padding: 18px; display: grid; gap: 12px; min-width: 0; }
+.prompt p { font: 400 14px/1.6 var(--mono); overflow-wrap: anywhere; max-width: none; user-select: all; }
+.btn { font: 600 14px var(--sans); border-radius: 9999px; padding: 9px 18px; cursor: pointer; border: 1px solid var(--btn); background: var(--btn); color: var(--btn-fg); justify-self: start; }
+.btn.ghost { background: transparent; color: var(--fg); border-color: var(--border); }
+.btn:disabled { opacity: .4; cursor: default; }
+
+/* flow diagram */
+figure { margin: 0; width: 100%; display: grid; justify-items: center; }
+figure svg { display: block; width: 100%; max-width: 760px; max-height: 56vh; height: auto; color: var(--fg); }
+.d-box { fill: var(--frame); stroke: var(--border); stroke-width: 1.5; }
 .d-live { fill: var(--surface-teal); stroke: var(--accent); stroke-width: 2; }
-.d-pill { fill: var(--fg); }
-.d-pill-text { fill: var(--bg); font: 600 14px var(--sans); }
-.d-title { fill: var(--headline); font: 600 15px var(--sans); }
-.d-sub { fill: var(--muted-fg); font: 400 12.5px var(--sans); }
-.d-tag { fill: var(--fg); font: 500 11.5px var(--mono); letter-spacing: .02em; }
-.d-label { fill: var(--muted-fg); font: 500 12px var(--sans); }
+.d-title { fill: var(--headline); font: 600 17px var(--sans); }
+.d-sub { fill: var(--muted-fg); font: 400 14px var(--sans); }
+.d-tag { fill: var(--fg); font: 500 13px var(--mono); }
+.d-label { fill: var(--muted-fg); font: 500 13.5px var(--sans); }
 .d-line { fill: none; stroke: currentColor; stroke-width: 1.5; }
 .d-dash { stroke-dasharray: 5 5; }
 .d-arrow { fill: currentColor; }
 .d-diamond { fill: var(--bg); stroke: currentColor; stroke-width: 1.5; }
 
-/* two doors */
-.doors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.door { border: 1px solid var(--border); border-radius: 16px; padding: 20px; background: var(--frame); display: grid; gap: 12px; align-content: start; }
-.door.ai { background: var(--surface-teal); }
-.door ul, .calls ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
-.door li, .calls li { font-size: 15px; }
-.door .where { font-size: 14px; color: var(--muted-fg); }
+.contact { display: grid; gap: 4px; font-size: 16px; }
+.contact b { font-size: 18px; color: var(--headline); }
 
-/* steps: a real sequence, so numbered */
-ol.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: s; }
-ol.steps li { counter-increment: s; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 12px; align-items: start; }
-ol.steps li::before {
-  content: counter(s); font: 500 13px var(--mono); width: 28px; height: 28px; border-radius: 9999px;
-  border: 1px solid var(--border); display: grid; place-items: center; color: var(--muted-fg); margin-top: 1px;
-}
-.quote { font-style: italic; }
+/* bottom bar */
+.foot { display: flex; align-items: center; justify-content: space-between; gap: 12px 16px; flex-wrap: wrap; padding-block: 12px; border-top: 1px solid var(--border); }
+.dots { display: flex; gap: 6px; flex-wrap: wrap; }
+.dots button { width: 12px; height: 12px; border-radius: 9999px; padding: 0; border: 1px solid var(--muted-fg); background: transparent; cursor: pointer; }
+.dots button.done { background: var(--border); border-color: var(--border); }
+.dots button.now { background: var(--btn); border-color: var(--btn); transform: scale(1.25); }
+.count { font: 500 13px var(--mono); color: var(--muted-fg); }
+.nav { display: flex; gap: 8px; }
 
-/* when to call */
-.calls { display: grid; gap: 16px; }
-.call { border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: grid; gap: 12px; background: var(--frame); }
-.call header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 12px; }
-.call.urgent { border-color: var(--marker); border-width: 2px; }
-.call.fine { background: transparent; }
-.send { display: grid; gap: 10px; }
-
-.status { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-.status li { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 12px; padding-block: 10px; border-top: 1px solid var(--border); font-size: 15px; }
-.status li:last-child { border-bottom: 1px solid var(--border); }
-.status .state { font-size: 13px; font-weight: 600; color: var(--muted-fg); text-transform: uppercase; letter-spacing: .06em; padding-top: 2px; }
-
-footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
-
-@media (max-width: 640px) {
-  .doors { grid-template-columns: minmax(0, 1fr); }
-  .status li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
-  .page { gap: 44px; padding-block: 32px 48px; }
-}
-@media (prefers-reduced-motion: no-preference) {
-  a { transition: color .15s ease; }
+@media (max-width: 820px) {
+  body { font-size: 16px; }
+  .gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .slide { grid-template-columns: minmax(0, 1fr); align-content: start; }
+  .pair { grid-template-columns: minmax(0, 1fr); }
+  .lede { font-size: 17px; }
+  figure svg { max-height: none; }
 }
 </style>
 </head>
 <body>
-
-<main class="page">
-  <header>
-    <p class="eyebrow"><span class="star">✦</span> Rhythm Culture · your new website</p>
-    <h1>Change your website <span class="mark">by asking</span>, then <span class="accent-word">check</span> before it goes live.</h1>
-    <p class="lede">Two ways in. One safety net. You never touch code. You look at every change on your own computer first. Your yes saves it, and a second yes puts it on the real site.</p>
-    <div class="byline"><span>From André, Hinterland Web</span><span class="mono">2 Nov 2026</span></div>
-    <div class="live">
-      <span class="chip">Live now</span>
-      <a class="url" href="https://rhythm-culture.vercel.app/" target="_blank" rel="noopener">rhythm-culture.vercel.app</a>
-      <span class="muted" style="font-size:14px">Your real address, rhythmculture.com.au, moves across on launch day.</span>
-    </div>
+<div class="deck">
+  <header class="top gutter">
+    <p class="eyebrow"><span class="star">✦</span> Rhythm Culture · editing guide</p>
+    <p class="eyebrow">From André, Hinterland Web</p>
   </header>
 
-  <section aria-labelledby="how">
-    <header>
-      <p class="eyebrow">How it works</p>
-      <h2 id="how">Every change takes the same path</h2>
-    </header>
-    <figure>
-      <div class="diagram-wrap">
-        <svg viewBox="0 0 770 620" role="img" aria-label="You make a change in the website editor or by asking Claude or ChatGPT. Changes made with the assistant are shown on your own computer first, with nothing saved online. If it looks right you say save it and it becomes a draft on GitHub. Website editor changes are saved straight to a draft, and you ask the assistant to show them on your computer. When you say publish, Vercel builds the draft and the live website updates.">
+  <main class="stage" id="stage">
+
+    <section class="slide gutter" data-name="welcome">
+      <div class="copy">
+        <h1 class="in">Change your website <span class="mark">by asking</span>, then <span class="accent-word">check</span> before it goes live.</h1>
+        <p class="lede in">Two ways in. You never touch code. Claude shows you every change on your own computer first.</p>
+        <div class="live in">
+          <span class="chip">Live</span>
+          <a class="url" href="https://rhythmculture.com.au/" target="_blank" rel="noopener">rhythmculture.com.au</a>
+        </div>
+        <p class="muted in">Use the arrow keys or <b>Next</b>.</p>
+      </div>
+      <div class="stack in">
+        <div class="card"><h3>Website editor</h3><p class="where">Small edits, in your browser.</p></div>
+        <div class="card teal"><h3>Claude on your PC</h3><p class="where">Bigger jobs. You ask in plain words.</p></div>
+      </div>
+    </section>
+
+    <section class="slide gutter" data-name="two-ways">
+      <div class="copy">
+        <p class="eyebrow in">Which way in</p>
+        <h2 class="in">Small edits in the editor. Bigger jobs with Claude.</h2>
+        <p class="muted in">Not sure which? Ask Claude. It tells you if the editor is quicker.</p>
+      </div>
+      <div class="stack in">
+        <article class="card">
+          <h3>Website editor</h3>
+          <p class="where">rhythmculture.com.au/keystatic · Log in with GitHub</p>
+          <ul>
+            <li>Fix a typo or a paragraph</li>
+            <li>Change a price</li>
+            <li>Paste in a Stripe payment link</li>
+            <li>Mark a product sold out, or hide it</li>
+          </ul>
+          <p class="where"><b>Save</b> puts it live in about 2 minutes.</p>
+        </article>
+        <article class="card teal">
+          <h3>Claude on your PC</h3>
+          <p class="where">The desktop app, open on your website folder. It knows the house rules.</p>
+          <ul>
+            <li>Write a blog post from your notes</li>
+            <li>Add photos (it shrinks them)</li>
+            <li>Add a testimonial to a page</li>
+            <li>Update a whole section, like term dates</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide gutter wide" data-name="path">
+      <div class="copy">
+        <p class="eyebrow in">How it works</p>
+        <h2 class="in">Two paths to the live site</h2>
+      </div>
+      <figure class="in">
+        <svg viewBox="0 0 760 560" role="img" aria-label="Website editor: Save puts the change live in about 2 minutes. Claude: the change is shown on your own computer first. If it isn't right, ask for a fix. If it is, say save it, then publish, and the live website updates 1 to 2 minutes later. Something wrong? Ask Claude to undo the last publish, or call André.">
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
               <path d="M0 0 L10 5 L0 10 z" class="d-arrow"/>
             </marker>
           </defs>
-
-          <!-- you -->
-          <rect x="335" y="12" width="90" height="36" rx="18" class="d-pill"/>
-          <text x="380" y="35" text-anchor="middle" class="d-pill-text">You</text>
-          <path d="M380 48 V68 H180 V96" class="d-line" marker-end="url(#arrow)"/>
-          <path d="M380 68 H570 V96" class="d-line" marker-end="url(#arrow)"/>
-          <text x="280" y="62" text-anchor="middle" class="d-label">small edits</text>
-          <text x="475" y="62" text-anchor="middle" class="d-label">bigger jobs</text>
-
           <!-- two doors -->
-          <rect x="40" y="100" width="280" height="96" rx="14" class="d-box"/>
-          <text x="60" y="130" class="d-title">Website editor</text>
-          <text x="60" y="152" class="d-sub">In your browser, at /keystatic</text>
-          <text x="60" y="179" class="d-tag">text · prices · payment links</text>
+          <rect x="20" y="16" width="290" height="92" rx="14" class="d-box"/>
+          <text x="40" y="46" class="d-title">Website editor</text>
+          <text x="40" y="70" class="d-sub">In your browser, at /keystatic</text>
+          <text x="40" y="94" class="d-tag">text · prices · products</text>
 
-          <rect x="420" y="100" width="300" height="96" rx="14" class="d-box"/>
-          <text x="440" y="130" class="d-title">Claude or ChatGPT app</text>
-          <text x="440" y="152" class="d-sub">On your PC. You ask in plain words.</text>
-          <text x="440" y="179" class="d-tag">posts · pages · photos</text>
+          <rect x="390" y="16" width="300" height="92" rx="14" class="d-box"/>
+          <text x="410" y="46" class="d-title">Claude</text>
+          <text x="410" y="70" class="d-sub">On your PC. Ask in plain words.</text>
+          <text x="410" y="94" class="d-tag">posts · pages · photos</text>
 
-          <!-- editor saves straight to a draft -->
-          <path d="M180 196 V246" class="d-line" marker-end="url(#arrow)"/>
-          <text x="192" y="226" class="d-label">saves a draft</text>
+          <!-- editor: straight to live -->
+          <path d="M165 108 V452" class="d-line" marker-end="url(#arrow)"/>
+          <text x="178" y="262" class="d-label">Save</text>
+          <text x="178" y="280" class="d-label">live in about 2 minutes,</text>
+          <text x="178" y="298" class="d-label">no preview</text>
 
-          <!-- assistant changes files on the PC -->
-          <path d="M570 196 V246" class="d-line" marker-end="url(#arrow)"/>
-          <text x="582" y="226" class="d-label">changes files on your PC</text>
-
-          <!-- draft -->
-          <rect x="40" y="250" width="280" height="86" rx="14" class="d-box"/>
-          <text x="60" y="280" class="d-title">Draft copy</text>
-          <text x="60" y="302" class="d-sub">Saved on GitHub as its own branch</text>
-          <text x="60" y="324" class="d-tag">the live site is untouched</text>
-
-          <!-- look on PC -->
-          <rect x="420" y="250" width="300" height="86" rx="14" class="d-live"/>
-          <text x="440" y="280" class="d-title">Look on your PC</text>
-          <text x="440" y="302" class="d-sub" style="fill: var(--fg)">The site runs only on your computer</text>
-          <text x="440" y="324" class="d-tag">nothing is saved online yet</text>
-
-          <!-- editor drafts can be looked at too -->
-          <path d="M320 285 H416" class="d-line d-dash" marker-end="url(#arrow)"/>
-          <text x="368" y="277" text-anchor="middle" class="d-label">to look</text>
+          <!-- claude: look on PC -->
+          <path d="M540 108 V146" class="d-line" marker-end="url(#arrow)"/>
+          <rect x="390" y="150" width="300" height="78" rx="14" class="d-live"/>
+          <text x="410" y="180" class="d-title">Look on your PC</text>
+          <text x="410" y="206" class="d-sub" style="fill: var(--fg)">Nothing is online yet</text>
 
           <!-- decision -->
-          <path d="M570 336 V372" class="d-line" marker-end="url(#arrow)"/>
-          <polygon points="570,376 646,410 570,444 494,410" class="d-diamond"/>
-          <text x="570" y="414" text-anchor="middle" class="d-label" style="fill: var(--fg)">Looks right?</text>
-          <text x="570" y="478" text-anchor="middle" class="d-label">Nothing is saved online</text>
-          <text x="570" y="494" text-anchor="middle" class="d-label">until you say yes.</text>
+          <path d="M540 228 V262" class="d-line" marker-end="url(#arrow)"/>
+          <polygon points="540,266 620,302 540,338 460,302" class="d-diamond"/>
+          <text x="540" y="307" text-anchor="middle" class="d-label" style="fill: var(--fg)">Looks right?</text>
 
-          <!-- no: loop back to assistant -->
-          <path d="M646 410 H744 V148 H724" class="d-line d-dash" marker-end="url(#arrow)"/>
-          <text x="758" y="280" text-anchor="middle" class="d-label" transform="rotate(-90 758 280)">no: ask for a fix</text>
+          <!-- no: loop back -->
+          <path d="M620 302 H730 V62 H694" class="d-line d-dash" marker-end="url(#arrow)"/>
+          <text x="746" y="190" text-anchor="middle" class="d-label" transform="rotate(-90 746 190)">no: ask for a fix</text>
 
-          <!-- yes: save as draft -->
-          <path d="M494 410 H370 V322 H324" class="d-line" marker-end="url(#arrow)"/>
-          <text x="432" y="430" text-anchor="middle" class="d-label">yes: “save it”</text>
-
-          <!-- publish -->
-          <path d="M180 336 V516" class="d-line" marker-end="url(#arrow)"/>
-          <text x="192" y="420" class="d-label">you say “publish”</text>
-          <text x="192" y="438" class="d-label">Vercel builds it, 1 to 2 minutes</text>
+          <!-- yes -->
+          <path d="M540 338 V368" class="d-line" marker-end="url(#arrow)"/>
+          <text x="552" y="358" class="d-label">yes</text>
+          <rect x="390" y="372" width="300" height="62" rx="14" class="d-box"/>
+          <text x="410" y="400" class="d-title">“Save it”, then “publish”</text>
+          <text x="410" y="422" class="d-sub">Two yeses, both yours</text>
+          <path d="M540 434 V452" class="d-line" marker-end="url(#arrow)"/>
 
           <!-- live -->
-          <rect x="40" y="520" width="280" height="70" rx="14" class="d-live"/>
-          <text x="60" y="548" class="d-title">Live website</text>
-          <text x="60" y="570" class="d-sub" style="fill: var(--fg)">rhythmculture.com.au</text>
-          <path d="M320 555 H344" class="d-line d-dash"/>
-          <text x="350" y="551" class="d-label">Undo: I can put</text>
-          <text x="350" y="567" class="d-label">the last version back</text>
+          <rect x="20" y="456" width="670" height="84" rx="14" class="d-live"/>
+          <text x="40" y="488" class="d-title">Live website · rhythmculture.com.au</text>
+          <text x="40" y="514" class="d-sub" style="fill: var(--fg)">Something wrong? Ask Claude: “undo the last publish”. Or call André.</text>
         </svg>
+      </figure>
+    </section>
+
+    <section class="slide gutter" data-name="a-change">
+      <div class="copy">
+        <p class="eyebrow in">A normal change</p>
+        <h2 class="in">Start to finish, about five minutes</h2>
+        <p class="muted in">Claude never makes up dates, prices or payment links. If something is missing, it asks.</p>
       </div>
-      <figcaption>When you ask the assistant, the change is shown on your own computer before anything is saved online. Edits made in the website editor are saved straight to a draft, and you ask the assistant to show you that draft the same way. Nothing reaches the live website until you say publish. If something slips through, the previous version can be put back in about a minute.</figcaption>
-    </figure>
-    <p class="muted">The contact, quote, booking and camp forms are wired up by me. Each enquiry is checked for spam, saved to a spreadsheet and emailed to info@rhythmculture.com.au. Hit reply and it goes straight to the customer. You don't need to edit any of that.</p>
-  </section>
-
-  <section aria-labelledby="doors">
-    <header>
-      <p class="eyebrow">Which way in</p>
-      <h2 id="doors">Small edits in the editor. Bigger jobs by asking.</h2>
-    </header>
-    <div class="doors">
-      <article class="door">
-        <h3>Website editor</h3>
-        <p class="where">Open it in your browser at /keystatic. It looks like a form: fields for titles, prices, text.</p>
-        <ul>
-          <li>Fix a typo or update a paragraph</li>
-          <li>Change a price or a sale price</li>
-          <li>Paste in a Stripe payment link</li>
-          <li>Tick a product as sold out or hide it</li>
-        </ul>
-        <p class="where">Saved edits wait as a draft. To look at one, ask the assistant: <span class="quote">“show me my draft.”</span></p>
-      </article>
-      <article class="door ai">
-        <h3>Claude or ChatGPT on your PC</h3>
-        <p class="where">The desktop app is pointed at your website folder and knows the house rules. You type what you want, like you'd text me.</p>
-        <ul>
-          <li>Write a new blog post from your notes</li>
-          <li>Add photos (it shrinks them for you)</li>
-          <li>Add a testimonial to a page</li>
-          <li>Update a whole section, like term dates</li>
-        </ul>
-      </article>
-    </div>
-  </section>
-
-  <section aria-labelledby="change">
-    <header>
-      <p class="eyebrow">A normal change</p>
-      <h2 id="change">Start to finish, about five minutes</h2>
-    </header>
-    <ol class="steps">
-      <li><p><strong>Ask.</strong> <span class="quote">“Add a post saying Term 1 drum classes start Monday 2 February in Palmwoods. Use this photo.”</span></p></li>
-      <li><p><strong>It makes the change on your computer.</strong> The assistant starts from the latest version of the site, writes the post, shrinks the photo and checks the site still builds.</p></li>
-      <li><p><strong>It shows you.</strong> The page opens right in the app, running only on your computer. Read it the way a customer would. Nothing is online yet. Not right? Say what to change and it shows you again.</p></li>
-      <li><p><strong>Say “save it”.</strong> It saves a draft to GitHub and tells you in plain words what it did.</p></li>
-      <li><p><strong>Say “publish”.</strong> The live site updates a couple of minutes later.</p></li>
-    </ol>
-    <p class="muted">It never makes up dates, prices or payment links. If something is missing, it asks you.</p>
-  </section>
-
-  <section aria-labelledby="call">
-    <header>
-      <p class="eyebrow"><span class="star">✦</span> When to call me</p>
-      <h2 id="call">Most days you won't need me. These are the days you will.</h2>
-    </header>
-    <div class="calls">
-      <article class="call urgent">
-        <header><h3>Call me straight away</h3><span class="chip">I fix these first</span></header>
-        <ul>
-          <li>The live site is down, blank, or looks broken after a publish. I'll put the last version back first, then find out why.</li>
-          <li>A customer says a form didn't send, or enquiries have stopped arriving in the inbox.</li>
-          <li>A payment link charges the wrong amount, or a customer can't pay.</li>
-          <li>The assistant asks you to paste a password, code or token anywhere. Don't. Send me a screenshot instead.</li>
-          <li>The assistant says git or GitHub is “in a state”, or it can't start the site on your computer.</li>
-        </ul>
-      </article>
-      <article class="call">
-        <header><h3>Ask me before you start</h3><span class="chip">the assistant will say “this one needs André”</span></header>
-        <ul>
-          <li>Changing a form: its questions, the booking terms, or where enquiries go.</li>
-          <li>Changing a page's web address, deleting pages or products, or changing lots of pages at once.</li>
-          <li>Anything new the site doesn't do yet: online bookings, an events calendar, an Instagram feed, a newsletter sign-up.</li>
-          <li>Design changes beyond words and photos: new layouts, colours, fonts, the menu.</li>
-          <li>Your domain, email, or logins for GitHub, Vercel or Stripe.</li>
-          <li>Legal wording: terms and conditions, privacy.</li>
-        </ul>
-      </article>
-      <article class="call fine">
-        <header><h3>No need to call</h3><span class="chip">just do it, then look on your PC</span></header>
-        <ul>
-          <li>Typos, opening hours, class times, term dates.</li>
-          <li>Prices, sold out, new payment links from your Stripe account.</li>
-          <li>New blog posts, new photos, a new testimonial.</li>
-        </ul>
-      </article>
-    </div>
-    <div class="send">
-      <h3>When you message me, send three things</h3>
-      <ol class="steps">
-        <li><p>The page you were looking at, or its address.</p></li>
-        <li><p>What you asked the assistant, copied from the chat.</p></li>
-        <li><p>A screenshot of what looks wrong.</p></li>
+      <ol class="steps in">
+        <li><p><strong>Ask.</strong> <span class="quote">“Add a post: Term 1 drum classes start Monday 2 February in Palmwoods. Use this photo.”</span></p></li>
+        <li><p><strong>It makes the change on your PC.</strong> It gets the latest site first, writes the post and shrinks the photo.</p></li>
+        <li><p><strong>It shows you.</strong> The page opens in the app. Read it like a customer. Not right? Say what to change.</p></li>
+        <li><p><strong>Say “save it”.</strong> It saves a draft to GitHub.</p></li>
+        <li><p><strong>Say “publish”.</strong> The live site updates a couple of minutes later.</p></li>
       </ol>
+    </section>
+
+    <section class="slide gutter" data-name="setup">
+      <div class="copy">
+        <p class="eyebrow in">Once per computer · about 20 minutes</p>
+        <h2 class="in">Set up your computer</h2>
+        <p class="in">We do this together on the call. Every installer: default options.</p>
+      </div>
+      <ol class="steps in">
+        <li><p><strong>A GitHub account.</strong> I add you to the website. You accept the invite email.</p></li>
+        <li><p><strong>Git for Windows</strong> from <a href="https://git-scm.com/" target="_blank" rel="noopener">git-scm.com</a>.</p></li>
+        <li><p><strong>Node 24</strong> from <a href="https://nodejs.org/" target="_blank" rel="noopener">nodejs.org</a>. Pick 24, even if a newer one is offered.</p></li>
+        <li><p><strong>GitHub CLI</strong> from <a href="https://cli.github.com/" target="_blank" rel="noopener">cli.github.com</a>.</p></li>
+        <li><p><strong>The Claude desktop app</strong> from <a href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a>. Sign in.</p></li>
+      </ol>
+    </section>
+
+    <section class="slide gutter" data-name="start-prompt">
+      <div class="copy">
+        <p class="eyebrow in">Then</p>
+        <h2 class="in">Paste this into Claude</h2>
+        <ol class="steps in">
+          <li><p>Open Claude, then the <strong>Code</strong> tab.</p></li>
+          <li><p>Choose your <strong>Documents</strong> folder.</p></li>
+          <li><p>Paste the text. Sign in to GitHub when a window asks.</p></li>
+        </ol>
+        <p class="muted in">From then on, open Claude on the <span class="mono">rhythm-culture</span> folder. Something stopped working? Type <span class="mono">/rc-setup</span>.</p>
+      </div>
+      <div class="prompt in">
+        <p id="prompt-text">Set up the Rhythm Culture website on this computer. Check that Git, Node 24 and the GitHub CLI are installed, and walk me through anything missing. Download https://github.com/andrestack/rhythm-culture.git into a folder called rhythm-culture here. Then follow rhythm-culture/.agents/skills/rc-setup/SKILL.md. When it's done, tell me how to open Claude on the rhythm-culture folder.</p>
+        <button type="button" class="btn" id="copy">Copy</button>
+      </div>
+    </section>
+
+    <section class="slide gutter" data-name="call-now">
+      <div class="copy">
+        <p class="eyebrow in"><span class="star">✦</span> When to call me</p>
+        <h2 class="in">Most days you won't need me. These are the days you will.</h2>
+      </div>
+      <article class="card urgent in">
+        <h3>Call me straight away</h3>
+        <ul>
+          <li>The site is down, blank or broken after a publish. Call me, and ask Claude: <span class="quote">“undo the last publish”</span>. Whichever is faster wins.</li>
+          <li>A form didn't send, or enquiries stopped arriving.</li>
+          <li>A payment link charges the wrong amount, or a customer can't pay.</li>
+          <li>Claude asks you to paste a password, code or token. Don't. Send me a screenshot.</li>
+          <li>Claude says git or GitHub is “in a state”, or <span class="mono">/rc-setup</span> can't fix it.</li>
+        </ul>
+      </article>
+    </section>
+
+    <section class="slide gutter" data-name="ask-first">
+      <div class="copy">
+        <p class="eyebrow in">Everything else</p>
+        <h2 class="in">Ask me first, or just do it</h2>
+        <p class="muted in">Claude will say “this one needs André” when it does.</p>
+      </div>
+      <div class="stack in">
+        <article class="card">
+          <h3>Ask me before you start</h3>
+          <ul>
+            <li>Changing a form: its questions, the booking terms, where enquiries go.</li>
+            <li>A page's web address, deleting pages or products, changing many pages at once.</li>
+            <li>Anything new: online bookings, an events calendar, a newsletter sign-up.</li>
+            <li>Design beyond words and photos: layouts, colours, fonts, the menu.</li>
+            <li>Your domain, email, or logins for GitHub, Vercel or Stripe. Legal wording.</li>
+          </ul>
+        </article>
+        <article class="card plain">
+          <h3>No need to call</h3>
+          <ul>
+            <li>Typos, class times, term dates.</li>
+            <li>Prices, sold out, new Stripe links.</li>
+            <li>Blog posts, photos, testimonials.</li>
+            <li>Undoing your own change: <span class="quote">“undo the last publish”</span>.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="slide gutter" data-name="message-me">
+      <div class="copy">
+        <p class="eyebrow in">When you message me</p>
+        <h2 class="in">Send three things</h2>
+        <ol class="steps in">
+          <li><p>The page you were looking at, or its address.</p></li>
+          <li><p>What you asked Claude, copied from the chat.</p></li>
+          <li><p>A screenshot of what looks wrong.</p></li>
+        </ol>
+      </div>
+      <div class="card in">
+        <div class="contact">
+          <b>André Silva</b>
+          <span>Hinterland Web</span>
+          <a href="mailto:andre@hinterlandweb.com">andre@hinterlandweb.com</a>
+          <a href="tel:+61461546818">0461 546 818</a>
+        </div>
+        <p class="where">Keep this guide. It's the short version of the rules Claude follows.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="foot gutter">
+    <div class="dots" id="dots" aria-label="Slides"></div>
+    <span class="count" id="count"></span>
+    <div class="nav">
+      <button type="button" class="btn ghost" id="prev">Back</button>
+      <button type="button" class="btn" id="next">Next</button>
     </div>
-  </section>
-
-  <section aria-labelledby="status">
-    <header>
-      <p class="eyebrow">Where things stand</p>
-      <h2 id="status">Before launch</h2>
-    </header>
-    <ul class="status">
-      <li><span class="state">Done</span><span>The new site is live on its test address, with every old page, post and product at the same address as before.</span></li>
-      <li><span class="state">Testing</span><span>The forms are built to send enquiries to the inbox and a spreadsheet. I test all four on the live site before launch.</span></li>
-      <li><span class="state">Done</span><span>The house rules for Claude and ChatGPT are in the project, and it works on Windows.</span></li>
-      <li><span class="state">To do</span><span>Your login for the website editor. I'm setting this up before handover.</span></li>
-      <li><span class="state">To do</span><span>Stripe payment links for the class passes and shop items.</span></li>
-      <li><span class="state">To do</span><span>Installing the desktop app and the tool it needs to run the site (Node), then a first test run. We do that together, about 45 minutes.</span></li>
-      <li><span class="state">Launch</span><span>Moving rhythmculture.com.au across. Your old WordPress site stays untouched until then.</span></li>
-    </ul>
-  </section>
-
-  <footer>
-    <p>André Silva · Hinterland Web</p>
-    <p>Keep this page. It's the short version of the rules the assistant follows.</p>
   </footer>
-</main>
+</div>
+
+<script>
+(() => {
+  const slides = [...document.querySelectorAll('.slide')];
+  const dots = document.getElementById('dots');
+  const count = document.getElementById('count');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  slides.forEach((s, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', 'Slide ' + (i + 1) + ': ' + (s.querySelector('h1,h2')?.textContent || ''));
+    b.addEventListener('click', () => go(i));
+    dots.appendChild(b);
+  });
+  let cur = -1;
+  function go(i) {
+    i = Math.max(0, Math.min(slides.length - 1, i));
+    if (i === cur) return;
+    slides.forEach((s, k) => { s.classList.toggle('on', k === i); s.setAttribute('aria-hidden', k === i ? 'false' : 'true'); });
+    [...dots.children].forEach((b, k) => { b.classList.toggle('now', k === i); b.classList.toggle('done', k < i); });
+    count.textContent = (i + 1) + ' / ' + slides.length;
+    prev.disabled = i === 0;
+    next.textContent = i === slides.length - 1 ? 'Start again' : 'Next';
+    slides[i].scrollTop = 0;
+    cur = i;
+    const name = 'slide-' + slides[i].dataset.name;
+    try { if (location.hash.slice(1) !== name) history.replaceState(null, '', '#' + name); } catch (e) {}
+  }
+  function fromHash() {
+    const n = location.hash.replace(/^#(slide-)?/, '');
+    const k = slides.findIndex((s) => s.dataset.name === n);
+    go(k < 0 ? 0 : k);
+  }
+  prev.addEventListener('click', () => go(cur - 1));
+  next.addEventListener('click', () => go(cur === slides.length - 1 ? 0 : cur + 1));
+  document.addEventListener('keydown', (e) => {
+    if (e.target.closest('input,textarea,[contenteditable]')) return;
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); go(cur + 1); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(cur - 1); }
+    if (e.key === 'Home') go(0);
+    if (e.key === 'End') go(slides.length - 1);
+  });
+  window.addEventListener('hashchange', fromHash);
+  fromHash();
+
+  // Copy the start prompt (falls back to selecting it, which the page makes one click).
+  const copy = document.getElementById('copy');
+  const text = document.getElementById('prompt-text');
+  copy.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(text.textContent.trim()); copy.textContent = 'Copied'; }
+    catch (e) { const r = document.createRange(); r.selectNodeContents(text); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copy.textContent = 'Selected: press Ctrl+C'; }
+    setTimeout(() => { copy.textContent = 'Copy'; }, 2500);
+  });
+})();
+</script>
 </body>
 </html>
