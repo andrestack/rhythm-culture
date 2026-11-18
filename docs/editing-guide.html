@@ -284,11 +284,17 @@ figure svg { display: block; width: 100%; max-width: 760px; max-height: 56vh; he
           <li><p>Choose your <strong>Documents</strong> folder.</p></li>
           <li><p>Paste the text. Sign in to GitHub when a window asks.</p></li>
         </ol>
-        <p class="muted in">From then on, open Claude on the <span class="mono">rhythm-culture</span> folder. Something stopped working? Type <span class="mono">/rc-setup</span>.</p>
+        <p class="muted in">From then on, open Claude on the <span class="mono">rhythm-culture</span> folder.</p>
       </div>
-      <div class="prompt in">
-        <p id="prompt-text">Set up the Rhythm Culture website on this computer. Check that Git, Node 24 and the GitHub CLI are installed, and walk me through anything missing. Download https://github.com/andrestack/rhythm-culture.git into a folder called rhythm-culture here. Then follow rhythm-culture/.agents/skills/rc-setup/SKILL.md. When it's done, tell me how to open Claude on the rhythm-culture folder.</p>
-        <button type="button" class="btn" id="copy">Copy</button>
+      <div class="stack in">
+        <div class="prompt">
+          <p id="prompt-text">Set up the Rhythm Culture website on this computer. Check that Git, Node 24 and the GitHub CLI are installed, and walk me through anything missing. Download https://github.com/andrestack/rhythm-culture.git into a folder called rhythm-culture here. Then follow rhythm-culture/.agents/skills/rc-setup/SKILL.md. When it's done, tell me how to open Claude on the rhythm-culture folder.</p>
+          <button type="button" class="btn" id="copy">Copy</button>
+        </div>
+        <article class="card teal">
+          <h3><span class="mono">/rc-setup</span>: the computer check</h3>
+          <p class="where">Type it into Claude whenever the preview won't open or Claude can't get the latest site. It checks your computer one step at a time (Git, Node, your GitHub login, the latest website, the preview) and fixes what it can. Anything it can't fix, it explains in plain words.</p>
+        </article>
       </div>
     </section>
 
@@ -304,7 +310,7 @@ figure svg { display: block; width: 100%; max-width: 760px; max-height: 56vh; he
           <li>A form didn't send, or enquiries stopped arriving.</li>
           <li>A payment link charges the wrong amount, or a customer can't pay.</li>
           <li>Claude asks you to paste a password, code or token. Don't. Send me a screenshot.</li>
-          <li>Claude says git or GitHub is “in a state”, or <span class="mono">/rc-setup</span> can't fix it.</li>
+          <li>Claude says GitHub is “in a state”, or the computer check (<span class="mono">/rc-setup</span>) can't fix a problem.</li>
         </ul>
       </article>
     </section>
@@ -312,27 +318,27 @@ figure svg { display: block; width: 100%; max-width: 760px; max-height: 56vh; he
     <section class="slide gutter" data-name="ask-first">
       <div class="copy">
         <p class="eyebrow in">Everything else</p>
-        <h2 class="in">Ask me first, or just do it</h2>
-        <p class="muted in">Claude will say “this one needs André” when it does.</p>
+        <h2 class="in">It's your website. Explore.</h2>
+        <p class="muted in">Claude builds everything from the site's own building blocks, colours and fonts, so new sections match the rest. It will say “this one needs André” when it does.</p>
       </div>
       <div class="stack in">
-        <article class="card">
-          <h3>Ask me before you start</h3>
+        <article class="card plain">
+          <h3>Go ahead</h3>
           <ul>
-            <li>Changing a form: its questions, the booking terms, where enquiries go.</li>
-            <li>A page's web address, deleting pages or products, changing many pages at once.</li>
-            <li>Anything new: online bookings, an events calendar, a newsletter sign-up.</li>
-            <li>Design beyond words and photos: layouts, colours, fonts, the menu.</li>
-            <li>Your domain, email, or logins for GitHub, Vercel or Stripe. Legal wording.</li>
+            <li>Words, dates, prices, Stripe links, sold out.</li>
+            <li>Blog posts, photos, testimonials, new sections and page layouts.</li>
+            <li>Add, hide or delete pages and products. Claude points the old address somewhere sensible.</li>
+            <li>The questions on a form. Claude keeps it sending.</li>
+            <li>Undoing your own change: <span class="quote">“undo the last publish”</span>.</li>
           </ul>
         </article>
-        <article class="card plain">
-          <h3>No need to call</h3>
+        <article class="card">
+          <h3>Ask me first</h3>
           <ul>
-            <li>Typos, class times, term dates.</li>
-            <li>Prices, sold out, new Stripe links.</li>
-            <li>Blog posts, photos, testimonials.</li>
-            <li>Undoing your own change: <span class="quote">“undo the last publish”</span>.</li>
+            <li>Where enquiries go and the enquiry emails. They run on my system.</li>
+            <li>Something new the site can't do yet: online bookings, an events calendar, a newsletter sign-up.</li>
+            <li>Big changes to the whole site at once, like the menu or the overall look.</li>
+            <li>Your domain, email, or logins for GitHub, Vercel or Stripe.</li>
           </ul>
         </article>
       </div>

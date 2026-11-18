@@ -115,9 +115,10 @@ Drafting an email is fine. Sending needs their clear yes. Never connect an accou
 ## Jobs for Andre
 
 Say why, then point to Andre: andre@hinterlandweb.com, 0461 546 818.
-- What a form asks, or where it sends.
+- Where enquiries go, or the enquiry emails (they run on Andre's system). The questions on a form are theirs.
+- Something the site can't do yet: online bookings, an events calendar, a newsletter sign-up.
+- The menu or the whole site's look at once. New sections and layouts on a page are theirs (Claude builds them from the site's blocks).
 - Domain, DNS, email settings, hosting.
 - Student video password.
-- A page's web address, redirects, anything called "settings".
 - GitHub login or access errors.
 - Site down or blank after publishing. Start the undo, and tell them to call Andre too: he can restore it in a minute.

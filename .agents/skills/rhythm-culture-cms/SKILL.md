@@ -82,19 +82,50 @@ Only change a price or payment link when they give you the exact new value, and 
 ### Photos
 Save new photos into `public/media/cms/` with lowercase hyphenated names, reference them as `/media/cms/<file>`, and write short descriptive alt text in the markdown: `![Dundun class at Palmwoods](/media/cms/dundun-class.webp)`. Phone photos are 3 to 8 MB, so **always run the `compress-images` skill first** (convert to WebP is the best default for new photos).
 
+### Change a form
+The four forms (contact, quote, booking, camp) are listed in `src/lib/forms.ts`. Each field is one line: `f('name', 'Label', { type, required, options })`. The checks in the browser and on the server are built from this list automatically, so a field added here is checked and sent with no other change.
+
+- They can add a field, remove one, change a label, a dropdown's options, whether it's required, or the booking terms text.
+- Keep every existing field's `name` (the first value) as it is. The enquiries sheet and email are matched on it. To retire a field, remove its line. Don't reuse the name for something else.
+- A new field's `name` is camelCase, short and unique within that form (`eventPostcode`). Use the right `type`: `email`, `tel`, `date`, `number`, `select` (with `options`), `textarea`, `checkbox`.
+- Show it locally and fill the form in. It won't send from this computer; that's expected. After publishing, ask them to send one test enquiry and check it arrives.
+- Where enquiries are emailed, the email's look and the enquiries sheet run on Andre's system: that's his.
+
+### Delete or hide a page or product
+Their call. Confirm which one by its title and address, then:
+
+1. **Hide instead?** A product can be hidden (`visible: false`) or shown as sold out (`soldOut: true`) and brought back later. Offer that first. If they still want it gone, delete it.
+2. Delete the file (`src/content/pages/<file>.mdoc` or `src/content/shop/<slug>.json`).
+3. **Point the old address somewhere.** Add one line to the `redirects` list in `astro.config.mjs`, without the trailing slash, to the closest page: `'/old-page': '/classes/',` (a product goes to `/shop/`). Only add lines there. Change nothing else in that file.
+4. Search for links to it: `grep -rn '/old-page/' src/content src/lib/nav.ts src/components/Footer.astro`. Point links inside pages and posts at the new place. If it's in the menu or footer, remove just that link.
+5. `npm run build`, then check the old address locally: it should land on the new page.
+
+Never delete `thank-you-*` pages (each form sends people to one), or the home, shop, blog or contact pages.
+
+### Move a page (new web address)
+Same as a delete, the other way round: change `link:` in the page, add a redirect line from the old address to the new one (step 3 above), and update links to it (step 4).
+
 ## Stop and say "this one needs Andre"
 
-These are outside normal updates. Explain why, suggest they contact Andre (the developer), and do not edit them unless Andre has said so:
+These change how the whole site works or reach outside it. Explain why, suggest they contact Andre (the developer), and do not edit them unless Andre has said so:
 
-- **Forms** (`src/lib/forms.ts`, `src/pages/api/form.ts`): changing fields, where messages are sent, spam protection. Forms use zod validation and that must not be weakened.
-- **Redirects and site settings** (`astro.config.mjs`, `keystatic.config.ts`, `package.json`, `.vercel` and environment variables).
-- Changing a page's web address (`link:`), because old links and Google rankings break without a redirect.
-- Deleting pages, products or lots of content at once.
-- Anything involving secrets, logins or `.env` files.
+- **Where enquiries go and the enquiry emails** (they run on Andre's n8n), and the form machinery: `src/lib/formSchema.ts`, `src/pages/api/form.ts`, `src/components/Form.astro` (validation, spam protection, sending). The validation must never be weakened.
+- **Site settings:** `astro.config.mjs` (apart from adding a redirect line), `keystatic.config.ts`, `package.json`, `.vercel` and environment variables.
+- **The whole site's look at once:** the menu (`src/lib/nav.ts`, apart from removing a deleted page's link), `src/styles/global.css`, layouts, components, and new kinds of block.
+- **Something the site can't do yet:** online bookings, an events calendar, a newsletter sign-up, logins.
+- Domain, DNS, email, hosting, secrets, logins or `.env` files.
 - Never run `npm run import` (it overwrites their edited pages and posts) and never touch `reference/`.
 
-## Keep it right
+## Keep it right: the design rules
 
-- Keep the look as it is (green `#7cda24`, red `#e02b20`, Assegai headings, Open Sans text) unless they ask for a change. Build layouts from the blocks in `blocks.md`; never add inline styles or HTML.
+It's their website and they can try new layouts. Every change still has to look like the rest of the site. Before showing them anything, check:
+
+- **Blocks only.** Build sections from the blocks in `blocks.md` (hero, section, columns, feature, testimonials, faq, button, banner, callout, chips, embed). No inline styles, HTML, `<iframe>`, or new CSS. If they want something no block can do, say so and suggest Andre adds a block. Don't fake it.
+- **The site's colours and fonts.** Green `#7cda24`, red `#e02b20`, Assegai headings, Open Sans text. Background colour comes only from a `section` `tone` (grey, white, dark, red, image). No green text on white.
+- **One page shape.** One `hero` at the top with the page's only `#` title. `##` for section titles, `###` inside columns and cards. Alternate section tones so bands don't run together. End a sales page with a clear next step (a `button` to the right form or the shop).
+- **Copy their own pages.** Before a new section, open a similar page (`/school-incursions/`, `/classes/`) and reuse its pattern: features in 3s or 4s, testimonials as cards, photos as a gallery row.
+- **Photos.** Compressed WebP (`compress-images`), real alt text, banners landscape and at least 1600 px wide.
+- **Their voice.** Write as "we" (Rhythm Culture). Never invent facts, prices or dates.
+- **Check on a phone width** before you show them, and fix anything that wraps badly.
 - If you are not sure what they mean, ask one short question before changing anything.
 - End every job with a plain summary: what changed, which page to look at on their own computer, and what happens next (look, then say "publish").
