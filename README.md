@@ -48,7 +48,7 @@ Node 24 was used. Copy `.env.example` to `.env` and set `FORM_WEBHOOK_URL` to tr
 
 ```
 scripts/import-wp.mjs     WP export -> src/content (one-time migration tool, guarded: see "Re-running the import")
-.agents/skills/           rhythm-culture-cms (client editing guide) and compress-images (+ compress.mjs, run via `npm run compress`). Edit skills here only.
+.agents/skills/           rhythm-culture-cms (client editing guide), rhythm-culture-onboarding (the tour), rc-setup (computer setup check, /rc-setup) and compress-images (+ compress.mjs, run via `npm run compress`). Edit skills here only.
 .claude/skills/           generated copy of .agents/skills for Claude Code (scripts/sync-skills.mjs, runs before every build)
 docs/editing-guide.html   client guide: how editing works (diagram) and when to call André; open in a browser
 src/content/pages/*.mdoc  pages (markdown + YAML frontmatter)
@@ -169,7 +169,11 @@ Vercel preview links need a Vercel login, so the client doesn't use them. Instea
 
 - **Claude desktop app:** `.claude/launch.json` defines "Rhythm Culture (local preview)" (`npm run dev`, port 4321). The assistant starts it and opens the page in the app's browser pane. **Untested here:** I ran the same command and viewed the site in the browser pane, but the app's own `launch.json` lookup only works when the app is opened on this project folder. Check it on the client's PC.
 - **Codex / ChatGPT desktop app:** not verified. The rules say to run `npm run dev` and open `http://localhost:4321/`. Test whether the app can show a local page before promising it.
-- **One-time setup on the client's PC (about 15 minutes):** install Node 24 (`.nvmrc`), run `npm install` in the project folder, then ask the assistant to start the site and check it opens.
+- **One-time setup on the client's PC (about 20 minutes each):**
+  1. Create their GitHub account. Andre adds it as a collaborator on `andrestack/rhythm-culture`, and they accept the invite email.
+  2. Install Git for Windows, Node 24 LTS (not newer: `.nvmrc`), the GitHub CLI and the Claude desktop app.
+  3. Paste the start prompt from `docs/editing-guide.html` ("Set up your computer") into the Claude app's Code tab. It downloads the repo, then runs `/rc-setup`.
+  4. `/rc-setup` (`.agents/skills/rc-setup`) checks Git, Node, `gh` login, git name and email, `git pull`, `npm install` and the preview, one line each. Run it again whenever the preview, a pull or a pull request fails.
 - **Editor drafts:** edits saved in `/keystatic` on an `update/` branch can be looked at by asking "show me my draft": the assistant fetches that branch and runs it locally.
 - **Limits:** only the client sees it, forms don't send from a local run (no webhook secret there), and Vercel's own build after merge is still the final check. `npm run build` runs before every commit.
 - **Keystatic-only clients** (no assistant) have no preview: Keystatic saves straight to `main` unless `branchPrefix` is set, and then the preview needs a Vercel login again.

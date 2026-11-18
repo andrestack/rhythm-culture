@@ -111,6 +111,7 @@ ol.steps li::before {
   border: 1px solid var(--border); display: grid; place-items: center; color: var(--muted-fg); margin-top: 1px;
 }
 .quote { font-style: italic; }
+.prompt { max-width: none; border: 1px solid var(--border); background: var(--frame); border-radius: 16px; padding: 14px 18px; font: 400 14px/1.6 var(--mono); overflow-wrap: anywhere; user-select: all; }
 
 /* when to call */
 .calls { display: grid; gap: 16px; }
@@ -288,6 +289,24 @@ footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
     <p class="muted">It never makes up dates, prices or payment links. If something is missing, it asks you.</p>
   </section>
 
+  <section aria-labelledby="setup">
+    <header>
+      <p class="eyebrow">Once per computer</p>
+      <h2 id="setup">Set up your computer, about 20 minutes</h2>
+    </header>
+    <p>We do this together on the call. Install each one with the default options.</p>
+    <ol class="steps">
+      <li><p><strong>A GitHub account.</strong> We make it on the call. I add you to the website, then you accept the invite email.</p></li>
+      <li><p><strong>Git for Windows</strong> from <a href="https://git-scm.com/">git-scm.com</a>.</p></li>
+      <li><p><strong>Node 24</strong> from <a href="https://nodejs.org/">nodejs.org</a>. Pick version 24, even if a newer one is offered.</p></li>
+      <li><p><strong>GitHub CLI</strong> from <a href="https://cli.github.com/">cli.github.com</a>.</p></li>
+      <li><p><strong>The Claude desktop app</strong> from <a href="https://claude.ai/download">claude.ai/download</a>. Sign in.</p></li>
+      <li><p><strong>Paste the start prompt.</strong> In Claude, open the Code tab, choose your Documents folder, and paste the text below. Sign in to GitHub when a window asks.</p></li>
+    </ol>
+    <p class="prompt">Set up the Rhythm Culture website on this computer. Check that Git, Node 24 and the GitHub CLI are installed, and walk me through anything missing. Download https://github.com/andrestack/rhythm-culture.git into a folder called rhythm-culture here. Then follow rhythm-culture/.agents/skills/rc-setup/SKILL.md. When it's done, tell me how to open Claude on the rhythm-culture folder.</p>
+    <p class="muted">From then on, always open Claude on the rhythm-culture folder. If the preview or publishing stops working, type <span class="mono">/rc-setup</span>. It checks everything and says what to fix.</p>
+  </section>
+
   <section aria-labelledby="call">
     <header>
       <p class="eyebrow"><span class="star">✦</span> When to call me</p>
@@ -345,7 +364,7 @@ footer { color: var(--muted-fg); font-size: 14px; display: grid; gap: 6px; }
       <li><span class="state">Done</span><span>The house rules for Claude and ChatGPT are in the project, and it works on Windows.</span></li>
       <li><span class="state">To do</span><span>Your login for the website editor. I'm setting this up before handover.</span></li>
       <li><span class="state">To do</span><span>Stripe payment links for the class passes and shop items.</span></li>
-      <li><span class="state">To do</span><span>Installing the desktop app and the tool it needs to run the site (Node), then a first test run. We do that together, about 45 minutes.</span></li>
+      <li><span class="state">To do</span><span>Setting up your computers (see <a href="#setup">Set up your computer</a>). We do it together on the call, about 20 minutes each.</span></li>
       <li><span class="state">Launch</span><span>Moving rhythmculture.com.au across. Your old WordPress site stays untouched until then.</span></li>
     </ul>
   </section>

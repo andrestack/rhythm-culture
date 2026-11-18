@@ -19,7 +19,7 @@ The site is Astro + Keystatic. Content is plain files, so you edit files directl
    - Tell them in plain words what to look at ("scroll to the new paragraph", "the price should say $130"). For phone view, resize the window narrow.
    - Forms won't send from here. That's expected.
    - Not right? Change it and show it again. Don't commit yet.
-   - If the site won't start because `node` or `npm` is missing, say so and tell them to contact Andre. If it says packages are missing, run `npm install` once (it needs Node 24, see `.nvmrc`), then start it again.
+   - If the site won't start (`node` or `npm` missing, missing packages, wrong Node version), run the `rc-setup` skill (`/rc-setup`): it checks this computer step by step and says what to fix.
 5. **Save it online only when they say yes.** Commit, push the branch and open a pull request. Do **not** send the Vercel preview link: it asks for a Vercel login they don't have.
 6. **Publish only when they say so:** merge the pull request. If they are not sure, wait. The live site updates a couple of minutes later.
 
