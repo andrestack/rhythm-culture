@@ -8,6 +8,12 @@ export interface Entry {
   featured: string; categories: string[]; form: string; body: string; html: string;
 }
 
+// "2026-11-18" -> "18/11/2026" (anything else is shown as typed)
+export const fmtDate = (iso: string) => {
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(iso);
+  return m ? `${m[3]}/${m[2]}/${m[1]}` : iso;
+};
+
 const dir = (d: string) => path.join(process.cwd(), 'src/content', d);
 
 // Entries are Keystatic markdoc files: YAML frontmatter + markdown body, parsed with js-yaml (the library

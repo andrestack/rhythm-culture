@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Form from '../components/Form.astro';
 import Reveal from '../components/Reveal.astro';
-import { pages, posts, NOINDEX } from '../lib/content';
+import { pages, posts, NOINDEX, fmtDate } from '../lib/content';
 
 export function getStaticPaths() {
   const all = [...pages().map((e) => ({ e, post: false })), ...posts().map((e) => ({ e, post: true }))];
@@ -18,7 +18,7 @@ const designed = !post && e.html.includes('class="blk-');
 <Base title={e.seoTitle || e.title} description={e.description} noindex={NOINDEX.has(e.link) || e.link.startsWith('/thank-you')}>
   <article class={designed ? 'content designed' : 'content'}>
     {post && <h1 class="post-title">{e.title}</h1>}
-    {post && <p class="meta post-date">{e.date}</p>}
+    {post && <p class="meta post-date">{fmtDate(e.date)}</p>}
     <Fragment set:html={e.html} />
     {e.form && <div class="form-wrap"><Form form={e.form} /></div>}
   </article>

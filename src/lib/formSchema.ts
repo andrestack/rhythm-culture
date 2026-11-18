@@ -6,6 +6,14 @@ import { FORMS, type Field } from './forms';
 // Any new form: add it to FORMS and it is validated here automatically.
 const REQUIRED = 'This field is required';
 
+const isRealDate = (v: string) => {
+  const [y, m, d] = v.split('-').map(Number);
+  const dt = new Date(Date.UTC(y, m - 1, d));
+  return dt.getUTCFullYear() === y && dt.getUTCMonth() === m - 1 && dt.getUTCDate() === d;
+};
+// Today as YYYY-MM-DD in Brisbane (en-CA prints ISO order).
+const todayBrisbane = () => new Date().toLocaleDateString('en-CA', { timeZone: 'Australia/Brisbane' });
+
 function fieldSchema(fl: Field): z.ZodType {
   let base: z.ZodType;
   switch (fl.type) {
@@ -19,7 +27,10 @@ function fieldSchema(fl: Field): z.ZodType {
       base = z.string().trim().regex(/^\d{1,5}$/, 'Enter a whole number');
       break;
     case 'date':
-      base = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Enter a valid date');
+      // Must be a real calendar day (not 2026-02-31) and not in the past (Brisbane time, same on client and server).
+      base = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Enter a valid date')
+        .refine(isRealDate, 'Enter a valid date')
+        .refine((v) => v >= todayBrisbane(), 'Please choose today or a future date');
       break;
     case 'time':
       base = z.string().regex(/^\d{2}:\d{2}$/, 'Enter a valid time');
