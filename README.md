@@ -50,7 +50,7 @@ Node 24 was used. Copy `.env.example` to `.env` and set `FORM_WEBHOOK_URL` to tr
 scripts/import-wp.mjs     WP export -> src/content (one-time migration tool, guarded: see "Re-running the import")
 .agents/skills/           rhythm-culture-cms (client editing guide), rhythm-culture-onboarding (the tour), rc-setup (computer setup check, /rc-setup) and compress-images (+ compress.mjs, run via `npm run compress`). Edit skills here only.
 .claude/skills/           generated copy of .agents/skills for Claude Code (scripts/sync-skills.mjs, runs before every build)
-docs/editing-guide.html   client guide: how editing works (diagram) and when to call André; open in a browser
+docs/editing-guide.html   client slideshow: two ways to edit, how a change goes live, computer setup + start prompt, when to call André
 src/content/pages/*.mdoc  pages (markdown + YAML frontmatter)
 src/content/posts/*.mdoc  blog posts
 src/content/shop/*.json   one file per product
@@ -172,7 +172,7 @@ Vercel preview links need a Vercel login, so the client doesn't use them. Instea
 - **One-time setup on the client's PC (about 20 minutes each):**
   1. Create their GitHub account. Andre adds it as a collaborator on `andrestack/rhythm-culture`, and they accept the invite email.
   2. Install Git for Windows, Node 24 LTS (not newer: `.nvmrc`), the GitHub CLI and the Claude desktop app.
-  3. Paste the start prompt from `docs/editing-guide.html` ("Set up your computer") into the Claude app's Code tab. It downloads the repo, then runs `/rc-setup`.
+  3. Paste the start prompt from `docs/editing-guide.html` (slide "Paste this into Claude", with a Copy button) into the Claude app's Code tab. It downloads the repo, then follows the `/rc-setup` checks.
   4. `/rc-setup` (`.agents/skills/rc-setup`) checks Git, Node, `gh` login, git name and email, `git pull`, `npm install` and the preview, one line each. Run it again whenever the preview, a pull or a pull request fails.
 - **Editor drafts:** edits saved in `/keystatic` on an `update/` branch can be looked at by asking "show me my draft": the assistant fetches that branch and runs it locally.
 - **Limits:** only the client sees it, forms don't send from a local run (no webhook secret there), and Vercel's own build after merge is still the final check. `npm run build` runs before every commit.

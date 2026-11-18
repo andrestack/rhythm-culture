@@ -24,10 +24,8 @@ Asked about one thing only? Jump straight to that stop.
 
 ## Slideshow
 
-Open it first. It is one file, no internet needed:
-
-- Windows: `start docs\onboarding\slides.html`
-- Mac: `open docs/onboarding/slides.html`
+Open it first. It is one file, no internet needed: `start docs\onboarding\slides.html`.
+The editing guide (how a change goes live, setup, when to call Andre) is a slideshow too: `start docs\editing-guide.html`.
 
 Say: "The tour is open in your browser. Use the arrow keys, and ask me about any slide."
 Jump to a slide with `#slide-<name>`: welcome, big-picture, which-tool, editor-login, editor-text, editor-photos, claude, enquiries, shop, connectors, good-to-know, andre.
