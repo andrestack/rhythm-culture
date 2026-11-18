@@ -24,12 +24,11 @@ Asked about one thing only? Jump straight to that stop.
 
 ## Slideshow
 
-Open it first. It is one file, no internet needed: `start docs\onboarding\slides.html`.
-The editing guide (how a change goes live, setup, when to call Andre) is a slideshow too: `start docs\editing-guide.html`.
-
-Say: "The tour is open in your browser. Use the arrow keys, and ask me about any slide."
-Jump to a slide with `#slide-<name>`: welcome, big-picture, which-tool, editor-login, editor-text, editor-photos, claude, enquiries, shop, connectors, good-to-know, andre.
-If a stop below changes, update its slide too (plain HTML in `docs/onboarding/slides.html`).
+Open the editing guide first: `start docs\editing-guide.html`. One file, nine slides.
+Say: "The guide is open in your browser. Use the arrow keys, and ask me about any slide."
+Slides: welcome, two-ways, path, a-change, setup, start-prompt, call-now, ask-first, message-me. They click a dot to jump.
+The slides give the big picture. The stops below go tool by tool.
+If a rule changes (how publishing works, setup, who to call), update the matching slide too: plain HTML in `docs/editing-guide.html`.
 
 ## Big picture
 
@@ -65,6 +64,7 @@ Rule of thumb: **words and prices → website editor. Layout, new pages, many pa
 ### 3. Bigger changes (Claude)
 - Describe it: "add a blog post about Term 1 classes".
 - Claude shows it on this computer first. Nothing goes live until they say "publish".
+- Changed their mind, or a publish broke a page? "Undo the last publish." Claude reverses it the same safe way (CMS skill, "Undo a publish").
 - Try it: "Show me the home page on my computer."
 
 ### 4. Enquiries
@@ -120,4 +120,4 @@ Say why, then point to Andre: andre@hinterlandweb.com, 0461 546 818.
 - Student video password.
 - A page's web address, redirects, anything called "settings".
 - GitHub login or access errors.
-- Something looks broken after publishing. He can roll back in a minute.
+- Site down or blank after publishing. Start the undo, and tell them to call Andre too: he can restore it in a minute.

@@ -25,7 +25,25 @@ The site is Astro + Keystatic. Content is plain files, so you edit files directl
 
 **Used the website editor (`/keystatic`) instead?** Edits made there on a branch starting with `update/` are saved to GitHub. To look at one, run `git fetch`, switch to that branch (`git switch update/<name>`), then show it locally exactly as in step 4. Publish by merging its pull request. Edits made on `main` go live immediately with no preview.
 
-Never push or merge without a clear yes. If something goes wrong after publishing, the previous version can be restored from Vercel (Deployments, then promote the previous one) or by reverting the pull request.
+Never push or merge without a clear yes. If something goes wrong after publishing, undo it (next section). Andre can also restore the previous version in Vercel in about a minute.
+
+## Undo a publish
+
+Use when they say "undo", "put it back", or "the last change broke the page". An undo is a new change that reverses the old one. Nothing is deleted.
+
+1. `git switch main`, then `git pull`.
+2. Find the change: `git log --first-parent -15 --format='%h %ad %s' --date=format:'%d/%m %H:%M'`. Pick it by date and message. Not sure which one? Ask.
+3. Say it in plain words and wait for yes: "Undo 'Term 1 post', published today at 2:10pm?"
+4. `git switch -c update/undo-<topic>`.
+5. Revert, newest first, one at a time:
+   - Message starts with "Merge" (a publish): `git revert --no-edit -m 1 <hash>`
+   - Anything else (a website editor save, or a direct change): `git revert --no-edit <hash>`
+6. Conflict? `git revert --abort`, stop, and tell them to contact Andre. A later change touched the same lines.
+7. `npm run build`, show it locally, then "save it" and "publish" as above. Live again about 2 minutes after the merge.
+
+- Never `git reset`, force-push or rewrite history to undo.
+- Only website files undo. Stripe prices, forms, DNS and sent emails don't.
+- Site down or blank right now? Tell them to call Andre as well. He can restore it in Vercel while you prepare the undo.
 
 ## What you can do yourself
 
