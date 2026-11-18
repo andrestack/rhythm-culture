@@ -10,13 +10,14 @@ Each block is defined in three places that must match: `src/lib/markdoc.ts` (how
 |---|---|---|
 | `hero` | The photo at the top of a page, with the title and usually a button. Once per page, first thing. | `image` (required), `align` center/left, `size` tall/short, `accent` white/green (heading colour) |
 | `section` | A full-width band to set part of the page apart. | `tone` grey/white/dark/red/image, `image` (only with tone "image") |
-| `columns` + `column` | Side-by-side content: 2 to 5 columns. Stacks on phones. If every column holds just one photo, the row becomes a photo gallery: photos are cropped to the same shape and stay side by side on phones. | `layout` equal/wide-left/wide-right, `align` top/center |
+| `columns` + `column` | Side-by-side content: 2 to 5 columns. Stacks on phones. If every column holds just one photo, the row becomes a photo gallery: photos are cropped to the same shape and stay side by side on phones. | `layout` equal/wide-left/wide-right, `align` top/center. On a `column`: `card` dark/light puts that column in a rounded box (dark = dark box with green heading, light = white box, best on a grey band). A numbered list inside a card gets red number circles. |
 | `feature` | A red icon above a short heading and sentence ("Free drum hire"). Put 3 or 4 in `columns`. | `icon`: dollar, pin, thumbs-up, check, people, music, star, heart, calendar, school, chat, smile |
 | `testimonials` + `testimonial` | Client quotes on cards. Put the quotes inside one `testimonials` block. | `name`, `role` (role and organisation) |
 | `faq` + `question` | Questions that open to show the answer, for FAQs and any long list of explanations. Each `question` has a `title` and its answer inside; put them all in one `faq`. Use it instead of a wall of text. | `title` (the question) |
 | `button` | A red button. Self-closing (ends with `/%}`). | `label`, `href` (both required), `align` center/left |
 | `banner` | The multicoloured stripe with one line of big text. | `image` (leave out to use the standard stripe) |
 | `callout` | One or two sentences in large red text, centred. | none |
+| `chips` | Wrap a bullet list to show it as small rounded tags (lists of schools, quick benefits). | none |
 | `embed` | A YouTube/Vimeo video, Google map or Facebook post. Self-closing. | `src` (the *embed* link), `title`, `ratio` video/map/post |
 
 ## Examples
