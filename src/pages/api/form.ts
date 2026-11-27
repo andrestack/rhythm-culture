@@ -64,8 +64,9 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
         page: String(body.page ?? '').slice(0, 200),
         submittedAt: new Date().toISOString(),
         data: parsed.data,
-        // Labels in form order, so the email reads like the form.
-        fields: FORMS[formType].fields.map((f) => ({ name: f.name, label: f.label })),
+        // Labels in form order, so the email reads like the form. `note` is the terms text a checkbox
+        // accepts: the email prints it, so the copy sent to the client shows what they agreed to.
+        fields: FORMS[formType].fields.map((f) => ({ name: f.name, label: f.label, note: f.note })),
       }),
     });
     // Count it as delivered only when n8n confirms it saved the enquiry: a 200 alone has proven unreliable.
